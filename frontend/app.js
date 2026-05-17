@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Escucha de respuesta de confirmación de base de datos
   socket.on('config-updated', (res) => {
     if (res.success) {
-      appendLog('CONFIG', '🟢 Credenciales guardadas y persistidas correctamente en database.json.');
+      appendLog('CONFIG', '🟢 Credenciales guardadas y persistidas con éxito en la Base de Datos.');
       setLedState(ledMeta, 'green');
       alert('¡Credenciales guardadas y sincronizadas con éxito!');
     } else {
