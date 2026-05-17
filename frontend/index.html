@@ -110,6 +110,35 @@
     @keyframes rippleEffect { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.8); opacity: 0; } }
     @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(52,199,89,0.5); } 70% { box-shadow: 0 0 0 20px rgba(52,199,89,0); } 100% { box-shadow: 0 0 0 0 rgba(52,199,89,0); } }
 
+    /* --- SCROLL REVEAL VIDEO PORTAL --- */
+    .scroll-reveal-container { height: 350vh; position: relative; background: #0A0A0A; }
+    .scroll-reveal-sticky { position: sticky; top: 0; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #050505; }
+    
+    .scroll-reveal-line { 
+      width: 90%; max-width: 1100px; height: 2px; 
+      background: var(--accent-gold); 
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 0 30px var(--accent-gold); overflow: hidden; border-radius: 20px;
+      will-change: height;
+    }
+    .scroll-reveal-content { 
+      width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center; background: #000;
+      opacity: 0; transition: opacity 0.5s;
+    }
+    .scroll-reveal-content img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+    .scroll-reveal-play { position: absolute; font-size: 5rem; color: #fff; text-shadow: 0 10px 20px rgba(0,0,0,0.8); z-index: 10; cursor: pointer; transition: all 0.3s; }
+    .scroll-reveal-play:hover { transform: scale(1.1); color: var(--accent-gold); }
+    
+    .scroll-reveal-texts { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+    .reveal-text { 
+      position: absolute; color: #fff; font-weight: 900; text-align: center; width: 100%;
+      text-transform: uppercase; letter-spacing: -1px; text-shadow: 0 20px 40px rgba(0,0,0,1);
+      opacity: 0; transform: translateY(60px); transition: opacity 0.4s ease-out, transform 0.6s ease-out;
+    }
+    #text-1 { top: 18%; font-size: clamp(2.5rem, 5vw, 4.5rem); }
+    #text-2 { bottom: 18%; color: var(--accent-gold); font-size: clamp(1.5rem, 3vw, 2.5rem); }
+
     /* --- FEATURES --- */
     .section-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 40px; text-align: center; }
     .features-section { padding: 80px 0; }
@@ -235,6 +264,24 @@
           <div class="call-actions">
             <div class="btn-circle btn-red"><i class="fa-solid fa-phone-slash"></i></div>
             <div class="btn-circle btn-green"><i class="fa-solid fa-phone"></i></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCROLL REVEAL VIDEO PORTAL -->
+    <section class="scroll-reveal-container" id="video-portal">
+      <div class="scroll-reveal-sticky">
+        <div class="scroll-reveal-texts">
+          <div class="reveal-text" id="text-1">BIENVENIDOS AL FUTURO DE NEUROCALL</div>
+          <div class="reveal-text" id="text-2">Atención ultra-rápida. Cero fricción.</div>
+        </div>
+        <div class="scroll-reveal-line" id="reveal-line">
+          <div class="scroll-reveal-content" id="reveal-content">
+            <img src="assets/neurochat-ai-avatar.png" alt="Video Placeholder">
+            <div class="scroll-reveal-play"><i class="fa-solid fa-play"></i></div>
+            <!-- El iframe de YouTube irá aquí cuando lo grabes: -->
+            <!-- <iframe src="tu-link" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe> -->
           </div>
         </div>
       </div>
@@ -408,6 +455,74 @@
       document.getElementById('closePrivacy')?.addEventListener('click', () => closeModal(pm));
       
       [tm, pm].forEach(m => m?.addEventListener('click', (e) => { if(e.target === m) closeModal(m); }));
+
+      // Scroll Reveal Video Portal Logic
+      const revealContainer = document.getElementById('video-portal');
+      const revealLine = document.getElementById('reveal-line');
+      const revealContent = document.getElementById('reveal-content');
+      const text1 = document.getElementById('text-1');
+      const text2 = document.getElementById('text-2');
+
+      window.addEventListener('scroll', () => {
+        if(!revealContainer) return;
+        const rect = revealContainer.getBoundingClientRect();
+        const containerTop = rect.top;
+        const containerHeight = rect.height - window.innerHeight;
+        
+        // Progress from 0 to 1 as we scroll through the 350vh container
+        let progress = 0;
+        if (containerTop <= 0 && containerHeight > 0) {
+          progress = Math.min(1, Math.abs(containerTop) / containerHeight);
+        } else if (containerTop < -containerHeight) {
+          progress = 1; // Past the container
+        }
+
+        // Animation phases
+        if (progress > 0 && progress < 1) {
+          // Line expands vertically after 10% scroll
+          let heightProgress = Math.max(0, (progress - 0.1) * 1.5); 
+          let newHeight = 2 + (heightProgress * 80); // Expand to 80vh
+          if (newHeight > 80) newHeight = 80;
+          
+          revealLine.style.height = newHeight + 'vh';
+          
+          // Video/Content opacity
+          if (progress > 0.15) {
+            revealContent.style.opacity = 1;
+          } else {
+            revealContent.style.opacity = 0;
+          }
+
+          // Texts
+          if (progress > 0.25) {
+            text1.style.opacity = 1;
+            text1.style.transform = 'translateY(0)';
+          } else {
+            text1.style.opacity = 0;
+            text1.style.transform = 'translateY(60px)';
+          }
+
+          if (progress > 0.40) {
+            text2.style.opacity = 1;
+            text2.style.transform = 'translateY(0)';
+          } else {
+            text2.style.opacity = 0;
+            text2.style.transform = 'translateY(60px)';
+          }
+        } else if (progress === 0) {
+          revealLine.style.height = '2px';
+          revealContent.style.opacity = 0;
+          text1.style.opacity = 0;
+          text2.style.opacity = 0;
+        } else if (progress === 1) {
+          revealLine.style.height = '80vh';
+          revealContent.style.opacity = 1;
+          text1.style.opacity = 1;
+          text2.style.opacity = 1;
+          text1.style.transform = 'translateY(0)';
+          text2.style.transform = 'translateY(0)';
+        }
+      });
     });
   </script>
 
