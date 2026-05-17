@@ -1186,3 +1186,43 @@ footer .copyright {
     right: 20px;
   }
 }
+
+/* 🔙 BOTÓN FUTURISTA DE REGRESO A LANDING */
+.back-landing-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: 999px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  width: fit-content;
+  cursor: pointer;
+}
+
+.back-landing-btn i {
+  font-size: 0.75rem;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.back-landing-btn:hover {
+  color: var(--accent-blue);
+  background: rgba(26, 115, 232, 0.08);
+  border-color: rgba(26, 115, 232, 0.3);
+  box-shadow: 0 4px 15px rgba(26, 115, 232, 0.15);
+  transform: translateX(-3px);
+}
+
+.back-landing-btn:hover i {
+  transform: translateX(-2px);
+}
