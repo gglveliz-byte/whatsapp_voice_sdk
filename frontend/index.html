@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WhatsApp Voice SDK — WhatsApp Real-Time Calls + Gemini Live</title>
+  <title>WhatsApp Voice SDK — Experience liftoff with Gemini Live</title>
   <!-- Google Fonts Outfit & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,29 +17,50 @@
   <!-- Rejilla Cibernética de Fondo -->
   <div class="cyber-grid"></div>
 
+  <!-- Partículas Flotantes de Gravedad (Estilo Antigravity) -->
+  <div class="gravity-particles" id="gravityParticles"></div>
+
+  <!-- MENÚ SUPERIOR MINIMALISTA -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <span>WhatsApp</span> Voice SDK
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Product</a></li>
+      <li><a href="#guide">Use Cases</a></li>
+      <li><a href="#features">Pricing</a></li>
+      <li><a href="#guide">Resources</a></li>
+    </ul>
+    <div>
+      <a href="dashboard.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.85rem; border-radius: 999px;">
+        <i class="fa-solid fa-gauge-high"></i> Dashboard
+      </a>
+    </div>
+  </nav>
+
   <!-- Contenedor Principal -->
   <main class="container">
     
     <!-- 1. HEADER HERO SECTION -->
     <header class="hero">
       <div class="badge">🚀 MOTOR DE VOZ IA CON SOBERANÍA TECNOLÓGICA</div>
-      <h1>Domina el Mercado de Telefonía con el <span>WhatsApp Voice SDK</span></h1>
+      <h1>Experience liftoff with the <span>WhatsApp Voice SDK</span></h1>
       <p class="subtitle">
-        Ahorra 3 meses de código WebRTC complejo, librerías Opus, ffmpeg y burocracia de Meta. 
-        Te entregamos la única **plantilla real en Node.js ultra-documentada** para conectar llamadas en WhatsApp con Gemini Live en tiempo real.
+        Ahorra meses de desarrollo de código WebRTC complejo, Opus RTP streams y decodificaciones. 
+        Te entregamos la única plantilla en Node.js ultra-documentada para conectar llamadas telefónicas de WhatsApp con Gemini Live en tiempo real.
       </p>
       <div class="hero-actions">
-        <a href="dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge-high"></i> Ir al Panel de Administración</a>
-        <a href="#features" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i> Características Técnicas</a>
+        <a href="dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge-high"></i> Panel de Administración</a>
+        <a href="#features" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i> Explorar Características</a>
       </div>
     </header>
 
-    <!-- 2. CARDS DE VALOR Y PRECIO -->
+    <!-- 2. CARDS DE VALOR Y PRECIO (FLOTANTE ELEGANTE) -->
     <section class="pricing-card glass-card">
       <div class="card-glow"></div>
       <div class="pricing-header">
         <div>
-          <h2>Adquiere la Licencia Comercial del Repositorio</h2>
+          <h2>Adquiere la Licencia del Repositorio</h2>
           <p>Llévate el código de producción completo y lanza agentes de voz en tu país hoy mismo.</p>
         </div>
         <div class="price-box">
@@ -53,10 +74,10 @@
         <li><i class="fa-solid fa-check text-green"></i> <b>Código WebRTC Completo:</b> Negociación SDP de WhatsApp Calls con node-datachannel.</li>
         <li><i class="fa-solid fa-check text-green"></i> <b>Puente Gemini Live:</b> Audio WebSocket bidireccional fluido a 24kHz.</li>
         <li><i class="fa-solid fa-check text-green"></i> <b>Base de Datos Persistente:</b> Capa de almacenamiento local ultra-ligera en archivo.</li>
-        <li><i class="fa-solid pointer fa-check text-green"></i> <b>Documentación en Español:</b> Explicado línea por línea para que lo integres en 10 minutos.</li>
+        <li><i class="fa-solid fa-check text-green"></i> <b>Documentación en Español:</b> Explicado línea por línea para que lo integres en 10 minutos.</li>
         <li><i class="fa-solid fa-check text-green"></i> <b>Estatus Corporativo Seguro:</b> Diseñado estructuralmente para pasar auditorías de Meta.</li>
       </ul>
-      <a href="mailto:lveliz213@hotmail.com?subject=Interes en comprar WhatsApp Voice SDK" class="btn btn-cta btn-full">
+      <a href="mailto:lveliz213@hotmail.com?subject=Interes en comprar WhatsApp Voice SDK" class="btn btn-cta btn-full" style="border-radius: 999px;">
         <i class="fa-solid fa-envelope"></i> Solicitar Acceso al Repositorio de GitHub
       </a>
     </section>
@@ -64,7 +85,7 @@
     <!-- 3. DETALLE DE CARACTERÍSTICAS -->
     <section id="features" class="features-section">
       <div class="section-title">
-        <h2>🛠️ Especificaciones de Arquitectura</h2>
+        <h2>🛠&nbsp; Especificaciones de Arquitectura</h2>
         <p>Un kit diseñado para desarrolladores profesionales y startups que exigen código limpio y escalable.</p>
       </div>
 
@@ -128,5 +149,36 @@
     </footer>
 
   </main>
+
+  <!-- GENERADOR DE PARTÍCULAS DINÁMICAS (Efecto Antigravity) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('gravityParticles');
+      if (container) {
+        const colors = ['blue', 'purple'];
+        for (let i = 0; i < 35; i++) {
+          const particle = document.createElement('div');
+          const isBlue = Math.random() > 0.5;
+          particle.className = `particle ${isBlue ? 'particle-blue' : 'particle-purple'}`;
+          
+          // Coordenadas iniciales aleatorias
+          const left = Math.random() * 100;
+          const top = Math.random() * 100;
+          const size = Math.random() * 6 + 3; // Tamaño entre 3px y 9px
+          const duration = Math.random() * 15 + 15; // Velocidad entre 15s y 30s
+          const delay = Math.random() * -20; // Delay negativo para que floten de inmediato
+          
+          particle.style.left = `${left}vw`;
+          particle.style.top = `${top}vh`;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.setProperty('--duration', `${duration}s`);
+          particle.style.animationDelay = `${delay}s`;
+          
+          container.appendChild(particle);
+        }
+      }
+    });
+  </script>
 </body>
 </html>

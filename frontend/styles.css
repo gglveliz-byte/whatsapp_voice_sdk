@@ -1,21 +1,24 @@
 /* =========================================================================
-   🎨 NEUROVOICE DEV-KIT — SISTEMA DE ESTILOS PREMIUM (AESTHETICS)
-   ========================================================================= */
+/* 🌌 GOOGLE ANTIGRAVITY STYLE SYSTEM — WHATSAPP VOICE SDK
+/* =========================================================================
+/* Desarrollado con honor por Luis Damian Veliz, Socio Fundador Mayoritario y CTO de NEURO IA S.A.S.
+/* Estilo minimalista, tecnológico y futurista, blanco, limpio y espacioso. */
 
-/* 1. CONFIGURACIÓN BASE Y VARIABLES DE COLOR */
 :root {
-  --bg-dark: #07080b;
-  --bg-card: rgba(13, 16, 23, 0.7);
-  --text-main: #e2e8f0;
-  --text-muted: #94a3b8;
-  --neon-green: #00ff66;
-  --neon-violet: #8b5cf6;
-  --neon-red: #ef4444;
-  --neon-yellow: #eab308;
-  --border-glass: rgba(255, 255, 255, 0.07);
+  --bg-light: #ffffff;
+  --bg-panel: rgba(255, 255, 255, 0.65);
+  --text-main: #1f2024;
+  --text-muted: #5f6368;
+  --accent-blue: #1a73e8;
+  --accent-purple: #8b5cf6;
+  --neon-green: #34a853; /* Verde Google */
+  --neon-red: #ea4335; /* Rojo Google */
+  --neon-yellow: #fbbc05; /* Amarillo Google */
+  --border-glass: rgba(0, 0, 0, 0.06);
   --font-outfit: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-floating: 0 30px 60px rgba(0, 0, 0, 0.03), 0 10px 20px rgba(0, 0, 0, 0.01), 0 2px 8px rgba(0, 0, 0, 0.01);
 }
 
 * {
@@ -26,14 +29,16 @@
 }
 
 body {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-light);
   color: var(--text-main);
   font-family: var(--font-outfit);
   overflow-x: hidden;
   line-height: 1.6;
+  position: relative;
+  min-height: 100vh;
 }
 
-/* 2. REJILLA CIBERNÉTICA DE FONDO (Cyber-Grid) */
+/* 🌌 REJILLA ESPACIAL DE FONDO */
 .cyber-grid {
   position: fixed;
   top: 0;
@@ -41,104 +46,174 @@ body {
   width: 100vw;
   height: 100vh;
   background-image: 
-    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(0, 0, 0, 0.01) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.01) 1px, transparent 1px);
+  background-size: 50px 50px;
   background-position: center;
   z-index: -2;
   pointer-events: none;
 }
 
-.cyber-grid::before {
-  content: "";
-  position: absolute;
-  top: 15%;
-  left: 15%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+/* 🌌 CONTENEDOR DE PARTÍCULAS FLOTANTES DE GRAVEDAD */
+.gravity-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
-  filter: blur(50px);
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.cyber-grid::after {
-  content: "";
+.particle {
   position: absolute;
-  bottom: 10%;
-  right: 15%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(0, 255, 102, 0.04) 0%, transparent 70%);
-  z-index: -1;
-  filter: blur(50px);
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(1px);
+  animation: float-gravity var(--duration, 20s) ease-in-out infinite alternate;
 }
 
-/* 3. CONTENEDOR Y MAQUETACIÓN GENERAL */
+.particle-blue {
+  background: var(--accent-blue);
+}
+
+.particle-purple {
+  background: var(--accent-purple);
+}
+
+@keyframes float-gravity {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  50% {
+    transform: translateY(-80px) translateX(30px) scale(1.1);
+  }
+  100% {
+    transform: translateY(-160px) translateX(-10px) scale(0.9);
+  }
+}
+
+/* 🚀 MENÚ SUPERIOR MINIMALISTA (Estilo Google Antigravity) */
+.navbar {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+}
+
+.nav-logo {
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-logo span {
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Simplificado para móviles */
+  }
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.nav-links a:hover {
+  color: var(--text-main);
+}
+
+/* 🚀 CONTENEDOR Y MAQUETACIÓN GENERAL */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 60px;
 }
 
-/* 4. HERO SECTION DESIGN */
+/* 🚀 HERO SECTION ESPACIAL */
 .hero {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  margin-top: 40px;
+  gap: 20px;
+  padding: 60px 0;
 }
 
 .badge {
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid var(--neon-violet);
-  color: var(--text-main);
+  background: rgba(26, 115, 232, 0.06);
+  border: 1px solid rgba(26, 115, 232, 0.12);
+  color: var(--accent-blue);
   padding: 6px 16px;
-  border-radius: 100px;
+  border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 1px;
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+  letter-spacing: 0.5px;
 }
 
 .hero h1 {
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
   font-weight: 800;
-  line-height: 1.2;
-  max-width: 900px;
-  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  max-width: 850px;
+  color: var(--text-main);
 }
 
 .hero h1 span {
-  background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-violet) 100%);
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .hero .subtitle {
   color: var(--text-muted);
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  max-width: 750px;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  max-width: 720px;
+  line-height: 1.5;
 }
 
 .hero-actions {
   display: flex;
   gap: 16px;
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
-/* 5. DISEÑO DE BOTONES PREMIUM */
+/* 🚀 BOTONES PREMIUM TIPO PÍLDORA (PILL BUTTONS) */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 14px 28px;
-  border-radius: 8px;
+  padding: 14px 30px;
+  border-radius: 999px; /* Forma de píldora */
   font-family: var(--font-outfit);
   font-size: 0.95rem;
   font-weight: 600;
@@ -149,54 +224,62 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--neon-green) 0%, #00d152 100%);
-  color: #000;
-  box-shadow: 0 4px 20px rgba(0, 255, 102, 0.25);
+  background: var(--text-main);
+  color: var(--bg-light);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(0, 255, 102, 0.4);
+  background: #000000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-light);
   color: var(--text-main);
-  border: 1px solid var(--border-glass);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.03);
   transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .btn-cta {
-  background: linear-gradient(135deg, var(--neon-violet) 0%, #6366f1 100%);
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 4px 15px rgba(26, 115, 232, 0.2);
 }
 
 .btn-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.45);
+  box-shadow: 0 8px 25px rgba(26, 115, 232, 0.35);
 }
 
 .btn-full {
   width: 100%;
 }
 
-/* 6. GLASSMORPHISM CARDS */
+/* 🚀 FLOAT GLASS CARDS */
 .glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--bg-panel);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border: 1px solid var(--border-glass);
-  border-radius: 16px;
-  padding: 30px;
+  border-radius: 20px;
+  padding: 36px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-floating);
+  transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.05), 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 
 .card-glow {
@@ -204,17 +287,17 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--neon-violet), var(--neon-green), transparent);
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-purple), transparent);
 }
 
-/* 7. TARJETA DE PRECIO Y VALOR COMERCIAL */
+/* 🚀 SECCIÓN PRECIO */
 .pricing-card {
   max-width: 900px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
 
 .pricing-header {
@@ -226,9 +309,10 @@ body {
 }
 
 .pricing-header h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #fff;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
 }
 
 .pricing-header p {
@@ -243,17 +327,18 @@ body {
 }
 
 .price-box .currency {
-  font-size: 0.8rem;
-  color: var(--neon-green);
+  font-size: 0.85rem;
+  color: var(--accent-blue);
   font-weight: 700;
   letter-spacing: 1px;
 }
 
 .price-box .amount {
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   font-weight: 800;
   line-height: 1;
-  color: #fff;
+  color: var(--text-main);
+  letter-spacing: -2px;
 }
 
 .price-box .period {
@@ -270,7 +355,7 @@ body {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
 .features-list li {
@@ -278,6 +363,7 @@ body {
   align-items: center;
   gap: 12px;
   color: var(--text-main);
+  font-size: 0.95rem;
 }
 
 .features-list li i {
@@ -289,10 +375,10 @@ body {
 }
 
 .text-violet {
-  color: var(--neon-violet);
+  color: var(--accent-purple);
 }
 
-/* 8. SECCIÓN SANDBOX Y FORMULARIO */
+/* 🚀 CARACTERÍSTICAS GRID */
 .section-title {
   text-align: center;
   margin-bottom: 40px;
@@ -300,7 +386,9 @@ body {
 
 .section-title h2 {
   font-size: 2.2rem;
-  color: #fff;
+  color: var(--text-main);
+  font-weight: 800;
+  letter-spacing: -0.8px;
 }
 
 .section-title p {
@@ -309,236 +397,44 @@ body {
   margin: 8px auto 0;
 }
 
-.sandbox-grid {
+.features-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
-  align-items: start;
 }
 
-@media (max-width: 900px) {
-  .sandbox-grid {
-    grid-template-columns: 1fr;
-  }
+.feat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
 }
 
-.config-form h3 {
+.feat-card h3 {
   font-size: 1.3rem;
-  margin-bottom: 8px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.form-help {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 24px;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.input-group label {
-  font-size: 0.85rem;
-  font-weight: 600;
   color: var(--text-main);
+  font-weight: 700;
 }
 
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-wrapper i {
-  position: absolute;
-  left: 14px;
+.feat-card p {
   color: var(--text-muted);
-}
-
-.input-wrapper input {
-  width: 100%;
-  padding: 12px 14px 12px 42px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-glass);
-  border-radius: 8px;
-  color: #fff;
-  font-family: var(--font-outfit);
   font-size: 0.95rem;
-  transition: var(--transition-smooth);
 }
 
-.input-wrapper input:focus {
-  outline: none;
-  border-color: var(--neon-violet);
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.25);
+.icon-large {
+  font-size: 2rem;
 }
 
-/* 9. TERMINAL CONSOLA Y PANEL DE ESTADO */
-.terminal-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  height: 100%;
-}
-
-.status-panel {
-  display: flex;
-  justify-content: space-around;
-  padding: 16px;
-  background: rgba(10, 12, 17, 0.8);
-}
-
-.status-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-/* Luces LED con animaciones */
-.led {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  transition: var(--transition-smooth);
-}
-
-.led-red {
-  background-color: var(--neon-red);
-  box-shadow: 0 0 8px var(--neon-red);
-}
-
-.led-green {
-  background-color: var(--neon-green);
-  box-shadow: 0 0 10px var(--neon-green);
-  animation: pulse-green 1.5s infinite;
-}
-
-.led-yellow {
-  background-color: var(--neon-yellow);
-  box-shadow: 0 0 8px var(--neon-yellow);
-}
-
-@keyframes pulse-green {
-  0% { transform: scale(1); box-shadow: 0 0 8px var(--neon-green); }
-  50% { transform: scale(1.1); box-shadow: 0 0 16px var(--neon-green); }
-  100% { transform: scale(1); box-shadow: 0 0 8px var(--neon-green); }
-}
-
-/* Consola Interactiva */
-.terminal {
-  background: #050608;
-  border: 1px solid var(--border-glass);
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-  flex-grow: 1;
-  min-height: 350px;
-}
-
-.terminal-header {
-  background: #0d0f14;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border-glass);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.terminal-buttons {
-  display: flex;
-  gap: 6px;
-}
-
-.t-btn {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.t-btn.red { background-color: #ff5f56; }
-.t-btn.yellow { background-color: #ffbd2e; }
-.t-btn.green { background-color: #27c93f; }
-
-.terminal-title {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-.btn-simulate {
-  padding: 6px 12px;
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid var(--neon-violet);
-  color: var(--text-main);
-  font-size: 0.75rem;
-  font-weight: 700;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-}
-
-.btn-simulate:hover {
-  background: var(--neon-violet);
-  color: #fff;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
-}
-
-.terminal-body {
-  padding: 20px;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  overflow-y: auto;
-  max-height: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.log-line {
-  display: flex;
-  gap: 10px;
-  align-items: start;
-}
-
-.t-time {
-  color: var(--text-muted);
-}
-
-.t-tag {
-  font-weight: 700;
-}
-
-/* Modificadores de Logs de Consola */
-.log-line.system .t-tag { color: var(--neon-green); }
-.log-line.meta .t-tag { color: #3b82f6; }
-.log-line.webrtc .t-tag { color: #f59e0b; }
-.log-line.gemini .t-tag { color: var(--neon-violet); }
-.log-line.whatsapp .t-tag { color: #10b981; }
-.log-line.error .t-tag { color: var(--neon-red); }
-.log-line.config .t-tag { color: #ec4899; }
-
-/* 10. STEPPER DE LA GUÍA DE CONFIGURACIÓN */
+/* 🚀 STEPPER DE GUÍA */
 .guide-section {
   max-width: 1000px;
   margin: 0 auto;
 }
 
 .guide-section h2 {
-  font-size: 1.8rem;
-  color: #fff;
+  font-size: 2rem;
+  color: var(--text-main);
+  font-weight: 800;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -557,16 +453,16 @@ body {
 }
 
 .step-card {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.02);
   border: 1px solid var(--border-glass);
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 16px;
+  padding: 28px;
   position: relative;
   transition: var(--transition-smooth);
 }
 
 .step-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.03);
   transform: translateY(-2px);
 }
 
@@ -576,21 +472,21 @@ body {
   left: 20px;
   width: 32px;
   height: 32px;
-  background: var(--neon-violet);
+  background: var(--accent-blue);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   color: #fff;
-  box-shadow: 0 4px 10px rgba(139, 92, 246, 0.5);
+  box-shadow: 0 4px 10px rgba(26, 115, 232, 0.3);
 }
 
 .step-card h4 {
   font-size: 1.15rem;
   margin-top: 10px;
   margin-bottom: 8px;
-  color: #fff;
+  color: var(--text-main);
 }
 
 .step-card p {
@@ -599,7 +495,7 @@ body {
 }
 
 .step-card a {
-  color: var(--neon-green);
+  color: var(--accent-blue);
   text-decoration: none;
   font-weight: 600;
 }
@@ -608,20 +504,220 @@ body {
   text-decoration: underline;
 }
 
-/* 11. FOOTER AND COPYRIGHT */
+/* 🚀 DASHBOARD Y CONSOLA DE CONTROL */
+.sandbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .sandbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-help li {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 16px;
+  color: var(--text-muted);
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 13px 14px 13px 44px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-glass);
+  border-radius: 10px;
+  color: var(--text-main);
+  font-family: var(--font-outfit);
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+}
+
+/* 🚨 PANEL DE ESTADO Y LUCES LED */
+.terminal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.status-panel {
+  display: flex;
+  justify-content: space-around;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.led {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+}
+
+.led-red {
+  background-color: var(--neon-red);
+  box-shadow: 0 0 8px rgba(234, 67, 53, 0.4);
+}
+
+.led-green {
+  background-color: var(--neon-green);
+  box-shadow: 0 0 10px rgba(52, 168, 83, 0.5);
+  animation: pulse-green 1.5s infinite;
+}
+
+.led-yellow {
+  background-color: var(--neon-yellow);
+  box-shadow: 0 0 8px rgba(251, 188, 5, 0.4);
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(1); box-shadow: 0 0 8px rgba(52, 168, 83, 0.4); }
+  50% { transform: scale(1.1); box-shadow: 0 0 16px rgba(52, 168, 83, 0.7); }
+  100% { transform: scale(1); box-shadow: 0 0 8px rgba(52, 168, 83, 0.4); }
+}
+
+/* 🚨 CONSOLA HACKER TRANSLÚCIDA PREMIUM (Estilo Charcoal Glass) */
+.terminal {
+  background: rgba(13, 16, 23, 0.95); /* Contraste oscuro ultra-premium para ver el código */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  flex-grow: 1;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.terminal-header {
+  background: rgba(22, 28, 38, 0.95);
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.t-btn {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.t-btn.red { background-color: #ea4335; }
+.t-btn.yellow { background-color: #fbbc05; }
+.t-btn.green { background-color: #34a853; }
+
+.terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.terminal-body {
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #f8fafc;
+  overflow-y: auto;
+  max-height: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.log-line {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+}
+
+.t-time {
+  color: #64748b;
+}
+
+.t-tag {
+  font-weight: 700;
+}
+
+.log-line.system .t-tag { color: #34a853; }
+.log-line.meta .t-tag { color: #4285f4; }
+.log-line.webrtc .t-tag { color: #fbbc05; }
+.log-line.gemini .t-tag { color: #a855f7; }
+.log-line.whatsapp .t-tag { color: #0f9d58; }
+.log-line.error .t-tag { color: #ea4335; }
+.log-line.config .t-tag { color: #ec4899; }
+
+/* 🚀 FOOTER */
 footer {
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 8px;
   border-top: 1px solid var(--border-glass);
-  padding-top: 40px;
+  padding: 40px 0;
   margin-top: 40px;
 }
 
 footer p {
   font-size: 0.95rem;
   color: var(--text-main);
+  font-weight: 500;
 }
 
 footer .copyright {

@@ -22,11 +22,11 @@
       gap: 16px;
     }
     .live-badge {
-      background: rgba(0, 255, 102, 0.1);
+      background: rgba(52, 168, 83, 0.08);
       border: 1px solid var(--neon-green);
       color: var(--neon-green);
       padding: 6px 14px;
-      border-radius: 4px;
+      border-radius: 999px; /* Pill-shaped badge */
       font-size: 0.85rem;
       font-weight: 700;
       display: inline-flex;
@@ -42,7 +42,7 @@
       animation: pulse-green 1.5s infinite;
     }
     .form-section-title {
-      color: var(--neon-yellow);
+      color: var(--accent-purple);
       font-size: 1.15rem;
       font-weight: 700;
       margin-bottom: 12px;
@@ -57,16 +57,19 @@
   <!-- Rejilla Cibernética de Fondo -->
   <div class="cyber-grid"></div>
 
+  <!-- Partículas Flotantes de Gravedad (Estilo Antigravity) -->
+  <div class="gravity-particles" id="gravityParticles"></div>
+
   <!-- Contenedor Principal -->
   <main class="container">
     
     <!-- HEADER DEL DASHBOARD -->
     <header class="live-status-container" style="margin-top: 20px;">
       <div>
-        <a href="index.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem; margin-bottom: 10px;">
+        <a href="index.html" class="btn btn-secondary" style="padding: 8px 20px; font-size: 0.85rem; margin-bottom: 10px; border-radius: 999px;">
           <i class="fa-solid fa-arrow-left"></i> Volver a la Landing
         </a>
-        <h1 style="font-size: 2.2rem; text-align: left; margin: 0;">Panel de Control y <span>Depuración</span></h1>
+        <h1 style="font-size: 2.2rem; text-align: left; margin: 0; letter-spacing: -0.8px;">Panel de Control y <span>Depuración</span></h1>
         <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
           Configura tus tokens de Meta y Google para enlazar llamadas reales de WhatsApp en caliente.
         </p>
@@ -83,7 +86,7 @@
       <div class="glass-card config-form">
         <h3 class="form-section-title">¿Dónde consigo estos datos?</h3>
         <ol class="form-help" style="padding-left: 16px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; line-height: 1.4;">
-          <li>Ve a <a href="https://developers.facebook.com/" target="_blank" style="color: var(--neon-green); font-weight: bold; text-decoration: none;">developers.facebook.com</a> ➔ tu App ➔ WhatsApp ➔ Configuración de la API.</li>
+          <li>Ve a <a href="https://developers.facebook.com/" target="_blank" style="color: var(--accent-blue); font-weight: bold; text-decoration: none;">developers.facebook.com</a> ➔ tu App ➔ WhatsApp ➔ Configuración de la API.</li>
           <li>El <b>Phone Number ID</b> y <b>WABA ID</b> aparecen en esa pantalla.</li>
           <li>El <b>Token</b>: crea un «System User» en tu Business Manager ➔ genera un token permanente con permisos <code>whatsapp_business_messaging</code>.</li>
         </ol>
@@ -130,7 +133,7 @@
           </div>
         </div>
 
-        <button id="btnConnect" class="btn btn-primary btn-full" style="margin-top: 10px;">
+        <button id="btnConnect" class="btn btn-primary btn-full" style="margin-top: 10px; border-radius: 999px;">
           <i class="fa-solid fa-floppy-disk"></i> Guardar y Conectar en Caliente
         </button>
       </div>
@@ -191,5 +194,35 @@
   <!-- Socket.io Client -->
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <script src="app.js"></script>
+
+  <!-- GENERADOR DE PARTÍCULAS DINÁMICAS (Efecto Antigravity) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('gravityParticles');
+      if (container) {
+        const colors = ['blue', 'purple'];
+        for (let i = 0; i < 35; i++) {
+          const particle = document.createElement('div');
+          const isBlue = Math.random() > 0.5;
+          particle.className = `particle ${isBlue ? 'particle-blue' : 'particle-purple'}`;
+          
+          const left = Math.random() * 100;
+          const top = Math.random() * 100;
+          const size = Math.random() * 6 + 3;
+          const duration = Math.random() * 15 + 15;
+          const delay = Math.random() * -20;
+          
+          particle.style.left = `${left}vw`;
+          particle.style.top = `${top}vh`;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.setProperty('--duration', `${duration}s`);
+          particle.style.animationDelay = `${delay}s`;
+          
+          container.appendChild(particle);
+        }
+      }
+    });
+  </script>
 </body>
 </html>
