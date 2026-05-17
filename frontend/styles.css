@@ -654,8 +654,8 @@ body {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-floating);
-  flex-grow: 1;
-  min-height: 480px;
+  height: 560px; /* Lock height to perfectly align with the left-hand form card! */
+  max-height: 560px; /* Absolute vertical expansion cap */
   overflow: hidden;
   transition: var(--transition-smooth);
 }
@@ -702,7 +702,7 @@ body {
 .terminal-body {
   padding: 24px;
   overflow-y: auto;
-  max-height: 440px;
+  flex: 1; /* Automatically fill all remaining space in the 560px terminal box */
   display: flex;
   flex-direction: column;
   gap: 12px;

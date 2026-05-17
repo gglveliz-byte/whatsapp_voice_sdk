@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (details) {
       const detailsStr = typeof details === 'object' ? JSON.stringify(details, null, 2) : details;
-      messageSpan.innerHTML = `${message} <span style="display: block; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 8px; margin-top: 6px; border: 1px dashed rgba(0,0,0,0.06); overflow-x: auto; white-space: pre-wrap; word-break: break-all;">${detailsStr}</span>`;
+      messageSpan.innerHTML = `${message} <span style="display: block; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 8px; margin-top: 6px; border: 1px dashed rgba(0,0,0,0.06); max-height: 120px; overflow-y: auto; overflow-x: auto; white-space: pre-wrap; word-break: break-all;">${detailsStr}</span>`;
     } else {
       messageSpan.textContent = message;
     }
