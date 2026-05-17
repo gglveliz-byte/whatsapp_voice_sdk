@@ -10,9 +10,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <link rel="stylesheet" href="css/landing.css?v=3">
+  <link rel="stylesheet" href="css/landing.css?v=8">
 </head>
 <body>
+
+  <!-- CANVAS NEURAL: Circuitos animados de fondo -->
+  <canvas id="neuralCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
 
   <!-- NAVBAR STICKY -->
   <nav class="sticky-nav">
@@ -202,17 +205,17 @@
     <section id="faq" class="container features-section build-section" style="padding-top: 20px;">
       <h2 class="section-title build-item">PREGUNTAS FRECUENTES</h2>
       <div class="features-grid">
-        <div class="feat-card hover-float build-item" style="background: #111;">
+        <div class="feat-card hover-float build-item">
           <i class="fa-solid fa-circle-question"></i>
           <h3>¿Puede el bot agendar citas o hacer ventas?</h3>
           <p>No. NeuroCall es un agente estrictamente informativo y de soporte. Está diseñado para responder preguntas sobre tu negocio con precisión basándose en tus documentos, sin inventar información ni realizar acciones no autorizadas.</p>
         </div>
-        <div class="feat-card hover-float build-item" style="background: #111;">
+        <div class="feat-card hover-float build-item">
           <i class="fa-solid fa-circle-question"></i>
           <h3>¿Qué necesito para empezar?</h3>
           <p>Solo necesitas compartirnos un PDF, documento Word o enlace web con la información de tu negocio (horarios, servicios, respuestas comunes). El bot aprenderá automáticamente de esta fuente.</p>
         </div>
-        <div class="feat-card hover-float build-item" style="background: #111;">
+        <div class="feat-card hover-float build-item">
           <i class="fa-solid fa-circle-question"></i>
           <h3>¿Funcionará con mi número actual?</h3>
           <p>Sí, NeuroCall se enlaza directamente a tu línea de WhatsApp Business actual para atender a tus clientes sin que tengan que agregar un número nuevo.</p>

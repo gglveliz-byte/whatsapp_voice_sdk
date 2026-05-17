@@ -28,7 +28,9 @@ let usePostgreSQL = false;
  * Resuelve y conecta con la base de datos de PostgreSQL o activa el fallback JSON
  */
 async function initDatabase() {
-  const connectionString = process.env.DATABASE_URL;
+  // Priorizar la base de datos de demo (NEUROCALL_DEMO_DATABASE_URL) cuando se integra en el SaaS,
+  // y usar DATABASE_URL para cuando corra de forma independiente.
+  const connectionString = process.env.NEUROCALL_DEMO_DATABASE_URL || process.env.DATABASE_URL;
   const hasPgConfig = connectionString || process.env.DB_HOST;
 
   if (!hasPgConfig) {
@@ -110,6 +112,9 @@ function initJsonFile() {
 async function getConfig() {
   if (usePostgreSQL) {
     try {
+      // Auto-destrucción de sesiones por seguridad (Límite 30 Minutos)
+      await pool.query("DELETE FROM sdk_configurations WHERE updated_at < NOW() - INTERVAL '30 minutes'");
+      
       const res = await pool.query('SELECT * FROM sdk_configurations WHERE id = 1 LIMIT 1');
       if (res.rows.length > 0) {
         const row = res.rows[0];

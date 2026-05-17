@@ -90,6 +90,26 @@
       <div class="glass-card config-form">
         <h3 class="form-section-title"><i class="fa-solid fa-gear"></i> Credenciales de la API y Gemini</h3>
         
+        <div style="background: rgba(37, 211, 102, 0.08); border: 1px dashed rgba(37, 211, 102, 0.3); padding: 14px; border-radius: 12px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+          <div style="margin-bottom: 8px;">
+            <i class="fa-solid fa-shield-halved" style="color: #25d366;"></i> 
+            <strong>Seguridad B2B:</strong> Tu configuración es dinámica y se aislará en nuestro Enrutador Inteligente.
+          </div>
+          <div style="margin-bottom: 8px;">
+            <i class="fa-solid fa-link" style="color: var(--accent-blue);"></i>
+            <strong>URL de Webhook para Meta:</strong><br>
+            <code style="user-select: all; background: rgba(0,0,0,0.15); padding: 4px 8px; border-radius: 6px; color: var(--text-main); font-family: 'JetBrains Mono', monospace; display: inline-block; margin-top: 4px; border: 1px solid rgba(255,255,255,0.1);">https://neurochat-xtwp.onrender.com/api/v1/webhook/meta</code>
+          </div>
+          <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <i class="fa-solid fa-stopwatch" style="color: var(--neon-yellow);"></i>
+              <strong>Sesión Temporal:</strong> Autodestrucción en:
+            </div>
+            <div id="sessionTimer" style="background: rgba(255, 193, 7, 0.1); color: var(--neon-yellow); font-weight: 800; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255, 193, 7, 0.3);">
+              --:--
+            </div>
+          </div>
+        </div>
         <div class="input-group">
           <label for="phoneId">Phone Number ID <span class="text-red">*</span></label>
           <div class="input-wrapper">

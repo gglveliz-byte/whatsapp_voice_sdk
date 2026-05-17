@@ -19,13 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const ledMeta = document.getElementById('ledMeta');
   const ledWebRTC = document.getElementById('ledWebRTC');
   const ledGemini = document.getElementById('ledGemini');
-  // URL dinámica del backend: Soporta local (localhost:3006) y producción (Render/VPS) de forma automática
-  const socketUrl = window.location.origin.startsWith('http') ? window.location.origin : 'http://localhost:3006';
+  // URL dinámica del backend: Soporta local (localhost:3001) y producción (Render backend) de forma automática
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  // Si está integrado en el SaaS principal usa puerto 3001, sino (standalone) usa puerto 3006
+  const socketUrl = isLocal 
+    ? (window.location.port === '3000' || window.location.port === '3001' ? 'http://localhost:3001' : 'http://localhost:3006')
+    : 'https://neurochat-xtwp.onrender.com';
   appendLog('SYSTEM', `Conectando con el Servidor de Voz en ${socketUrl}...`);
 
   const socket = io(socketUrl, {
     reconnectionAttempts: 5,
-    timeout: 5000
+    timeout: 5000,
+    transports: ['websocket', 'polling']
   });
 
   // Conexión Exitosa con el Servidor
@@ -154,12 +159,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Temporizador de Sesión Segura (30 Minutos)
+  let sessionInterval;
+  function startSessionTimer() {
+    const timerDisplay = document.getElementById('sessionTimer');
+    if (!timerDisplay) return;
+    
+    clearInterval(sessionInterval);
+    let secondsLeft = 30 * 60; // 30 minutos
+    
+    function updateDisplay() {
+      const minutes = Math.floor(secondsLeft / 60);
+      const seconds = secondsLeft % 60;
+      timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      if (secondsLeft <= 0) {
+        clearInterval(sessionInterval);
+        timerDisplay.textContent = "00:00";
+        appendLog('WARNING', '⚠️ Sesión expirada. Por seguridad las credenciales se han destruido en el servidor.');
+      }
+      secondsLeft--;
+    }
+    
+    updateDisplay();
+    sessionInterval = setInterval(updateDisplay, 1000);
+  }
+
   // Escucha de respuesta de confirmación de base de datos
   socket.on('config-updated', (res) => {
     if (res.success) {
-      appendLog('CONFIG', '🟢 Credenciales guardadas y persistidas con éxito en la Base de Datos.');
+      appendLog('CONFIG', '🟢 Credenciales guardadas con éxito (Aisladas en Enrutador B2B).');
       setLedState(ledMeta, 'green');
-      alert('¡Credenciales guardadas y sincronizadas con éxito!');
+      startSessionTimer(); // Inicia la cuenta regresiva visible
+      alert('¡Credenciales seguras guardadas! La sesión durará 30 minutos.');
     } else {
       appendLog('ERROR', '🔴 Error al intentar guardar la configuración en la base de datos.');
       alert('Hubo un error al guardar la configuración en el servidor.');
@@ -262,8 +294,12 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       title: "5. Configurar URL de Devolución",
       content: `Edita tu Webhook de WhatsApp y completa las casillas con tus datos del servidor en caliente:<br>
-      • <b>URL de devolución de llamada</b>: <code>${socketUrl}/webhook</code><br>
-      • <b>Token de verificación</b>: El token de tu Base de Datos (ej. <code>whatsapp_voice_sdk_verify_token</code>)<br><img src="guia/image copy 5.png" class="carousel-step-img" alt="Enlazar Webhook">`
+      • <b>URL de devolución de llamada</b>: <code>${socketUrl}/api/v1/webhook/meta</code><br>
+      • <b>Token de verificación</b>: El token inventado que pusiste en el Dashboard.<br>
+      <div style="margin-top: 8px; font-size: 0.85rem; color: #d97706; background: rgba(217, 119, 6, 0.1); padding: 8px; border-radius: 6px;">
+        <i class="fa-solid fa-stopwatch"></i> <strong>Nota:</strong> Al guardar en el Dashboard, tienes <b>30 minutos exactos</b> para probar. Luego la sesión se destruye.
+      </div>
+      <img src="guia/image copy 5.png" class="carousel-step-img" alt="Enlazar Webhook">`
     },
     {
       title: "6. Suscribirse a Campos de Webhook (Voz, Chats y Ecos)",
