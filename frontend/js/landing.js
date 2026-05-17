@@ -63,4 +63,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   buildItems.forEach(item => io.observe(item));
 
+  /* =====================================================
+     4. INTERCAMBIO DINÁMICO DE IMÁGENES (IMPACTO)
+  ===================================================== */
+  const dynamicImg = document.getElementById('dynamicStatsImg');
+  if (dynamicImg) {
+    const images = ['assets/b2b_brain.png', 'assets/b2b_hero.png'];
+    let currentIndex = 0;
+    
+    // Preparar la imagen para transición suave
+    dynamicImg.style.transition = 'opacity 0.8s ease';
+    
+    setInterval(() => {
+      dynamicImg.style.opacity = '0'; // Se desvanece
+      
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        dynamicImg.src = images[currentIndex];
+        dynamicImg.style.opacity = '1'; // Aparece la nueva
+      }, 800);
+      
+    }, 4000); // Rota cada 4 segundos
+  }
+
 });
