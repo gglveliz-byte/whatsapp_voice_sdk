@@ -1,0 +1,630 @@
+/* =========================================================================
+   🎨 NEUROVOICE DEV-KIT — SISTEMA DE ESTILOS PREMIUM (AESTHETICS)
+   ========================================================================= */
+
+/* 1. CONFIGURACIÓN BASE Y VARIABLES DE COLOR */
+:root {
+  --bg-dark: #07080b;
+  --bg-card: rgba(13, 16, 23, 0.7);
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --neon-green: #00ff66;
+  --neon-violet: #8b5cf6;
+  --neon-red: #ef4444;
+  --neon-yellow: #eab308;
+  --border-glass: rgba(255, 255, 255, 0.07);
+  --font-outfit: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-outfit);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* 2. REJILLA CIBERNÉTICA DE FONDO (Cyber-Grid) */
+.cyber-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.cyber-grid::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  z-index: -1;
+  filter: blur(50px);
+}
+
+.cyber-grid::after {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  right: 15%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 255, 102, 0.04) 0%, transparent 70%);
+  z-index: -1;
+  filter: blur(50px);
+}
+
+/* 3. CONTENEDOR Y MAQUETACIÓN GENERAL */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* 4. HERO SECTION DESIGN */
+.hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.badge {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid var(--neon-violet);
+  color: var(--text-main);
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  max-width: 900px;
+  color: #fff;
+}
+
+.hero h1 span {
+  background: linear-gradient(135deg, var(--neon-green) 0%, var(--neon-violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero .subtitle {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  max-width: 750px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+/* 5. DISEÑO DE BOTONES PREMIUM */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-family: var(--font-outfit);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--neon-green) 0%, #00d152 100%);
+  color: #000;
+  box-shadow: 0 4px 20px rgba(0, 255, 102, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 255, 102, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-main);
+  border: 1px solid var(--border-glass);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-cta {
+  background: linear-gradient(135deg, var(--neon-violet) 0%, #6366f1 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.25);
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.45);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* 6. GLASSMORPHISM CARDS */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-violet), var(--neon-green), transparent);
+}
+
+/* 7. TARJETA DE PRECIO Y VALOR COMERCIAL */
+.pricing-card {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pricing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pricing-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pricing-header p {
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.price-box .currency {
+  font-size: 0.8rem;
+  color: var(--neon-green);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.price-box .amount {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+}
+
+.price-box .period {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-glass);
+}
+
+.features-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.features-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-main);
+}
+
+.features-list li i {
+  font-size: 1.1rem;
+}
+
+.text-green {
+  color: var(--neon-green);
+}
+
+.text-violet {
+  color: var(--neon-violet);
+}
+
+/* 8. SECCIÓN SANDBOX Y FORMULARIO */
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title h2 {
+  font-size: 2.2rem;
+  color: #fff;
+}
+
+.section-title p {
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 8px auto 0;
+}
+
+.sandbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .sandbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.config-form h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-help {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-outfit);
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--neon-violet);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.25);
+}
+
+/* 9. TERMINAL CONSOLA Y PANEL DE ESTADO */
+.terminal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.status-panel {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  background: rgba(10, 12, 17, 0.8);
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Luces LED con animaciones */
+.led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+}
+
+.led-red {
+  background-color: var(--neon-red);
+  box-shadow: 0 0 8px var(--neon-red);
+}
+
+.led-green {
+  background-color: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green);
+  animation: pulse-green 1.5s infinite;
+}
+
+.led-yellow {
+  background-color: var(--neon-yellow);
+  box-shadow: 0 0 8px var(--neon-yellow);
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(1); box-shadow: 0 0 8px var(--neon-green); }
+  50% { transform: scale(1.1); box-shadow: 0 0 16px var(--neon-green); }
+  100% { transform: scale(1); box-shadow: 0 0 8px var(--neon-green); }
+}
+
+/* Consola Interactiva */
+.terminal {
+  background: #050608;
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  flex-grow: 1;
+  min-height: 350px;
+}
+
+.terminal-header {
+  background: #0d0f14;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.t-btn {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.t-btn.red { background-color: #ff5f56; }
+.t-btn.yellow { background-color: #ffbd2e; }
+.t-btn.green { background-color: #27c93f; }
+
+.terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.btn-simulate {
+  padding: 6px 12px;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid var(--neon-violet);
+  color: var(--text-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-simulate:hover {
+  background: var(--neon-violet);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+}
+
+.terminal-body {
+  padding: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  overflow-y: auto;
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.log-line {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+}
+
+.t-time {
+  color: var(--text-muted);
+}
+
+.t-tag {
+  font-weight: 700;
+}
+
+/* Modificadores de Logs de Consola */
+.log-line.system .t-tag { color: var(--neon-green); }
+.log-line.meta .t-tag { color: #3b82f6; }
+.log-line.webrtc .t-tag { color: #f59e0b; }
+.log-line.gemini .t-tag { color: var(--neon-violet); }
+.log-line.whatsapp .t-tag { color: #10b981; }
+.log-line.error .t-tag { color: var(--neon-red); }
+.log-line.config .t-tag { color: #ec4899; }
+
+/* 10. STEPPER DE LA GUÍA DE CONFIGURACIÓN */
+.guide-section {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.guide-section h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.guide-section > p {
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.step-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.step-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.step-number {
+  position: absolute;
+  top: -16px;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  background: var(--neon-violet);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(139, 92, 246, 0.5);
+}
+
+.step-card h4 {
+  font-size: 1.15rem;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.step-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.step-card a {
+  color: var(--neon-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.step-card a:hover {
+  text-decoration: underline;
+}
+
+/* 11. FOOTER AND COPYRIGHT */
+footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border-glass);
+  padding-top: 40px;
+  margin-top: 40px;
+}
+
+footer p {
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+footer .copyright {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
