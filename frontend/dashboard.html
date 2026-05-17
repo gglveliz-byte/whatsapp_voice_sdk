@@ -195,27 +195,41 @@
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
   <script src="app.js"></script>
 
-  <!-- GENERADOR DE PARTÍCULAS DINÁMICAS (Efecto Antigravity) -->
+  <!-- GENERADOR DE PARTÍCULAS DINÁMICAS (Efecto Antigravity 3D Bokeh) -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('gravityParticles');
       if (container) {
-        const colors = ['blue', 'purple'];
-        for (let i = 0; i < 35; i++) {
+        // Generamos un mix de 30 orbs grandes desenfocados y puntos pequeños nítidos (Efecto de Profundidad 3D)
+        for (let i = 0; i < 30; i++) {
           const particle = document.createElement('div');
           const isBlue = Math.random() > 0.5;
           particle.className = `particle ${isBlue ? 'particle-blue' : 'particle-purple'}`;
           
           const left = Math.random() * 100;
           const top = Math.random() * 100;
-          const size = Math.random() * 6 + 3;
-          const duration = Math.random() * 15 + 15;
-          const delay = Math.random() * -20;
+          
+          let size, duration, blur;
+          
+          if (i % 3 === 0) {
+            // Orbes gigantes con desenfoque de fondo profundo (Bokeh de fondo)
+            size = Math.random() * 70 + 40; // 40px a 110px
+            duration = Math.random() * 30 + 40; // Movimiento majestuoso ultra-lento (40s a 70s)
+            blur = 'blur(8px)';
+          } else {
+            // Puntos pequeños más nítidos flotando a velocidad media (Frente)
+            size = Math.random() * 10 + 6; // 6px a 16px
+            duration = Math.random() * 15 + 20; // 20s a 35s
+            blur = 'blur(1px)';
+          }
+          
+          const delay = Math.random() * -50; // Para que comiencen distribuidos en toda la pantalla
           
           particle.style.left = `${left}vw`;
           particle.style.top = `${top}vh`;
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
+          particle.style.filter = blur;
           particle.style.setProperty('--duration', `${duration}s`);
           particle.style.animationDelay = `${delay}s`;
           

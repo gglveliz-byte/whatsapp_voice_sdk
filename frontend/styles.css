@@ -69,28 +69,38 @@ body {
 .particle {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.15;
-  filter: blur(1px);
-  animation: float-gravity var(--duration, 20s) ease-in-out infinite alternate;
+  pointer-events: none;
+  mix-blend-mode: multiply; /* Mezcla de color ultra-suave sobre el fondo blanco */
+  filter: blur(2px); /* Difuminado de lente premium */
+  animation: float-gravity var(--duration, 40s) linear infinite;
 }
 
 .particle-blue {
-  background: var(--accent-blue);
+  background: radial-gradient(circle, rgba(26, 115, 232, 0.28) 0%, rgba(26, 115, 232, 0.05) 50%, rgba(26, 115, 232, 0) 70%);
 }
 
 .particle-purple {
-  background: var(--accent-purple);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.28) 0%, rgba(139, 92, 246, 0.05) 50%, rgba(139, 92, 246, 0) 70%);
 }
 
 @keyframes float-gravity {
   0% {
-    transform: translateY(0) translateX(0) scale(1);
+    transform: translateY(105vh) translateX(0) scale(0.6);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1; /* Transición de desvanecimiento suave al entrar */
   }
   50% {
-    transform: translateY(-80px) translateX(30px) scale(1.1);
+    transform: translateY(50vh) translateX(50px) scale(1.1);
+    opacity: 1;
+  }
+  85% {
+    opacity: 1; /* Se mantiene visible pero empieza a apagarse al salir */
   }
   100% {
-    transform: translateY(-160px) translateX(-10px) scale(0.9);
+    transform: translateY(-10vh) translateX(-20px) scale(0.7);
+    opacity: 0; /* Desvanecido total sin saltos ni cortes abruptos */
   }
 }
 
