@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/landing.css?v=3">
 </head>
 <body>
 
@@ -81,8 +81,8 @@
             <!-- Texto 3: Subtítulo -->
             <div class="float-text ft-subtitle" data-phase="3">
               No más clientes perdidos por líneas ocupadas.<br>
-              Nuestro agente de Inteligencia Artificial atiende llamadas reales, resuelve dudas<br>
-              y agenda servicios con una naturalidad que sorprende a cualquiera.
+              Nuestro agente de Inteligencia Artificial atiende llamadas reales y brinda soporte informático preciso.<br>
+              Proporciona información exacta sobre tu negocio sin realizar acciones no autorizadas.
             </div>
 
             <!-- Texto 4: Métricas elegantes en vez de pills -->
@@ -198,6 +198,28 @@
       </div>
     </section>
 
+    <!-- PREGUNTAS FRECUENTES -->
+    <section id="faq" class="container features-section build-section" style="padding-top: 20px;">
+      <h2 class="section-title build-item">PREGUNTAS FRECUENTES</h2>
+      <div class="features-grid">
+        <div class="feat-card hover-float build-item" style="background: #111;">
+          <i class="fa-solid fa-circle-question"></i>
+          <h3>¿Puede el bot agendar citas o hacer ventas?</h3>
+          <p>No. NeuroCall es un agente estrictamente informativo y de soporte. Está diseñado para responder preguntas sobre tu negocio con precisión basándose en tus documentos, sin inventar información ni realizar acciones no autorizadas.</p>
+        </div>
+        <div class="feat-card hover-float build-item" style="background: #111;">
+          <i class="fa-solid fa-circle-question"></i>
+          <h3>¿Qué necesito para empezar?</h3>
+          <p>Solo necesitas compartirnos un PDF, documento Word o enlace web con la información de tu negocio (horarios, servicios, respuestas comunes). El bot aprenderá automáticamente de esta fuente.</p>
+        </div>
+        <div class="feat-card hover-float build-item" style="background: #111;">
+          <i class="fa-solid fa-circle-question"></i>
+          <h3>¿Funcionará con mi número actual?</h3>
+          <p>Sí, NeuroCall se enlaza directamente a tu línea de WhatsApp Business actual para atender a tus clientes sin que tengan que agregar un número nuevo.</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- MEGA FOOTER -->
@@ -222,11 +244,18 @@
       </div>
 
       <div class="footer-col">
-        <h4>Legal & Tech</h4>
+        <h4>Legal (Clientes)</h4>
         <ul>
-          <li><a href="#" id="linkTerms">Términos de Servicio Corporativo</a></li>
-          <li><a href="#" id="linkPrivacy">Políticas de Confidencialidad</a></li>
-          <li><a href="desarrolladores.html" style="color: var(--accent-gold);">Portal de Desarrolladores API</a></li>
+          <li><a href="#" id="linkTerms">Términos de Servicio (Clientes)</a></li>
+          <li><a href="#" id="linkPrivacy">Política de Privacidad (Clientes)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Desarrolladores</h4>
+        <ul>
+          <li><a href="desarrolladores.html" style="color: var(--accent-gold);"><i class="fa-solid fa-code"></i> Portal SDK y API</a></li>
+          <li><a href="https://github.com/gglveliz-byte" target="_blank">Repositorio Open Source</a></li>
         </ul>
       </div>
 
@@ -251,7 +280,7 @@
   <div id="termsModal" class="legal-modal">
     <div class="legal-modal-content">
       <span class="legal-modal-close" id="closeTerms">&times;</span>
-      <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 10px;"><i class="fa-solid fa-file-contract"></i> Términos de Servicio</h3>
+      <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 10px;"><i class="fa-solid fa-file-contract"></i> Términos para Clientes Directos</h3>
       <div class="legal-modal-body">
         <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
         <p>Al contratar los servicios de automatización de NeuroCall (producto de NEURO IA S.A.S), acepta las siguientes condiciones:</p>
