@@ -1046,3 +1046,35 @@ footer .copyright {
   color: var(--accent-blue);
   transform: scale(1.15);
 }
+
+/* 🚀 MICRO-INTERACCIONES DEL PIE DE PÁGINA Y INFO GRID */
+.footer-socials a {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.2s ease, border 0.2s ease !important;
+}
+
+.footer-socials a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+}
+
+.footer-link:hover {
+  color: var(--accent-blue) !important;
+  text-decoration: underline !important;
+}
+
+.btn-whatsapp {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease !important;
+}
+
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #128c7e 0%, #075e54 100%) !important;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35) !important;
+}
+
+@media (max-width: 900px) {
+  .info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}

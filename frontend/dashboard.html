@@ -210,10 +210,143 @@
       </div>
     </section>
 
+    <!-- SECCIÓN DE REQUISITOS, SEGURIDAD Y CONTACTO COMERCIAL -->
+    <section class="info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 30px; margin-bottom: 30px;">
+      
+      <!-- Tarjeta 1: Requisitos previos de Meta -->
+      <div class="glass-card" style="display: flex; flex-direction: column; gap: 10px;">
+        <h3 class="form-section-title" style="font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+          <i class="fa-solid fa-list-check" style="color: var(--accent-purple);"></i>
+          Requisitos de Meta para Producción
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">
+          Para implementar este asistente de llamadas de voz por Inteligencia Artificial en entornos de producción, Meta exige que se cumplan las siguientes condiciones obligatorias:
+        </p>
+        
+        <ul class="requirements-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px;">
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              <strong style="color: var(--text-main);">WhatsApp Cloud API:</strong> El número de teléfono debe estar registrado exclusivamente bajo la API de la nube corporativa (no en la app móvil tradicional de WhatsApp Business).
+            </div>
+          </li>
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-triangle-exclamation" style="color: var(--neon-yellow); margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              <strong style="color: var(--text-main);">Migración Obligatoria:</strong> Los números vinculados a WhatsApp en la nube deben ser exclusivos. Se recomienda usar un número nuevo o eliminar cuentas anteriores antes de migrar a la nube.
+              <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/solution-providers/migrate-existing-whatsapp-number-to-a-business-account" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; color: var(--accent-blue); font-weight: 700; margin-top: 4px; text-decoration: none; transition: 0.2s;">
+                Ver Guía de Migración Oficial <i class="fa-solid fa-up-right-from-square" style="font-size: 0.75rem;"></i>
+              </a>
+            </div>
+          </li>
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              <strong style="color: var(--text-main);">Suscripción del Webhook:</strong> Suscribir obligatoriamente la aplicación de desarrollador de Meta al campo de evento de llamadas corporativas (<code>calls</code>).
+            </div>
+          </li>
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              <strong style="color: var(--text-main);">Vinculación de Cuentas:</strong> La misma app de Meta debe estar vinculada directamente a la cuenta de WhatsApp Business (WABA) de tu número corporativo.
+            </div>
+          </li>
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              <strong style="color: var(--text-main);">Permiso de Mensajería:</strong> Disponer de permisos de mensajería empresarial activos (<code>whatsapp_business_messaging</code>).
+            </div>
+          </li>
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              <strong style="color: var(--text-main);">Activación de Voz:</strong> Tener habilitadas las funciones de llamadas de entrada en el panel de configuración de voz del número de negocio de Meta.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Tarjeta 2: Garantía, Documentación y Contacto Directo -->
+      <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between; gap: 20px;">
+        <div>
+          <h3 class="form-section-title" style="font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <i class="fa-solid fa-shield-halved" style="color: var(--accent-blue);"></i>
+            Integración Oficial y Sin Riesgos
+          </h3>
+          
+          <div class="info-badge-success" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #1e7e34; background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2); padding: 8px 14px; border-radius: 999px; width: fit-content; margin-bottom: 18px;">
+            <i class="fa-solid fa-shield-check"></i>
+            <span>Uso oficial de Meta APIs (0% Riesgo de Baneo o Bloqueos)</span>
+          </div>
+
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Este sistema se conecta de forma directa a los servidores de Meta mediante las APIs en la nube de WhatsApp y WebRTC corporativas. Al usar canales oficiales y documentados, <strong>no existe ningún riesgo de penalización o suspensión de número</strong> para tu negocio, garantizando máxima estabilidad corporativa.
+          </p>
+
+          <div class="divider" style="margin-bottom: 20px;"></div>
+
+          <h4 style="font-size: 0.92rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-book" style="color: var(--accent-blue);"></i>
+            Documentación de Voz de Meta
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;">
+            Acceda a la guía oficial de desarrolladores de Meta para revisar a fondo el protocolo de integración de voz y WebRTC en la nube:
+          </p>
+          <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/calling" target="_blank" class="btn btn-secondary btn-xs" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; text-decoration: none; border-radius: 999px; font-weight: 700; width: fit-content; font-size: 0.78rem;">
+            <i class="fa-solid fa-up-right-from-square"></i> Documentación de Voz de Meta
+          </a>
+        </div>
+
+        <div class="contact-cta-box" style="padding: 20px; background: rgba(37, 211, 102, 0.04); border: 1px dashed rgba(37, 211, 102, 0.3); border-radius: 18px; display: flex; flex-direction: column; gap: 8px; margin-top: auto;">
+          <h4 style="font-size: 0.95rem; font-weight: 800; color: #25d366; margin: 0; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-comments"></i>
+            ¿Deseas una Demostración Comercial?
+          </h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin: 0 0 12px 0;">
+            Si deseas una demostración interactiva en tiempo real o negociar la integración en caliente en tus servidores, ponte en contacto directo por WhatsApp con nuestro equipo.
+          </p>
+          <a href="https://wa.me/593987865420" target="_blank" class="btn btn-whatsapp" style="display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: 700; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 999px; border: none; font-size: 0.88rem; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.2); transition: 0.3s ease; cursor: pointer;">
+            <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Contactar por WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </section>
+
     <!-- FOOTER -->
-    <footer>
-      <p>Hecho con pasión e ingeniería de voz de primer nivel por <b>Luis Damian Veliz</b>, Socio Fundador Mayoritario y Director de Tecnología (CTO) de <b>NEURO IA S.A.S</b> 🚀</p>
-      <p class="copyright">&copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.</p>
+    <footer style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; border-top: 1px solid var(--border-glass); padding: 40px 0; margin-top: 40px;">
+      
+      <!-- Enlaces de Términos y Políticas -->
+      <div class="footer-links" style="display: flex; gap: 18px; justify-content: center; align-items: center; font-size: 0.85rem;">
+        <a href="#" class="footer-link" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Términos y Condiciones</a>
+        <span style="color: rgba(0, 0, 0, 0.15);">•</span>
+        <a href="#" class="footer-link" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Políticas de Privacidad</a>
+      </div>
+
+      <!-- Botones de Redes Sociales Corporativas -->
+      <div class="footer-socials" style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <a href="https://www.facebook.com/neuroia" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #1877f2; background: rgba(24, 119, 242, 0.08); border: 1px solid rgba(24, 119, 242, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-facebook" style="font-size: 0.95rem;"></i> Facebook
+        </a>
+        <a href="https://www.tiktok.com/@neuro_ai_sas?_r=1&_t=ZS-96QV1HULxLs" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #000000; background: rgba(0, 0, 0, 0.06); border: 1px solid rgba(0, 0, 0, 0.1); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-tiktok" style="font-size: 0.95rem;"></i> TikTok
+        </a>
+        <a href="https://wa.me/593987865420" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #25d366; background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-whatsapp" style="font-size: 0.95rem;"></i> WhatsApp
+        </a>
+      </div>
+
+      <div style="max-width: 600px; line-height: 1.6;">
+        <p style="font-size: 0.92rem; color: var(--text-main); font-weight: 600; margin: 0 0 4px 0;">
+          Hecho con pasión e ingeniería de voz de primer nivel por <b>Luis Damian Veliz</b> 🚀
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin: 0 0 10px 0;">
+          Socio Fundador Mayoritario y Director de Tecnología (CTO) de <b style="color: var(--text-main);">NEURO IA S.A.S</b>
+        </p>
+        <p class="copyright" style="font-size: 0.78rem; color: var(--text-muted); margin: 0;">
+          &copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.
+        </p>
+      </div>
     </footer>
 
   </main>
