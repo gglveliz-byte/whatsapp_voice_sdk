@@ -92,12 +92,12 @@
     }
     .float-phone {
       position: absolute; right: 8%; top: 50%;
-      transform: translateY(-50%) perspective(1000px) rotateY(15deg) translateX(50px);
+      transform: translateY(-50%) perspective(1000px) rotateY(15deg) translateX(50px) scale(0.85);
       opacity: 0; z-index: 10; pointer-events: none;
       transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1);
     }
     .float-phone.visible {
-      opacity: 1; transform: translateY(-50%) perspective(1000px) rotateY(-5deg) translateX(0);
+      opacity: 1; transform: translateY(-50%) perspective(1000px) rotateY(-5deg) translateX(0) scale(0.85);
       pointer-events: auto;
     }
     .phone-notch { position: absolute; top: 15px; width: 100px; height: 25px; background: #000; border-radius: 20px; }
@@ -173,18 +173,17 @@
        CINEMATICA — SCROLL-DRIVEN VIDEO REVEAL
     ============================================================ */
 
-    /* El wrapper ocupa 350vh para dar recorrido al scroll */
+    /* El wrapper ya es de altura normal */
     .cinematic-wrapper {
       position: relative;
-      height: 350vh;
-      /* Sin overflow: queremos que el sticky funcione */
+      height: 100vh;
     }
 
-    /* El "rail" es el contenedor sticky */
+    /* El "rail" ya no necesita ser sticky */
     .cinematic-rail {
-      position: sticky;
-      top: 0;
-      height: 100vh;
+      position: relative;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       background: #000;
     }
@@ -205,15 +204,19 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      /* Comienza como una línea ultrafina */
       width: 80px;
       height: 2px;
-      border-radius: 2px;
+      border-radius: 20px;
       overflow: hidden;
       background: #fff;
-      transition: width 0.05s linear, height 0.05s linear, border-radius 0.3s ease;
+      transition: width 0.7s cubic-bezier(0.25, 1, 0.5, 1), 
+                  height 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                  border-radius 0.3s ease;
       will-change: width, height;
     }
+
+    .film-line.expand-width { width: 100vw; }
+    .film-line.expand-height { height: 100vh; border-radius: 0; }
 
     .film-line video {
       position: absolute;
@@ -678,98 +681,40 @@
 
 
     /* =====================================================
-       2. MOTOR CINEMATOGRÁFICO — SCROLL-DRIVEN
-       Basado en la posición de scroll dentro del wrapper
+       2. MOTOR CINEMATOGRÁFICO — AUTOMÁTICO (TIME-DRIVEN)
     ===================================================== */
-    const wrapper   = document.getElementById('cinematicSection');
     const filmLine  = document.getElementById('filmLine');
-    const textLayer = document.getElementById('textLayer');
     const video     = document.getElementById('heroVideo');
     const texts     = document.querySelectorAll('.float-text');
+    const phoneEl   = document.getElementById('cinematicPhone');
 
-    if (!wrapper || !filmLine || !video) return;
+    if (filmLine && video) {
+      // 1. Expandir a lo ancho (0.3s)
+      setTimeout(() => {
+        filmLine.classList.add('expand-width');
+      }, 300);
 
-    // Fases de scroll (en % del recorrido total del wrapper 0→1)
-    // 0.00 - 0.15 : Línea crece en ancho (de 80px a 100vw)
-    // 0.15 - 0.30 : Línea crece en alto (de 2px a 100vh) → video aparece
-    // 0.30 - 0.45 : Aparece Texto 1 (BIENVENIDO)
-    // 0.45 - 0.55 : Aparece Texto 2 (NeuroCall)
-    // 0.55 - 0.65 : Aparece Texto 3 (Subtítulo)
-    // 0.65 - 0.75 : Aparece Texto 4 (Tags)
-    // 0.75 - 0.88 : Aparece Texto 5 (CTA)
-    // 0.88 - 1.00 : Todo fade-out → vuelve el Beige
-
-    const TEXT_PHASES = [
-      { el: texts[0], show: 0.30, hide: 0.88 },
-      { el: texts[1], show: 0.40, hide: 0.88 },
-      { el: texts[2], show: 0.50, hide: 0.88 },
-      { el: texts[3], show: 0.60, hide: 0.88 },
-      { el: texts[4], show: 0.70, hide: 0.88 },
-    ];
-    
-    // Agregamos el teléfono animado al ciclo de scroll
-    const phoneEl = document.getElementById('cinematicPhone');
-    if (phoneEl) {
-      TEXT_PHASES.push({ el: phoneEl, show: 0.45, hide: 0.88 });
-    }
-
-    let videoPlaying = false;
-
-    function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
-    function norm(val, min, max) { return (val - min) / (max - min); }
-
-    function onScroll() {
-      const rect    = wrapper.getBoundingClientRect();
-      const total   = wrapper.offsetHeight - window.innerHeight;
-      const scrolled = -rect.top;                // px desde el inicio del wrapper
-      const progress = Math.max(0, Math.min(1, scrolled / total)); // 0→1
-
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-
-      /* ── FASE 1: Crecer en ANCHO (0 → 0.15) ── */
-      const widthT = norm(progress, 0, 0.15);
-      const newW   = lerp(80, vw, widthT);
-
-      /* ── FASE 2: Crecer en ALTO (0.15 → 0.30) ── */
-      const heightT = norm(progress, 0.15, 0.30);
-      const newH    = lerp(2, vh, heightT);
-
-      /* Aplica dimensiones */
-      filmLine.style.width  = newW + 'px';
-      filmLine.style.height = newH + 'px';
-
-      /* Border-radius: empieza redondeado, se vuelve recto al abrirse */
-      const radius = lerp(20, 0, norm(progress, 0.10, 0.25));
-      filmLine.style.borderRadius = radius + 'px';
-
-      /* Video: aparece cuando el rollo está casi abierto */
-      if (progress > 0.22) {
+      // 2. Expandir a lo alto y reproducir video (1.0s)
+      setTimeout(() => {
+        filmLine.classList.add('expand-height');
         filmLine.classList.add('video-visible');
-        if (!videoPlaying) { video.play().catch(()=>{}); videoPlaying = true; }
-      } else {
-        filmLine.classList.remove('video-visible');
-        video.pause(); videoPlaying = false;
-      }
+        video.play().catch(()=>{});
+      }, 1000);
 
-      /* ── TEXTOS FLOTANTES: cada uno tiene su ventana de scroll ── */
-      TEXT_PHASES.forEach(({ el, show, hide }) => {
-        if (!el) return;
-        if (progress >= show && progress < hide) {
-          el.classList.add('visible');
-        } else {
-          el.classList.remove('visible');
+      // 3. Textos y teléfono entrando secuencialmente (1.6s)
+      setTimeout(() => {
+        let delay = 0;
+        texts.forEach(txt => {
+          setTimeout(() => txt.classList.add('visible'), delay);
+          delay += 200; // cascada de 0.2s entre textos
+        });
+        
+        // El teléfono entra justo a la mitad de la presentación de textos
+        if (phoneEl) {
+          setTimeout(() => phoneEl.classList.add('visible'), 500);
         }
-      });
-
-      /* ── FADE-OUT GLOBAL al final (0.88 → 1.0) ── */
-      const fadeT = norm(progress, 0.88, 1.0);
-      const stageOpacity = lerp(1, 0, fadeT);
-      document.getElementById('cinematicStage').style.opacity = stageOpacity;
+      }, 1600);
     }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // inicializa en el estado correcto
 
     /* =====================================================
        3. BUILD-ON-SCROLL: Intersection Observer para secciones post-video
