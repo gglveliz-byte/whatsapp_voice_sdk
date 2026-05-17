@@ -3,223 +3,762 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WhatsApp Voice SDK — Experience liftoff with Gemini Live</title>
-  <!-- Google Fonts Outfit & JetBrains Mono -->
+  <title>NEURO IA - Agente de Voz para WhatsApp</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <!-- FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    :root {
+      --bg-color: #EAE9E4; /* Beige elegante */
+      --text-dark: #121212;
+      --text-muted: #555555;
+      --accent-black: #000000;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --font-main: 'Outfit', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-dark);
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* --- NAV --- */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 40px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: -1px;
+    }
+
+    .btn-black {
+      background: var(--accent-black);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-black:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* --- HERO --- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 60px;
+      padding: 80px 0 100px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .hero-content h4 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3.5rem, 6vw, 6.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+
+    .hero-content h1 i {
+      font-style: normal;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    .hero-metrics {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+      text-align: right;
+    }
+
+    .metric-item h2 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .metric-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    /* --- SECTION TITLES --- */
+    .section-title {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    /* --- FEATURES (ALGORITMOS) --- */
+    .features-section {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .feat-card {
+      background: #111;
+      color: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .feat-card i {
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    .feat-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .feat-card p {
+      font-size: 0.95rem;
+      color: #A0A0A0;
+      line-height: 1.6;
+    }
+
+    .feat-badge {
+      background: #fff;
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      align-self: flex-start;
+      margin-top: 20px;
+    }
+
+    /* --- STATS GRID --- */
+    .stats-section {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .stats-numbers {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .stats-content h2 {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      max-width: 500px;
+    }
+
+    .stats-content p {
+      margin-top: 20px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 400px;
+    }
+
+    /* --- DEMO VIDEO --- */
+    .demo-section {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+
+    .demo-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step h4 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .video-container {
+      background: #111;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #555;
+      position: relative;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .video-placeholder i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    /* --- FAQ --- */
+    .faq-section {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 60px;
+    }
+
+    details {
+      border-bottom: 1px solid var(--border-color);
+      padding: 20px 0;
+    }
+
+    summary {
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      font-weight: 300;
+      transition: transform 0.3s;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    details p {
+      margin-top: 15px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      padding: 100px 0 0 0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    .watermark {
+      font-size: 18vw;
+      font-weight: 900;
+      color: rgba(0, 0, 0, 0.03);
+      line-height: 0.7;
+      letter-spacing: -5px;
+      user-select: none;
+      margin-bottom: -20px;
+      white-space: nowrap;
+    }
+
+    /* --- LEGAL MODALS --- */
+    .legal-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .legal-modal.active { opacity: 1; }
+    .legal-modal-content {
+      background: #EAE9E4;
+      color: #121212;
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .legal-modal-close {
+      position: absolute;
+      top: 20px; right: 25px;
+      font-size: 2.5rem;
+      cursor: pointer;
+      color: #121212;
+      font-weight: 900;
+    }
+    .legal-modal-body h4 { margin-top: 25px; margin-bottom: 10px; font-size: 1.1rem; font-weight: 800; }
+    .legal-modal-body p { margin-bottom: 15px; color: #444; font-size: 0.95rem; }
+
+    @media (max-width: 900px) {
+      .hero, .stats-grid, .demo-grid, .faq-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-metrics {
+        text-align: left;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .hero-content h1 {
+        font-size: 3.5rem;
+      }
+      .stats-content h2 {
+        font-size: 3rem;
+      }
+    }
+
+    /* ANIMACIONES B2B Y EFECTOS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatParallax {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 0 rgba(0,0,0,0.3); }
+      70% { box-shadow: 0 0 0 15px rgba(0,0,0,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+    }
+
+    .animate-up {
+      opacity: 0;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    .pulse { animation: pulseGlow 2s infinite; }
+    .hover-float { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+    .hover-float:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+    }
+
+    .hero-image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      animation: floatParallax 6s ease-in-out infinite;
+    }
+    .brain-image {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: floatParallax 8s ease-in-out infinite reverse;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Rejilla Cibernética de Fondo -->
-  <div class="cyber-grid"></div>
-
-  <!-- Partículas Flotantes de Gravedad (Estilo Antigravity) -->
-  <div class="gravity-particles" id="gravityParticles"></div>
-
-  <!-- MENÚ SUPERIOR MINIMALISTA -->
-  <nav class="navbar">
-    <a href="index.html" class="nav-logo">
-      <span>WhatsApp</span> Voice SDK
-    </a>
-    <ul class="nav-links">
-      <li><a href="#features">Product</a></li>
-      <li><a href="#guide">Use Cases</a></li>
-      <li><a href="#features">Pricing</a></li>
-      <li><a href="#guide">Resources</a></li>
-    </ul>
+  <nav class="animate-up">
+    <div class="logo">NEURO IA S.A.S</div>
     <div>
-      <a href="clientes.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.85rem; border-radius: 999px; margin-right: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass);">
-        <i class="fa-solid fa-briefcase"></i> Ventas B2B
-      </a>
-      <a href="dashboard.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.85rem; border-radius: 999px;">
-        <i class="fa-solid fa-gauge-high"></i> Consola
+      <a href="https://wa.me/593987865420" target="_blank" class="btn-black hover-float pulse">
+        Agendar Demo <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
   </nav>
 
-  <!-- Contenedor Principal -->
   <main class="container">
     
-    <!-- 1. HEADER HERO SECTION -->
-    <header class="hero">
-      <div class="badge">🚀 MOTOR DE VOZ IA CON SOBERANÍA TECNOLÓGICA</div>
-      <h1>Experience liftoff with the <span>WhatsApp Voice SDK</span></h1>
-      <p class="subtitle">
-        Ahorra meses de desarrollo de código WebRTC complejo, Opus RTP streams y decodificaciones. 
-        Te entregamos la única plantilla en Node.js ultra-documentada para conectar llamadas telefónicas de WhatsApp con Gemini Live en tiempo real.
-      </p>
-      <div class="hero-actions">
-        <a href="dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge-high"></i> Consola de Voz</a>
-        <a href="#features" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i> Explorar Características</a>
+    <!-- HERO -->
+    <section class="hero animate-up delay-1" style="grid-template-columns: 1fr 380px 200px;">
+      <div class="hero-content">
+        <h4>ATENCIÓN AL CLIENTE AUTOMATIZADA</h4>
+        <h1>IA EN LA VOZ,<br><i>NO EN CHATS</i></h1>
+        <p>Un agente inteligente que contesta las llamadas de WhatsApp de tu negocio 24/7, resuelve dudas y agenda citas con voz natural. Se entrena en minutos con tu información corporativa.</p>
+        <a href="https://wa.me/593987865420" target="_blank" class="btn-black pulse hover-float" style="padding: 18px 35px; font-size: 1.1rem; margin-top: 10px;">
+          <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Hablar con el Bot
+        </a>
       </div>
-    </header>
-
-    <!-- 2. CARDS DE VALOR Y PRECIO (FLOTANTE ELEGANTE) -->
-    <section class="pricing-card glass-card">
-      <div class="card-glow"></div>
-      <div class="pricing-header">
-        <div>
-          <h2>Adquiere la Licencia del Repositorio</h2>
-          <p>Llévate el código de producción completo y lanza agentes de voz en tu país hoy mismo.</p>
+      <div class="hero-image-container">
+        <img src="assets/b2b_hero.png" alt="AI Voice Agent" class="hero-image">
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-item">
+          <h2>24/7</h2>
+          <p>Disponibilidad</p>
         </div>
-        <div class="price-box">
-          <span class="amount" style="font-size: 1.6rem; color: var(--accent-blue); font-weight: 700; letter-spacing: -0.5px;">Contáctanos:</span>
+        <div class="metric-item">
+          <h2>0s</h2>
+          <p>Tiempo de Espera</p>
+        </div>
+        <div class="metric-item">
+          <h2>100%</h2>
+          <p>Llamadas Atendidas</p>
         </div>
       </div>
-      <div class="divider"></div>
-      <ul class="features-list">
-        <li><i class="fa-solid fa-check text-green"></i> <b>Código WebRTC Completo:</b> Negociación SDP de WhatsApp Calls con node-datachannel.</li>
-        <li><i class="fa-solid fa-check text-green"></i> <b>Puente Gemini Live:</b> Audio WebSocket bidireccional fluido a 24kHz.</li>
-        <li><i class="fa-solid fa-check text-green"></i> <b>Base de Datos Persistente:</b> Capa de almacenamiento local ultra-ligera en archivo.</li>
-        <li><i class="fa-solid fa-check text-green"></i> <b>Documentación en Español:</b> Explicado línea por línea para que lo integres en 10 minutos.</li>
-        <li><i class="fa-solid fa-check text-green"></i> <b>Estatus Corporativo Seguro:</b> Diseñado estructuralmente para pasar auditorías de Meta.</li>
-      </ul>
-      <a href="https://wa.me/593987865420" target="_blank" class="btn btn-cta btn-full btn-whatsapp-negotiate" style="border-radius: 999px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: #ffffff; border: none; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25); text-decoration: none; padding: 14px; transition: all 0.3s ease; cursor: pointer;">
-        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Contactar
-      </a>
     </section>
 
-    <!-- 3. DETALLE DE CARACTERÍSTICAS -->
-    <section id="features" class="features-section">
-      <div class="section-title">
-        <h2>🛠&nbsp; Especificaciones de Arquitectura</h2>
-        <p>Un kit diseñado para desarrolladores profesionales y startups que exigen código limpio y escalable.</p>
-      </div>
-
+    <!-- CARDS (ALGORITMOS) -->
+    <section class="features-section animate-up delay-2">
+      <h2 class="section-title">ENTRENAMIENTO &<br>CONEXIÓN</h2>
       <div class="features-grid">
-        <div class="glass-card feat-card">
-          <i class="fa-solid fa-shield-halved text-violet icon-large"></i>
-          <h3>Persistencia Segura</h3>
-          <p>Credenciales almacenadas de manera local. Listo para ser migrado a PostgreSQL o Prisma con un par de líneas.</p>
-        </div>
-        <div class="glass-card feat-card">
-          <i class="fa-solid fa-bolt text-violet icon-large"></i>
-          <h3>Baja Latencia</h3>
-          <p>Transcodificación en caliente de Opus RTP a Raw PCM (16kHz) garantizando respuestas de voz inmediatas con IA.</p>
-        </div>
-        <div class="glass-card feat-card">
-          <i class="fa-solid fa-code text-violet icon-large"></i>
-          <h3>100% Modificable</h3>
-          <p>Código Node.js modular sin ofuscación ni dependencias innecesarias, con comentarios detallados en español.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. GUÍA DE CONFIGURACIÓN INTERACTIVA -->
-    <section id="guide" class="guide-section glass-card">
-      <h2><i class="fa-solid fa-book-open text-violet"></i> Estructura de Integración Rápida</h2>
-      <p>Bypassa meses de investigación de la API de Meta siguiendo este stepper estructural para configurar tu entorno de producción:</p>
-      
-      <div class="stepper">
         
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <h4>Crear App en Meta Developers</h4>
-          <p>
-            Entra a <a href="https://developers.facebook.com/" target="_blank">Meta for Developers</a>, crea una App de tipo <b>Negocios (Business)</b> y agrégale el producto <b>WhatsApp</b>.
-          </p>
+        <div class="feat-card hover-float">
+          <div>
+            <i class="fa-solid fa-file-pdf"></i>
+            <h3>Entrenamiento Instantáneo</h3>
+            <p>Olvídate de la programación. Sube un documento PDF, Word o enlace a tu página web con las reglas, precios e información de tu negocio. El bot aprenderá todo en segundos.</p>
+          </div>
+          <div class="feat-badge">Cero Código</div>
         </div>
 
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <h4>Configurar el Webhook en Meta</h4>
-          <p>
-            Apunta la URL del Webhook a tu servidor expuesto (ej. mediante Ngrok a <code>http://localhost:3006/webhook</code>). Usa como Verify Token el mismo que guardes en tu base de datos.
-          </p>
+        <div class="feat-card hover-float">
+          <div>
+            <i class="fa-brands fa-whatsapp"></i>
+            <h3>Conexión a tu Número</h3>
+            <p>El sistema se vincula directamente al número de WhatsApp Business de tu negocio. Cuando tus clientes llamen, no notarán la diferencia tecnológica, pero apreciarán la rapidez y eficiencia.</p>
+          </div>
+          <div class="feat-badge">Integración Nativa</div>
         </div>
 
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <h4>Llamar y Conectar en Vivo</h4>
-          <p>
-            Obtén tu **Phone Number ID**, guarda los valores en la Consola y llama directamente al número. El backend capturará la señal e iniciará el puente en tiempo real.
-          </p>
+        <div class="feat-card hover-float">
+          <div>
+            <i class="fa-solid fa-headset"></i>
+            <h3>Voz Fluida y Natural</h3>
+            <p>Impulsado por el modelo más avanzado de IA, el agente es capaz de conversar en tiempo real, entender interrupciones y hablar con un tono cálido, empático y humano.</p>
+          </div>
+          <div class="feat-badge">Latencia Ultra Baja</div>
         </div>
 
       </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; border-top: 1px solid var(--border-glass); padding: 40px 0; margin-top: 40px;">
-      
-      <!-- Enlaces de Términos y Políticas -->
-      <div class="footer-links" style="display: flex; gap: 18px; justify-content: center; align-items: center; font-size: 0.85rem;">
-        <a href="#" class="footer-link" id="linkTerms" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Términos y Condiciones</a>
-        <span style="color: rgba(0, 0, 0, 0.15);">•</span>
-        <a href="#" class="footer-link" id="linkPrivacy" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Políticas de Privacidad</a>
+    <!-- STATS (PRECISIÓN MATEMÁTICA) -->
+    <section class="stats-section animate-up delay-3">
+      <div class="stats-grid">
+        <div class="stats-content">
+          <img src="assets/b2b_brain.png" alt="AI Data Brain" class="brain-image" style="margin-bottom: 30px;">
+          <h2>IMPACTO REAL EN SERVICIO & RETENCIÓN</h2>
+          <p>Transforma los costos operativos en pura rentabilidad. Deja que la IA maneje el volumen de consultas repetitivas mientras tu equipo se enfoca en gestionar las verdaderas ventas.</p>
+          <a href="https://wa.me/593987865420" target="_blank" class="btn-black hover-float" style="margin-top: 30px;">
+            Cotizar Plan <i class="fa-solid fa-chevron-right"></i>
+          </a>
+        </div>
+        <div class="stats-numbers" style="align-self: center;">
+          <div class="metric-item">
+            <h2>85%</h2>
+            <p>Ahorro Operativo</p>
+          </div>
+          <div class="metric-item">
+            <h2>98%</h2>
+            <p>Dudas Resueltas</p>
+          </div>
+          <div class="metric-item">
+            <h2>+50</h2>
+            <p>Llamadas Simultáneas</p>
+          </div>
+          <div class="metric-item">
+            <h2>0%</h2>
+            <p>Fricción Técnica</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- Botones de Redes Sociales Corporativas -->
-      <div class="footer-socials" style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap;">
-        <a href="https://www.facebook.com/neuroia" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #1877f2; background: rgba(24, 119, 242, 0.08); border: 1px solid rgba(24, 119, 242, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
-          <i class="fa-brands fa-facebook" style="font-size: 0.95rem;"></i> Facebook
-        </a>
-        <a href="https://www.tiktok.com/@neuro_ai_sas?_r=1&_t=ZS-96QV1HULxLs" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #000000; background: rgba(0, 0, 0, 0.06); border: 1px solid rgba(0, 0, 0, 0.1); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
-          <i class="fa-brands fa-tiktok" style="font-size: 0.95rem;"></i> TikTok
-        </a>
-        <a href="https://wa.me/593987865420" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #25d366; background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
-          <i class="fa-brands fa-whatsapp" style="font-size: 0.95rem;"></i> WhatsApp
-        </a>
+    <!-- DEMO (DEL DATO A LA DECISIÓN) -->
+    <section class="demo-section">
+      <div class="demo-grid">
+        <div>
+          <h2 class="section-title" style="font-size: 2.5rem;">DE LA CONFIGURACIÓN A LA LLAMADA EN MINUTOS</h2>
+          <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 400px;">
+            Un proceso tan sencillo que podrás tener a tu agente contestando llamadas hoy mismo.
+          </p>
+          
+          <div class="demo-steps">
+            <div class="step">
+              <h4>01. CREAMOS LA BASE DE CONOCIMIENTOS</h4>
+              <p>Nos compartes un documento (PDF/Word) con toda la información clave de tu negocio: precios, horarios, políticas y preguntas frecuentes.</p>
+            </div>
+            <div class="step">
+              <h4>02. ENLAZAMOS TU NÚMERO</h4>
+              <p>Conectamos tu línea de WhatsApp Business directamente a nuestra infraestructura de voz alojada en la nube corporativa.</p>
+            </div>
+            <div class="step">
+              <h4>03. ¡EL BOT CONTESTA POR TI!</h4>
+              <p>El agente atiende automáticamente las llamadas entrantes, resolviendo dudas de manera empática y natural 24 horas al día.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="video-container" id="videoContainer">
+          <!-- Espacio reservado para el iframe de YouTube (Demo Real) -->
+          <div class="video-placeholder">
+            <i class="fa-brands fa-youtube"></i>
+            <p><b>Video de Demostración Real</b><br>Contáctanos para ver el bot de Neuro IA en acción.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div style="max-width: 600px; line-height: 1.6;">
-        <p class="copyright" style="font-size: 0.78rem; color: var(--text-muted); margin: 0;">
-          &copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.
-        </p>
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="faq-grid">
+        <div>
+          <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 10px;">PREGUNTAS<br>FRECUENTES</h2>
+          <p style="color: var(--text-muted);">Aclara todas tus dudas para dar el paso hacia la automatización.</p>
+          <a href="https://wa.me/593987865420" target="_blank" class="btn-black" style="margin-top: 30px;">
+            Hablar con un Asesor
+          </a>
+        </div>
+        
+        <div class="faq-list">
+          <details>
+            <summary>¿Qué pasa si el bot no sabe responder algo?</summary>
+            <p>El bot está diseñado para ser honesto. Si le hacen una pregunta fuera de su base de conocimientos (el PDF que le pasaste), indicará amablemente que no tiene esa información y le sugerirá al cliente contactarte mediante mensaje de texto o derivará la duda a un humano.</p>
+          </details>
+          <details>
+            <summary>¿Necesito conocimientos técnicos o de programación?</summary>
+            <p>¡Para nada! Nosotros nos encargamos de toda la configuración técnica. Tú solo debes proporcionarnos la información en un PDF o documento de texto con las reglas y datos de tu negocio.</p>
+          </details>
+          <details>
+            <summary>¿Se pierden mis chats actuales en mi cuenta de WhatsApp?</summary>
+            <p>No. El bot únicamente se encarga de contestar llamadas de voz entrantes. Tus chats de texto siguen funcionando de manera totalmente normal y puedes seguir chateando con tus clientes desde tu celular o WhatsApp Web.</p>
+          </details>
+          <details>
+            <summary>¿Es seguro compartir la información interna de mi negocio?</summary>
+            <p>Totalmente. La base de conocimientos se aloja en entornos cifrados y privados. Nunca utilizamos tus datos comerciales para entrenar modelos públicos.</p>
+          </details>
+        </div>
       </div>
-    </footer>
+    </section>
 
   </main>
 
-  <!-- GENERADOR DE PARTÍCULAS DINÁMICAS (Efecto Antigravity 3D Bokeh) -->
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+        <a href="https://www.facebook.com/neuroia" target="_blank"><i class="fa-brands fa-facebook" style="font-size: 1.5rem; color: #111; transition: transform 0.2s;"></i></a>
+        <a href="https://www.tiktok.com/@neuro_ai_sas?_r=1&_t=ZS-96QV1HULxLs" target="_blank"><i class="fa-brands fa-tiktok" style="font-size: 1.5rem; color: #111; transition: transform 0.2s;"></i></a>
+        <a href="https://wa.me/593987865420" target="_blank"><i class="fa-brands fa-whatsapp" style="font-size: 1.5rem; color: #111; transition: transform 0.2s;"></i></a>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
+        <a href="#" id="linkTerms" style="text-decoration: underline;">Términos y Condiciones</a> &nbsp;•&nbsp; 
+        <a href="#" id="linkPrivacy" style="text-decoration: underline;">Políticas de Privacidad</a>
+      </p>
+      <p style="font-size: 0.75rem; color: var(--text-muted);">
+        &copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de uso comercial aprobada.
+      </p>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 5px;">
+        <a href="desarrolladores.html" style="text-decoration: none; opacity: 0.6; transition: opacity 0.3s;">Portal para Desarrolladores & API</a>
+      </p>
+    </div>
+    
+    <div class="watermark">NEURO IA</div>
+  </footer>
+
+  <style>
+    /* Hovers del footer */
+    .footer-content a:hover i {
+      transform: translateY(-3px);
+      color: var(--accent-black);
+    }
+  </style>
+
+  <!-- Modales Legales B2B -->
+  <div id="termsModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closeTerms">&times;</span>
+      <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 10px;">
+        <i class="fa-solid fa-file-contract"></i> Términos de Servicio Corporativo
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>Al contratar los servicios de automatización de voz de NEURO IA S.A.S, el cliente empresarial acepta las siguientes condiciones:</p>
+        
+        <h4>1. Prestación del Servicio</h4>
+        <p>NEURO IA proporciona infraestructura en la nube y agentes de Inteligencia Artificial para atención telefónica. No nos hacemos responsables por ventas no cerradas o fluctuaciones en los ingresos del cliente derivados del uso del bot.</p>
+        
+        <h4>2. Propiedad Intelectual del Agente</h4>
+        <p>El código fuente, algoritmos, y la lógica de enrutamiento son propiedad exclusiva de NEURO IA S.A.S. El cliente adquiere una licencia de uso (SaaS) mensual o anual, pero no los derechos patrimoniales del software subyacente.</p>
+        
+        <h4>3. Uso Aceptable y Restricciones</h4>
+        <p>El agente debe utilizarse únicamente para atención al cliente y soporte comercial legítimo. Está terminantemente prohibido utilizar nuestra infraestructura para cobros abusivos, fraude, acoso, o violar los términos comerciales de Meta Platforms Inc.</p>
+        
+        <h4>4. Disponibilidad (SLA)</h4>
+        <p>Procuramos un 99.9% de tiempo de actividad, sin embargo, el servicio depende de proveedores externos (Google Gemini y Meta Cloud API). NEURO IA no se responsabiliza por caídas masivas en los servicios de terceros.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="privacyModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closePrivacy">&times;</span>
+      <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 10px;">
+        <i class="fa-solid fa-user-shield"></i> Políticas de Confidencialidad
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>En NEURO IA S.A.S entendemos que los datos comerciales de su negocio son su activo más valioso. Protegemos su información así:</p>
+        
+        <h4>1. Base de Conocimientos Protegida</h4>
+        <p>Los manuales, PDFs y catálogos de precios suministrados para entrenar al agente se procesan en un entorno aislado. Su información no se comercializa ni se utiliza para entrenar modelos públicos externos de IA.</p>
+        
+        <h4>2. Privacidad de las Llamadas</h4>
+        <p>Las llamadas de voz entre sus clientes y el bot se transmiten mediante canales WebRTC y WebSockets cifrados. NEURO IA puede transcribir el audio temporalmente para que la IA genere respuestas, pero no conserva grabaciones de audio a largo plazo sin su previo consentimiento.</p>
+        
+        <h4>3. Datos de Contacto de Sus Clientes</h4>
+        <p>Cualquier dato proporcionado por sus clientes finales durante una llamada automatizada (nombres, dudas, intenciones de compra) le pertenece estrictamente a su empresa. Nosotros actuamos únicamente como procesadores de datos de paso.</p>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const container = document.getElementById('gravityParticles');
-      if (container) {
-        // Generamos un mix de 30 orbs grandes desenfocados y puntos pequeños nítidos (Efecto de Profundidad 3D)
-        for (let i = 0; i < 30; i++) {
-          const particle = document.createElement('div');
-          const isBlue = Math.random() > 0.5;
-          particle.className = `particle ${isBlue ? 'particle-blue' : 'particle-purple'}`;
-          
-          const left = Math.random() * 100;
-          const top = Math.random() * 100;
-          
-          let size, duration, blur;
-          
-          if (i % 3 === 0) {
-            // Orbes gigantes con desenfoque de fondo profundo (Bokeh de fondo)
-            size = Math.random() * 70 + 40; // 40px a 110px
-            duration = Math.random() * 30 + 40; // Movimiento majestuoso ultra-lento (40s a 70s)
-            blur = 'blur(8px)';
-          } else {
-            // Puntos pequeños más nítidos flotando a velocidad media (Frente)
-            size = Math.random() * 10 + 6; // 6px a 16px
-            duration = Math.random() * 15 + 20; // 20s a 35s
-            blur = 'blur(1px)';
-          }
-          
-          const delay = Math.random() * -50; // Para que comiencen distribuidos en toda la pantalla
-          
-          particle.style.left = `${left}vw`;
-          particle.style.top = `${top}vh`;
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-          particle.style.filter = blur;
-          particle.style.setProperty('--duration', `${duration}s`);
-          particle.style.animationDelay = `${delay}s`;
-          
-          container.appendChild(particle);
-        }
-      }
-
-      // =========================================================================
-      // ⚖️ CONTROLADOR DE MODALES LEGALES (TÉRMINOS Y PRIVACIDAD)
-      // =========================================================================
       const linkTerms = document.getElementById('linkTerms');
       const linkPrivacy = document.getElementById('linkPrivacy');
       const termsModal = document.getElementById('termsModal');
@@ -227,119 +766,36 @@
       const closeTerms = document.getElementById('closeTerms');
       const closePrivacy = document.getElementById('closePrivacy');
 
-      const openLegalModal = (modal) => {
+      const openModal = (modal) => {
         if (modal) {
           modal.style.display = 'flex';
-          // Reflow for transition
-          modal.offsetHeight;
+          modal.offsetHeight; // trigger reflow
           modal.classList.add('active');
         }
       };
 
-      const closeLegalModal = (modal) => {
+      const closeModal = (modal) => {
         if (modal) {
           modal.classList.remove('active');
-          setTimeout(() => {
-            modal.style.display = 'none';
-          }, 300);
+          setTimeout(() => { modal.style.display = 'none'; }, 300);
         }
       };
 
-      if (linkTerms && termsModal) {
-        linkTerms.addEventListener('click', (e) => {
-          e.preventDefault();
-          openLegalModal(termsModal);
-        });
-      }
+      if (linkTerms) linkTerms.addEventListener('click', (e) => { e.preventDefault(); openModal(termsModal); });
+      if (linkPrivacy) linkPrivacy.addEventListener('click', (e) => { e.preventDefault(); openModal(privacyModal); });
+      if (closeTerms) closeTerms.addEventListener('click', () => closeModal(termsModal));
+      if (closePrivacy) closePrivacy.addEventListener('click', () => closeModal(privacyModal));
 
-      if (linkPrivacy && privacyModal) {
-        linkPrivacy.addEventListener('click', (e) => {
-          e.preventDefault();
-          openLegalModal(privacyModal);
-        });
-      }
-
-      if (closeTerms && termsModal) {
-        closeTerms.addEventListener('click', () => closeLegalModal(termsModal));
-      }
-
-      if (closePrivacy && privacyModal) {
-        closePrivacy.addEventListener('click', () => closeLegalModal(privacyModal));
-      }
-
-      // Cerrar al hacer clic fuera del contenido del modal
+      // Close on background click
       [termsModal, privacyModal].forEach(modal => {
-        if (modal) {
+        if(modal) {
           modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-              closeLegalModal(modal);
-            }
+            if(e.target === modal) closeModal(modal);
           });
         }
       });
-
-      // Cerrar con Escape
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          closeLegalModal(termsModal);
-          closeLegalModal(privacyModal);
-        }
-      });
-
     });
   </script>
-
-  <!-- Modal de Términos y Condiciones (NEURO IA S.A.S) -->
-  <div id="termsModal" class="legal-modal">
-    <div class="legal-modal-content">
-      <span class="legal-modal-close" id="closeTerms">&times;</span>
-      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-purple); margin: 0 0 10px 0;">
-        <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
-      </h3>
-      <div class="legal-modal-body">
-        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
-        <p>Bienvenido a la Consola de Administración de Voz de <strong>NEURO IA S.A.S</strong>. Al acceder o utilizar nuestra plataforma, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso:</p>
-        
-        <h4>1. Aceptación y Licencia</h4>
-        <p>NEURO IA S.A.S otorga al usuario una licencia comercial limitada, no exclusiva e intransferible para operar la Consola de Enlace de Llamadas de WhatsApp Cloud API de acuerdo con las condiciones estipuladas.</p>
-        
-        <h4>2. Uso Autorizado del Servicio</h4>
-        <p>El usuario se compromete a utilizar este sistema únicamente para fines legales y comerciales autorizados. Queda estrictamente prohibido realizar prácticas de llamadas no deseadas (SPAM), acoso, robo de identidad o actividades que violen las políticas de mensajería comercial de Meta Platforms Inc.</p>
-        
-        <h4>3. Propiedad Intelectual</h4>
-        <p>Todos los desarrollos, marcas, logos, diseños de interfaz de consola corporativa, algoritmos de enrutamiento y lógica de integración WebRTC/AI son propiedad exclusiva de NEURO IA S.A.S. Ningún derecho de propiedad intelectual es transferido al licenciatario.</p>
-        
-        <h4>4. Exclusión de Garantías</h4>
-        <p>La consola se proporciona "tal cual" y "según disponibilidad". NEURO IA S.A.S no garantiza que el servicio sea ininterrumpido o libre de errores debido a posibles latencias externas en los servicios de Meta Developers o Google Gemini AI Studio.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal de Políticas de Privacidad (NEURO IA S.A.S) -->
-  <div id="privacyModal" class="legal-modal">
-    <div class="legal-modal-content">
-      <span class="legal-modal-close" id="closePrivacy">&times;</span>
-      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-blue); margin: 0 0 10px 0;">
-        <i class="fa-solid fa-user-shield"></i> Políticas de Privacidad
-      </h3>
-      <div class="legal-modal-body">
-        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
-        <p>En <strong>NEURO IA S.A.S</strong>, nos tomamos muy en serio la seguridad y confidencialidad de su información corporativa. Esta política describe cómo gestionamos los datos en la Consola:</p>
-        
-        <h4>1. Recopilación de Credenciales y Tokens</h4>
-        <p>Toda credencial ingresada (Phone Number ID, WABA ID, Access Tokens, Gemini API Keys) se almacena y procesa localmente en su base de datos segura y se transmite de forma cifrada directa y exclusivamente a los endpoints oficiales de Meta y Google.</p>
-        
-        <h4>2. Seguridad de Transmisión de Audio y Datos</h4>
-        <p>Los flujos de voz entrantes y salientes a través del canal WebRTC viajan de manera segura mediante flujos cifrados en caliente (SRTP/DTLS) y WebSocket seguidos, asegurando la privacidad absoluta de las llamadas entre el cliente y el agente inteligente de Gemini.</p>
-        
-        <h4>3. No Compartición con Terceros</h4>
-        <p>NEURO IA S.A.S nunca comercializará, transferirá ni divulgará sus tokens, números telefónicos ni historiales de logs a ningún tercero sin su consentimiento explícito.</p>
-        
-        <h4>4. Control del Usuario</h4>
-        <p>Usted conserva el control total para borrar o actualizar sus credenciales guardadas en la consola de manera instantánea mediante el botón de Guardar y Conectar, restableciendo la memoria del sistema.</p>
-      </div>
-    </div>
-  </div>
 
 </body>
 </html>

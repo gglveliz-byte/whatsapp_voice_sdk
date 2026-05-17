@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Voice SDK — Experience liftoff with Gemini Live</title>
+  <!-- Google Fonts Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Rejilla Cibernética de Fondo -->
+  <div class="cyber-grid"></div>
+
+  <!-- Partículas Flotantes de Gravedad (Estilo Antigravity) -->
+  <div class="gravity-particles" id="gravityParticles"></div>
+
+  <!-- MENÚ SUPERIOR MINIMALISTA -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">
+      <span>WhatsApp</span> Voice SDK
+    </a>
+    <div>
+      <a href="dashboard.html" class="btn btn-secondary" style="padding: 10px 20px; font-size: 0.85rem; border-radius: 999px;">
+        <i class="fa-solid fa-gauge-high"></i> Consola
+      </a>
+    </div>
+  </nav>
+
+  <!-- Contenedor Principal -->
+  <main class="container">
+    
+    <!-- 1. HEADER HERO SECTION -->
+    <header class="hero">
+      <div class="badge">🚀 MOTOR DE VOZ IA CON SOBERANÍA TECNOLÓGICA</div>
+      <h1>Experience liftoff with the <span>WhatsApp Voice SDK</span></h1>
+      <p class="subtitle">
+        Ahorra meses de desarrollo de código WebRTC complejo, Opus RTP streams y decodificaciones. 
+        Te entregamos la única plantilla en Node.js ultra-documentada para conectar llamadas telefónicas de WhatsApp con Gemini Live en tiempo real.
+      </p>
+      <div class="hero-actions">
+        <a href="dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge-high"></i> Consola de Voz</a>
+        <a href="#features" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i> Explorar Características</a>
+      </div>
+    </header>
+
+    <!-- 2. CARDS DE VALOR Y PRECIO (FLOTANTE ELEGANTE) -->
+    <section class="pricing-card glass-card">
+      <div class="card-glow"></div>
+      <div class="pricing-header">
+        <div>
+          <h2>Adquiere la Licencia del Repositorio</h2>
+          <p>Llévate el código de producción completo y lanza agentes de voz en tu país hoy mismo.</p>
+        </div>
+        <div class="price-box">
+          <span class="amount" style="font-size: 1.6rem; color: var(--accent-blue); font-weight: 700; letter-spacing: -0.5px;">Contáctanos:</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <ul class="features-list">
+        <li><i class="fa-solid fa-check text-green"></i> <b>Código WebRTC Completo:</b> Negociación SDP de WhatsApp Calls con node-datachannel.</li>
+        <li><i class="fa-solid fa-check text-green"></i> <b>Puente Gemini Live:</b> Audio WebSocket bidireccional fluido a 24kHz.</li>
+        <li><i class="fa-solid fa-check text-green"></i> <b>Base de Datos Persistente:</b> Capa de almacenamiento local ultra-ligera en archivo.</li>
+        <li><i class="fa-solid fa-check text-green"></i> <b>Documentación en Español:</b> Explicado línea por línea para que lo integres en 10 minutos.</li>
+        <li><i class="fa-solid fa-check text-green"></i> <b>Estatus Corporativo Seguro:</b> Diseñado estructuralmente para pasar auditorías de Meta.</li>
+      </ul>
+      <a href="https://wa.me/593987865420" target="_blank" class="btn btn-cta btn-full btn-whatsapp-negotiate" style="border-radius: 999px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: #ffffff; border: none; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25); text-decoration: none; padding: 14px; transition: all 0.3s ease; cursor: pointer;">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.25rem;"></i> Contactar
+      </a>
+    </section>
+
+    <!-- 3. DETALLE DE CARACTERÍSTICAS -->
+    <section id="features" class="features-section">
+      <div class="section-title">
+        <h2>🛠&nbsp; Especificaciones de Arquitectura</h2>
+        <p>Un kit diseñado para desarrolladores profesionales y startups que exigen código limpio y escalable.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="glass-card feat-card">
+          <i class="fa-solid fa-shield-halved text-violet icon-large"></i>
+          <h3>Persistencia Segura</h3>
+          <p>Credenciales almacenadas de manera local. Listo para ser migrado a PostgreSQL o Prisma con un par de líneas.</p>
+        </div>
+        <div class="glass-card feat-card">
+          <i class="fa-solid fa-bolt text-violet icon-large"></i>
+          <h3>Baja Latencia</h3>
+          <p>Transcodificación en caliente de Opus RTP a Raw PCM (16kHz) garantizando respuestas de voz inmediatas con IA.</p>
+        </div>
+        <div class="glass-card feat-card">
+          <i class="fa-solid fa-code text-violet icon-large"></i>
+          <h3>100% Modificable</h3>
+          <p>Código Node.js modular sin ofuscación ni dependencias innecesarias, con comentarios detallados en español.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. GUÍA DE CONFIGURACIÓN INTERACTIVA -->
+    <section id="guide" class="guide-section glass-card">
+      <h2><i class="fa-solid fa-book-open text-violet"></i> Estructura de Integración Rápida</h2>
+      <p>Bypassa meses de investigación de la API de Meta siguiendo este stepper estructural para configurar tu entorno de producción:</p>
+      
+      <div class="stepper">
+        
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h4>Crear App en Meta Developers</h4>
+          <p>
+            Entra a <a href="https://developers.facebook.com/" target="_blank">Meta for Developers</a>, crea una App de tipo <b>Negocios (Business)</b> y agrégale el producto <b>WhatsApp</b>.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h4>Configurar el Webhook en Meta</h4>
+          <p>
+            Apunta la URL del Webhook a tu servidor expuesto (ej. mediante Ngrok a <code>http://localhost:3006/webhook</code>). Usa como Verify Token el mismo que guardes en tu base de datos.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h4>Llamar y Conectar en Vivo</h4>
+          <p>
+            Obtén tu **Phone Number ID**, guarda los valores en la Consola y llama directamente al número. El backend capturará la señal e iniciará el puente en tiempo real.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; border-top: 1px solid var(--border-glass); padding: 40px 0; margin-top: 40px;">
+      
+      <!-- Enlaces de Términos y Políticas -->
+      <div class="footer-links" style="display: flex; gap: 18px; justify-content: center; align-items: center; font-size: 0.85rem;">
+        <a href="#" class="footer-link" id="linkTerms" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Términos y Condiciones</a>
+        <span style="color: rgba(0, 0, 0, 0.15);">•</span>
+        <a href="#" class="footer-link" id="linkPrivacy" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Políticas de Privacidad</a>
+      </div>
+
+      <!-- Botones de Redes Sociales Corporativas -->
+      <div class="footer-socials" style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <a href="https://www.facebook.com/neuroia" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #1877f2; background: rgba(24, 119, 242, 0.08); border: 1px solid rgba(24, 119, 242, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-facebook" style="font-size: 0.95rem;"></i> Facebook
+        </a>
+        <a href="https://www.tiktok.com/@neuro_ai_sas?_r=1&_t=ZS-96QV1HULxLs" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #000000; background: rgba(0, 0, 0, 0.06); border: 1px solid rgba(0, 0, 0, 0.1); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-tiktok" style="font-size: 0.95rem;"></i> TikTok
+        </a>
+        <a href="https://wa.me/593987865420" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #25d366; background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-whatsapp" style="font-size: 0.95rem;"></i> WhatsApp
+        </a>
+      </div>
+
+      <div style="max-width: 600px; line-height: 1.6;">
+        <p class="copyright" style="font-size: 0.78rem; color: var(--text-muted); margin: 0;">
+          &copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.
+        </p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- GENERADOR DE PARTÍCULAS DINÁMICAS (Efecto Antigravity 3D Bokeh) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('gravityParticles');
+      if (container) {
+        // Generamos un mix de 30 orbs grandes desenfocados y puntos pequeños nítidos (Efecto de Profundidad 3D)
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          const isBlue = Math.random() > 0.5;
+          particle.className = `particle ${isBlue ? 'particle-blue' : 'particle-purple'}`;
+          
+          const left = Math.random() * 100;
+          const top = Math.random() * 100;
+          
+          let size, duration, blur;
+          
+          if (i % 3 === 0) {
+            // Orbes gigantes con desenfoque de fondo profundo (Bokeh de fondo)
+            size = Math.random() * 70 + 40; // 40px a 110px
+            duration = Math.random() * 30 + 40; // Movimiento majestuoso ultra-lento (40s a 70s)
+            blur = 'blur(8px)';
+          } else {
+            // Puntos pequeños más nítidos flotando a velocidad media (Frente)
+            size = Math.random() * 10 + 6; // 6px a 16px
+            duration = Math.random() * 15 + 20; // 20s a 35s
+            blur = 'blur(1px)';
+          }
+          
+          const delay = Math.random() * -50; // Para que comiencen distribuidos en toda la pantalla
+          
+          particle.style.left = `${left}vw`;
+          particle.style.top = `${top}vh`;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.filter = blur;
+          particle.style.setProperty('--duration', `${duration}s`);
+          particle.style.animationDelay = `${delay}s`;
+          
+          container.appendChild(particle);
+        }
+      }
+
+      // =========================================================================
+      // ⚖️ CONTROLADOR DE MODALES LEGALES (TÉRMINOS Y PRIVACIDAD)
+      // =========================================================================
+      const linkTerms = document.getElementById('linkTerms');
+      const linkPrivacy = document.getElementById('linkPrivacy');
+      const termsModal = document.getElementById('termsModal');
+      const privacyModal = document.getElementById('privacyModal');
+      const closeTerms = document.getElementById('closeTerms');
+      const closePrivacy = document.getElementById('closePrivacy');
+
+      const openLegalModal = (modal) => {
+        if (modal) {
+          modal.style.display = 'flex';
+          // Reflow for transition
+          modal.offsetHeight;
+          modal.classList.add('active');
+        }
+      };
+
+      const closeLegalModal = (modal) => {
+        if (modal) {
+          modal.classList.remove('active');
+          setTimeout(() => {
+            modal.style.display = 'none';
+          }, 300);
+        }
+      };
+
+      if (linkTerms && termsModal) {
+        linkTerms.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLegalModal(termsModal);
+        });
+      }
+
+      if (linkPrivacy && privacyModal) {
+        linkPrivacy.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLegalModal(privacyModal);
+        });
+      }
+
+      if (closeTerms && termsModal) {
+        closeTerms.addEventListener('click', () => closeLegalModal(termsModal));
+      }
+
+      if (closePrivacy && privacyModal) {
+        closePrivacy.addEventListener('click', () => closeLegalModal(privacyModal));
+      }
+
+      // Cerrar al hacer clic fuera del contenido del modal
+      [termsModal, privacyModal].forEach(modal => {
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              closeLegalModal(modal);
+            }
+          });
+        }
+      });
+
+      // Cerrar con Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeLegalModal(termsModal);
+          closeLegalModal(privacyModal);
+        }
+      });
+
+    });
+  </script>
+
+  <!-- Modal de Términos y Condiciones (NEURO IA S.A.S) -->
+  <div id="termsModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closeTerms">&times;</span>
+      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-purple); margin: 0 0 10px 0;">
+        <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>Bienvenido a la Consola de Administración de Voz de <strong>NEURO IA S.A.S</strong>. Al acceder o utilizar nuestra plataforma, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso:</p>
+        
+        <h4>1. Aceptación y Licencia</h4>
+        <p>NEURO IA S.A.S otorga al usuario una licencia comercial limitada, no exclusiva e intransferible para operar la Consola de Enlace de Llamadas de WhatsApp Cloud API de acuerdo con las condiciones estipuladas.</p>
+        
+        <h4>2. Uso Autorizado del Servicio</h4>
+        <p>El usuario se compromete a utilizar este sistema únicamente para fines legales y comerciales autorizados. Queda estrictamente prohibido realizar prácticas de llamadas no deseadas (SPAM), acoso, robo de identidad o actividades que violen las políticas de mensajería comercial de Meta Platforms Inc.</p>
+        
+        <h4>3. Propiedad Intelectual</h4>
+        <p>Todos los desarrollos, marcas, logos, diseños de interfaz de consola corporativa, algoritmos de enrutamiento y lógica de integración WebRTC/AI son propiedad exclusiva de NEURO IA S.A.S. Ningún derecho de propiedad intelectual es transferido al licenciatario.</p>
+        
+        <h4>4. Exclusión de Garantías</h4>
+        <p>La consola se proporciona "tal cual" y "según disponibilidad". NEURO IA S.A.S no garantiza que el servicio sea ininterrumpido o libre de errores debido a posibles latencias externas en los servicios de Meta Developers o Google Gemini AI Studio.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Políticas de Privacidad (NEURO IA S.A.S) -->
+  <div id="privacyModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closePrivacy">&times;</span>
+      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-blue); margin: 0 0 10px 0;">
+        <i class="fa-solid fa-user-shield"></i> Políticas de Privacidad
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>En <strong>NEURO IA S.A.S</strong>, nos tomamos muy en serio la seguridad y confidencialidad de su información corporativa. Esta política describe cómo gestionamos los datos en la Consola:</p>
+        
+        <h4>1. Recopilación de Credenciales y Tokens</h4>
+        <p>Toda credencial ingresada (Phone Number ID, WABA ID, Access Tokens, Gemini API Keys) se almacena y procesa localmente en su base de datos segura y se transmite de forma cifrada directa y exclusivamente a los endpoints oficiales de Meta y Google.</p>
+        
+        <h4>2. Seguridad de Transmisión de Audio y Datos</h4>
+        <p>Los flujos de voz entrantes y salientes a través del canal WebRTC viajan de manera segura mediante flujos cifrados en caliente (SRTP/DTLS) y WebSocket seguidos, asegurando la privacidad absoluta de las llamadas entre el cliente y el agente inteligente de Gemini.</p>
+        
+        <h4>3. No Compartición con Terceros</h4>
+        <p>NEURO IA S.A.S nunca comercializará, transferirá ni divulgará sus tokens, números telefónicos ni historiales de logs a ningún tercero sin su consentimiento explícito.</p>
+        
+        <h4>4. Control del Usuario</h4>
+        <p>Usted conserva el control total para borrar o actualizar sus credenciales guardadas en la consola de manera instantánea mediante el botón de Guardar y Conectar, restableciendo la memoria del sistema.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
