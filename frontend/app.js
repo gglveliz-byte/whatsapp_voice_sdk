@@ -245,36 +245,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const carouselSteps = [
     {
       title: "1. Registrarse en Meta Developers",
-      content: `El primer paso es tener un perfil de desarrollador en Meta. Ve a <a href="https://developers.facebook.com/" target="_blank">developers.facebook.com</a>, inicia sesión con tu cuenta de Facebook y completa el registro sencillo.`
+      content: `El primer paso es tener un perfil de desarrollador en Meta. Ve a <a href="https://developers.facebook.com/" target="_blank">developers.facebook.com</a>, inicia sesión con tu cuenta de Facebook y completa el registro sencillo.<br><img src="guia/image.png" class="carousel-step-img" alt="Portal de Desarrolladores">`
     },
     {
       title: "2. Crear una Aplicación de Negocio",
-      content: `Entra a la sección "Mis Apps" y haz clic en <a href="https://developers.facebook.com/apps/creation/" target="_blank">Crear App</a>. Selecciona la opción de caso de uso <b>"Otros"</b> o <b>"Negocios"</b>. Esto te habilitará las APIs empresariales necesarias.`
+      content: `Entra a la sección "Mis Apps" y haz clic en <a href="https://developers.facebook.com/apps/creation/" target="_blank">Crear App</a>. Selecciona la opción de caso de uso <b>"Otros"</b> o <b>"Negocios"</b>. Esto te habilitará las APIs empresariales necesarias.<br><img src="guia/image copy 2.png" class="carousel-step-img" alt="Crear Aplicación">`
     },
     {
       title: "3. Agregar el Producto WhatsApp",
-      content: `En el menú lateral de tu nueva App, deslízate hasta <b>"Agregar Producto"</b>. Busca el módulo de <b>WhatsApp</b> en el listado y haz clic en <b>Configurar</b> para agregarlo a tu aplicación.`
+      content: `En el menú lateral de tu nueva App, deslízate hasta <b>"Agregar Producto"</b>. Busca el módulo de <b>WhatsApp</b> en el listado y haz clic en <b>Configurar</b> para agregarlo a tu aplicación.<br><img src="guia/image copy 3.png" class="carousel-step-img" alt="Agregar WhatsApp">`
     },
     {
       title: "4. Entrar a Configuración de la API",
-      content: `Navega en el menú lateral a <b>WhatsApp ➔ Configuración de la API</b>. Desliza la pantalla hacia abajo hasta encontrar la sección de <b>Configuración de Webhooks</b> y haz clic en ella.`
+      content: `Navega en el menú lateral a <b>WhatsApp ➔ Configuración de la API</b>. Desliza la pantalla hacia abajo hasta encontrar la sección de <b>Configuración de Webhooks</b> y haz clic en ella.<br><img src="guia/image copy 4.png" class="carousel-step-img" alt="Configuración de la API">`
     },
     {
       title: "5. Configurar URL de Devolución",
       content: `Edita tu Webhook de WhatsApp y completa las casillas con tus datos del servidor en caliente:<br>
       • <b>URL de devolución de llamada</b>: <code>${socketUrl}/webhook</code><br>
-      • <b>Token de verificación</b>: El token de tu Base de Datos (ej. <code>whatsapp_voice_sdk_verify_token</code>)`
+      • <b>Token de verificación</b>: El token de tu Base de Datos (ej. <code>whatsapp_voice_sdk_verify_token</code>)<br><img src="guia/image copy 5.png" class="carousel-step-img" alt="Enlazar Webhook">`
     },
     {
       title: "6. Suscribirse a Campos de Webhook",
       content: `Una vez enlazado el webhook, haz clic en el botón de campos y suscríbete obligatoriamente a los siguientes tres eventos de Meta:<br>
       • <b><code>calls</code></b> (¡Crítico para capturar las llamadas de voz WebRTC!)<br>
       • <b><code>messages</code></b> (Chat y texto)<br>
-      • <b><code>smb_message_echoes</code></b> (Ecos de mensajes de la IA)`
+      • <b><code>smb_message_echoes</code></b> (Ecos de mensajes de la IA)<br><img src="guia/image copy 6.png" class="carousel-step-img" alt="Suscribirse a Eventos">`
     },
     {
       title: "7. Copiar Credenciales al Dashboard",
-      content: `En la pantalla de WhatsApp ➔ Configuración de la API copia el <b>Phone Number ID</b>, el <b>WABA ID</b> y haz clic en <b>Generar Token Temporal</b> de pruebas. Pégalos en el formulario de abajo para activar tu bot en caliente.`
+      content: `En la pantalla de WhatsApp ➔ Configuración de la API copia el <b>Phone Number ID</b>, el <b>WABA ID</b> y haz clic en <b>Generar Token Temporal</b> de pruebas. Pégalos en el formulario de abajo para activar tu bot en caliente.<br><img src="guia/image copy 7.png" class="carousel-step-img" alt="Credenciales de API">`
     }
   ];
 
