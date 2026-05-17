@@ -213,54 +213,58 @@
     <!-- SECCIÓN DE REQUISITOS, SEGURIDAD Y CONTACTO COMERCIAL -->
     <section class="info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 30px; margin-bottom: 30px;">
       
-      <!-- Tarjeta 1: Requisitos previos de Meta -->
+      <!-- Tarjeta 1: Requisitos previos de Meta (Verbatim) -->
       <div class="glass-card" style="display: flex; flex-direction: column; gap: 10px;">
         <h3 class="form-section-title" style="font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
           <i class="fa-solid fa-list-check" style="color: var(--accent-purple);"></i>
-          Requisitos de Meta para Producción
+          Paso 1: Requisitos previos
         </h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.5;">
-          Para implementar este asistente de llamadas de voz por Inteligencia Artificial en entornos de producción, Meta exige que se cumplan las siguientes condiciones obligatorias:
+        <p style="font-size: 0.88rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">
+          Antes de empezar con la API de llamadas, asegúrate de lo siguiente:
         </p>
         
         <ul class="requirements-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px;">
           <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
             <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
             <div>
-              <strong style="color: var(--text-main);">WhatsApp Cloud API:</strong> El número de teléfono debe estar registrado exclusivamente bajo la API de la nube corporativa (no en la app móvil tradicional de WhatsApp Business).
-            </div>
-          </li>
-          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
-            <i class="fa-solid fa-triangle-exclamation" style="color: var(--neon-yellow); margin-top: 3px; font-size: 1rem;"></i>
-            <div>
-              <strong style="color: var(--text-main);">Migración Obligatoria:</strong> Los números vinculados a WhatsApp en la nube deben ser exclusivos. Se recomienda usar un número nuevo o eliminar cuentas anteriores antes de migrar a la nube.
-              <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/solution-providers/migrate-existing-whatsapp-number-to-a-business-account" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; color: var(--accent-blue); font-weight: 700; margin-top: 4px; text-decoration: none; transition: 0.2s;">
-                Ver Guía de Migración Oficial <i class="fa-solid fa-up-right-from-square" style="font-size: 0.75rem;"></i>
-              </a>
-            </div>
-          </li>
-          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
-            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
-            <div>
-              <strong style="color: var(--text-main);">Suscripción del Webhook:</strong> Suscribir obligatoriamente la aplicación de desarrollador de Meta al campo de evento de llamadas corporativas (<code>calls</code>).
+              Tu número de empresa se usa con la <strong>API de la nube</strong> (no con la aplicación de WhatsApp Business tradicional).
+              <div style="margin-top: 8px; font-size: 0.82rem; background: rgba(255, 193, 7, 0.05); padding: 10px 14px; border-radius: 10px; border: 1px dashed rgba(255, 193, 7, 0.3); color: var(--text-muted); line-height: 1.5;">
+                <i class="fa-solid fa-triangle-exclamation" style="color: var(--neon-yellow); margin-right: 6px;"></i>
+                <strong style="color: var(--text-main);">Recomendación clave:</strong> Los números con WhatsApp en la nube son los únicos que valen. Se recomienda usar un número nuevo o eliminar sus cuentas de WhatsApp personales/business para migrar a WhatsApp en la nube.
+                <a href="https://developers.facebook.com/documentation/business-messaging/whatsapp/solution-providers/migrate-existing-whatsapp-number-to-a-business-account" target="_blank" style="display: inline-flex; align-items: center; gap: 4px; color: var(--accent-blue); font-weight: 700; margin-top: 6px; text-decoration: none; transition: 0.2s;">
+                  Ver Guía de Migración Oficial <i class="fa-solid fa-up-right-from-square" style="font-size: 0.75rem;"></i>
+                </a>
+              </div>
             </div>
           </li>
           <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
             <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
             <div>
-              <strong style="color: var(--text-main);">Vinculación de Cuentas:</strong> La misma app de Meta debe estar vinculada directamente a la cuenta de WhatsApp Business (WABA) de tu número corporativo.
+              Suscribe tu aplicación al campo de webhook <strong><code>calls</code></strong> (a menos que quieras usar SIP).
             </div>
           </li>
           <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
             <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
             <div>
-              <strong style="color: var(--text-main);">Permiso de Mensajería:</strong> Disponer de permisos de mensajería empresarial activos (<code>whatsapp_business_messaging</code>).
+              La misma app también debe estar suscrita a la <strong>cuenta de WhatsApp Business</strong> de tu número de teléfono del negocio.
             </div>
           </li>
           <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
             <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
             <div>
-              <strong style="color: var(--text-main);">Activación de Voz:</strong> Tener habilitadas las funciones de llamadas de entrada en el panel de configuración de voz del número de negocio de Meta.
+              Esta app debe tener permisos de mensajes (<strong><code>whatsapp_business_messaging</code></strong>) para el número comercial.
+            </div>
+          </li>
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              La empresa debe tener un límite de mensajes diario de al menos <strong>2.000 destinatarios únicos</strong>. Más detalles sobre cómo escalar las capacidades de tu cuenta.
+            </div>
+          </li>
+          <li style="display: flex; gap: 12px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+            <i class="fa-solid fa-circle-check" style="color: #25d366; margin-top: 3px; font-size: 1rem;"></i>
+            <div>
+              Activar las funciones de llamada en el <strong>número de teléfono de tu negocio</strong>.
             </div>
           </li>
         </ul>
