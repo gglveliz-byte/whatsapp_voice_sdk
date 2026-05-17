@@ -90,6 +90,16 @@
       padding: 50px 20px 30px; animation: float 6s ease-in-out infinite;
       border: 2px solid #333;
     }
+    .float-phone {
+      position: absolute; right: 8%; top: 50%;
+      transform: translateY(-50%) perspective(1000px) rotateY(15deg) translateX(50px);
+      opacity: 0; z-index: 10; pointer-events: none;
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .float-phone.visible {
+      opacity: 1; transform: translateY(-50%) perspective(1000px) rotateY(-5deg) translateX(0);
+      pointer-events: auto;
+    }
     .phone-notch { position: absolute; top: 15px; width: 100px; height: 25px; background: #000; border-radius: 20px; }
     .call-status { color: #888; font-size: 0.9rem; margin-top: 20px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; animation: blink 2s infinite; }
     
@@ -409,54 +419,7 @@
 
   <main>
     
-    <!-- HERO & FAKE PHONE -->
-    <section class="container hero animate-up">
-      <div class="hero-content">
-        <h4>ATENCIÓN AL CLIENTE 100% AUTOMATIZADA</h4>
-        <h1>IA EN LA VOZ,<br><i>NO EN CHATS.</i></h1>
-        <p>NeuroCall es el agente inteligente que contesta las llamadas de WhatsApp de tu negocio 24/7. Resuelve dudas, da precios y agenda citas con una voz cálida y natural. Se entrena en minutos.</p>
-        <div style="display: flex; gap: 15px; align-items: center; margin-top: 10px;">
-          <a href="https://wa.me/593987865420" target="_blank" class="btn-black hover-float" style="padding: 18px 35px; font-size: 1.1rem;">
-            <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Probar el Bot
-          </a>
-          <span style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Sin código</span>
-        </div>
-        
-        <div class="hero-metrics">
-          <div class="metric-item">
-            <h2>24/7</h2><p>Disponibilidad</p>
-          </div>
-          <div class="metric-item">
-            <h2>0s</h2><p>Tiempo de Espera</p>
-          </div>
-          <div class="metric-item">
-            <h2>100%</h2><p>Llamadas Atendidas</p>
-          </div>
-        </div>
-      </div>
 
-      <div class="phone-container">
-        <!-- FAKE PHONE UI -->
-        <div class="fake-phone hover-float">
-          <div class="phone-notch"></div>
-          <div class="call-status">Llamada entrante...</div>
-          
-          <div class="caller-avatar-container">
-            <div class="ripple"></div>
-            <div class="ripple ripple-2"></div>
-            <img src="assets/neurochat-ai-avatar.png" class="caller-avatar" alt="NeuroCall">
-          </div>
-          
-          <div class="caller-name">NeuroCall Agent</div>
-          <div class="caller-desc">Asistente de Inteligencia Artificial</div>
-          
-          <div class="call-actions">
-            <div class="btn-circle btn-red"><i class="fa-solid fa-phone-slash"></i></div>
-            <div class="btn-circle btn-green"><i class="fa-solid fa-phone"></i></div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- =========================================================
          SECCIÓN CINEMATOGRÁFICA: SCROLL-DRIVEN VIDEO REVEAL
@@ -519,6 +482,23 @@
             </div>
 
           </div><!-- /text-layer -->
+
+          <!-- TELÉFONO FLOTANTE 3D A LA DERECHA -->
+          <div class="fake-phone float-phone" id="cinematicPhone">
+            <div class="phone-notch"></div>
+            <div class="call-status">Llamada entrante...</div>
+            <div class="caller-avatar-container">
+              <div class="ripple"></div>
+              <div class="ripple ripple-2"></div>
+              <img src="assets/neurochat-ai-avatar.png" class="caller-avatar" alt="NeuroCall">
+            </div>
+            <div class="caller-name">NeuroCall Agent</div>
+            <div class="caller-desc">Asistente de Inteligencia Artificial</div>
+            <div class="call-actions">
+              <div class="btn-circle btn-red"><i class="fa-solid fa-phone-slash"></i></div>
+              <div class="btn-circle btn-green"><i class="fa-solid fa-phone"></i></div>
+            </div>
+          </div>
 
         </div><!-- /cinematic-stage -->
       </div><!-- /cinematic-rail -->
@@ -726,6 +706,12 @@
       { el: texts[3], show: 0.60, hide: 0.88 },
       { el: texts[4], show: 0.70, hide: 0.88 },
     ];
+    
+    // Agregamos el teléfono animado al ciclo de scroll
+    const phoneEl = document.getElementById('cinematicPhone');
+    if (phoneEl) {
+      TEXT_PHASES.push({ el: phoneEl, show: 0.45, hide: 0.88 });
+    }
 
     let videoPlaying = false;
 
