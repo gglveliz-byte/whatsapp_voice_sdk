@@ -110,35 +110,6 @@
     @keyframes rippleEffect { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.8); opacity: 0; } }
     @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(52,199,89,0.5); } 70% { box-shadow: 0 0 0 20px rgba(52,199,89,0); } 100% { box-shadow: 0 0 0 0 rgba(52,199,89,0); } }
 
-    /* --- SCROLL REVEAL VIDEO PORTAL --- */
-    .scroll-reveal-container { height: 350vh; position: relative; background: #0A0A0A; }
-    .scroll-reveal-sticky { position: sticky; top: 0; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #050505; }
-    
-    .scroll-reveal-line { 
-      width: 90%; max-width: 1100px; height: 2px; 
-      background: var(--accent-gold); 
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-      display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 0 30px var(--accent-gold); overflow: hidden; border-radius: 20px;
-      will-change: height;
-    }
-    .scroll-reveal-content { 
-      width: 100%; height: 100%; position: relative; display: flex; justify-content: center; align-items: center; background: #000;
-      opacity: 0; transition: opacity 0.5s;
-    }
-    .scroll-reveal-content img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
-    .scroll-reveal-play { position: absolute; font-size: 5rem; color: #fff; text-shadow: 0 10px 20px rgba(0,0,0,0.8); z-index: 10; cursor: pointer; transition: all 0.3s; }
-    .scroll-reveal-play:hover { transform: scale(1.1); color: var(--accent-gold); }
-    
-    .scroll-reveal-texts { position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-    .reveal-text { 
-      position: absolute; color: #fff; font-weight: 900; text-align: center; width: 100%;
-      text-transform: uppercase; letter-spacing: -1px; text-shadow: 0 20px 40px rgba(0,0,0,1);
-      opacity: 0; transform: translateY(60px); transition: opacity 0.4s ease-out, transform 0.6s ease-out;
-    }
-    #text-1 { top: 18%; font-size: clamp(2.5rem, 5vw, 4.5rem); }
-    #text-2 { bottom: 18%; color: var(--accent-gold); font-size: clamp(1.5rem, 3vw, 2.5rem); }
-
     /* --- FEATURES --- */
     .section-title { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 40px; text-align: center; }
     .features-section { padding: 80px 0; }
@@ -186,6 +157,216 @@
     .legal-modal-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; font-weight: 900; }
     .legal-modal-body h4 { margin-top: 20px; margin-bottom: 8px; font-size: 1.05rem; font-weight: 800; }
     .legal-modal-body p { margin-bottom: 12px; color: #444; font-size: 0.95rem; }
+
+
+    /* ============================================================
+       CINEMATICA — SCROLL-DRIVEN VIDEO REVEAL
+    ============================================================ */
+
+    /* El wrapper ocupa 350vh para dar recorrido al scroll */
+    .cinematic-wrapper {
+      position: relative;
+      height: 350vh;
+      /* Sin overflow: queremos que el sticky funcione */
+    }
+
+    /* El "rail" es el contenedor sticky */
+    .cinematic-rail {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* El stage es lo que el usuario ve */
+    .cinematic-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* ---- LA LÍNEA → ROLLO → VIDEO ---- */
+    .film-line {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      /* Comienza como una línea ultrafina */
+      width: 80px;
+      height: 2px;
+      border-radius: 2px;
+      overflow: hidden;
+      background: #fff;
+      transition: width 0.05s linear, height 0.05s linear, border-radius 0.3s ease;
+      will-change: width, height;
+    }
+
+    .film-line video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .film-line.video-visible video { opacity: 1; }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.2) 0%,
+        rgba(0,0,0,0.5) 50%,
+        rgba(0,0,0,0.8) 100%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ---- CAPA DE TEXTOS FLOTANTES ---- */
+    .text-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      pointer-events: none;
+    }
+
+    /* Cada bloque de texto */
+    .float-text {
+      opacity: 0;
+      transform: translateY(60px) perspective(800px) rotateX(15deg);
+      transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.8s cubic-bezier(0.16,1,0.3,1);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .float-text.visible {
+      opacity: 1;
+      transform: translateY(0) perspective(800px) rotateX(0deg);
+      pointer-events: auto;
+    }
+
+    /* Texto 1: BIENVENIDO AL FUTURO */
+    .ft-welcome {
+      font-size: clamp(1.5rem, 5vw, 4rem);
+      font-weight: 900;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      transition-delay: 0s;
+    }
+
+    /* Texto 2: NeuroCall */
+    .ft-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 900;
+      color: #D4AF37;
+      letter-spacing: -2px;
+      transition-delay: 0.15s;
+    }
+
+    .brand-avatar {
+      width: clamp(50px, 8vw, 80px);
+      height: clamp(50px, 8vw, 80px);
+      border-radius: 50%;
+      border: 3px solid #D4AF37;
+      box-shadow: 0 0 30px rgba(212,175,55,0.5);
+    }
+
+    /* Texto 3: Subtítulo */
+    .ft-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.8rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.5px;
+      transition-delay: 0.3s;
+    }
+
+    /* Texto 4: Pills de características */
+    .ft-tags {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      transition-delay: 0.45s;
+    }
+
+    .tag-pill {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(5px);
+    }
+
+    /* Texto 5: CTA final */
+    .ft-cta {
+      transition-delay: 0.6s;
+    }
+
+    .cta-glow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      padding: 15px 35px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-decoration: none;
+      box-shadow: 0 0 30px rgba(37,211,102,0.5);
+      animation: pulseGlow 2s infinite;
+      pointer-events: auto;
+    }
+
+    /* ---- BUILD-ON-SCROLL: Secciones post-video ---- */
+    .build-section { perspective: 1200px; }
+
+    .build-item {
+      opacity: 0;
+      transform: rotateX(-8deg) translateY(50px);
+      transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
+      transform-origin: top center;
+    }
+
+    .build-item.built {
+      opacity: 1;
+      transform: rotateX(0deg) translateY(0);
+    }
+
+    /* Delays escalonados para los hijos de build-section */
+    .build-item:nth-child(1) { transition-delay: 0s; }
+    .build-item:nth-child(2) { transition-delay: 0.1s; }
+    .build-item:nth-child(3) { transition-delay: 0.2s; }
+    .build-item:nth-child(4) { transition-delay: 0.3s; }
+    .build-item:nth-child(5) { transition-delay: 0.4s; }
+
+    /* Responsive cinematica */
+    @media (max-width: 700px) {
+      .ft-tags { flex-direction: column; align-items: center; }
+      .ft-brand { flex-direction: column; }
+    }
 
     @media (max-width: 900px) {
       .hero, .features-grid, .stats-grid, .demo-grid, .footer-container { grid-template-columns: 1fr; }
@@ -269,41 +450,89 @@
       </div>
     </section>
 
-    <!-- SCROLL REVEAL VIDEO PORTAL -->
-    <section class="scroll-reveal-container" id="video-portal">
-      <div class="scroll-reveal-sticky">
-        <div class="scroll-reveal-texts">
-          <div class="reveal-text" id="text-1">BIENVENIDOS AL FUTURO DE NEUROCALL</div>
-          <div class="reveal-text" id="text-2">Atención ultra-rápida. Cero fricción.</div>
-        </div>
-        <div class="scroll-reveal-line" id="reveal-line">
-          <div class="scroll-reveal-content" id="reveal-content">
-            <img src="assets/neurochat-ai-avatar.png" alt="Video Placeholder">
-            <div class="scroll-reveal-play"><i class="fa-solid fa-play"></i></div>
-            <!-- El iframe de YouTube irá aquí cuando lo grabes: -->
-            <!-- <iframe src="tu-link" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe> -->
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- =========================================================
+         SECCIÓN CINEMATOGRÁFICA: SCROLL-DRIVEN VIDEO REVEAL
+         Ocupa 300vh — el scroll controla la animación
+    ========================================================= -->
+    <section class="cinematic-wrapper" id="cinematicSection">
+      <!-- Rail de scroll invisible (da el "recorrido" al usuario) -->
+      <div class="cinematic-rail">
+        <!-- Sticky viewport: lo que el usuario VE mientras scrollea -->
+        <div class="cinematic-stage" id="cinematicStage">
 
-    <!-- CARDS (ALGORITMOS) -->
-    <section id="algoritmos" class="container features-section animate-up delay-1">
-      <h2 class="section-title">ENTRENAMIENTO & CONEXIÓN</h2>
+          <!-- LA LÍNEA: Nace aquí, se expande con el scroll -->
+          <div class="film-line" id="filmLine">
+            <!-- El video dentro del rollo -->
+            <video
+              id="heroVideo"
+              src="assets/d_d_a_a_c_dmp_.mp4"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+            ></video>
+            <!-- Overlay oscuro encima del video -->
+            <div class="video-overlay"></div>
+          </div>
+
+          <!-- CAPA DE TEXTOS FLOTANTES 3D -->
+          <div class="text-layer" id="textLayer">
+
+            <!-- Texto 1: Aparece primero -->
+            <div class="float-text ft-welcome" data-phase="1">
+              BIENVENIDO AL FUTURO
+            </div>
+
+            <!-- Texto 2: El logotipo en dorado -->
+            <div class="float-text ft-brand" data-phase="2">
+              <img src="assets/neurochat-ai-avatar.png" class="brand-avatar" alt="NeuroCall">
+              <span>NeuroCall</span>
+            </div>
+
+            <!-- Texto 3: Subtítulo -->
+            <div class="float-text ft-subtitle" data-phase="3">
+              La atención al cliente ya no duerme.
+            </div>
+
+            <!-- Texto 4: Tags de características -->
+            <div class="float-text ft-tags" data-phase="4">
+              <span class="tag-pill">Llamadas 24/7</span>
+              <span class="tag-pill">Voz Natural</span>
+              <span class="tag-pill">Zero Código</span>
+              <span class="tag-pill">WhatsApp Nativo</span>
+            </div>
+
+            <!-- Texto 5: CTA final antes de salir -->
+            <div class="float-text ft-cta" data-phase="5">
+              <a href="https://wa.me/593987865420" target="_blank" class="cta-glow">
+                <i class="fa-brands fa-whatsapp"></i> Hablar con el Agente
+              </a>
+            </div>
+
+          </div><!-- /text-layer -->
+
+        </div><!-- /cinematic-stage -->
+      </div><!-- /cinematic-rail -->
+    </section><!-- /cinematic-wrapper -->
+
+    <!-- CARDS (ALGORITMOS) — Ahora con efecto 3D build-on-scroll -->
+    <section id="algoritmos" class="container features-section build-section">
+      <h2 class="section-title build-item">ENTRENAMIENTO & CONEXIÓN</h2>
       <div class="features-grid">
-        <div class="feat-card hover-float">
+        <div class="feat-card hover-float build-item">
+
           <i class="fa-solid fa-file-pdf"></i>
           <h3>Entrenamiento<br>Instantáneo</h3>
           <p>Olvídate de la programación. Sube un documento PDF, Word o enlace a tu web con las reglas y precios de tu negocio. El bot aprenderá todo en segundos.</p>
           <div class="feat-badge" style="margin-top: 25px;">Cero Código</div>
         </div>
-        <div class="feat-card hover-float">
+        <div class="feat-card hover-float build-item">
           <i class="fa-brands fa-whatsapp"></i>
           <h3>Conexión a tu<br>Número</h3>
           <p>El sistema se vincula a tu número de WhatsApp Business actual. Tus clientes no notarán la diferencia tecnológica, pero apreciarán la rapidez inmediata.</p>
           <div class="feat-badge" style="margin-top: 25px;">Integración Nativa</div>
         </div>
-        <div class="feat-card hover-float">
+        <div class="feat-card hover-float build-item">
           <i class="fa-solid fa-headset"></i>
           <h3>Voz Fluida y<br>Natural</h3>
           <p>Impulsado por el modelo más avanzado de IA. El agente conversa en tiempo real, entiende interrupciones y habla con un tono cálido y empático.</p>
@@ -313,7 +542,7 @@
     </section>
 
     <!-- STATS (IMPACTO) -->
-    <section id="impacto" class="container stats-section animate-up delay-2">
+    <section id="impacto" class="container stats-section build-section">
       <div class="stats-grid" style="padding: 0 40px;">
         <div class="stats-content">
           <h2 style="font-size: 3rem; font-weight: 900; line-height: 1; letter-spacing: -1px; text-transform: uppercase;">IMPACTO REAL EN SERVICIO & RETENCIÓN</h2>
@@ -444,87 +673,126 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const openModal = (m) => { if(m) { m.style.display = 'flex'; m.offsetHeight; m.classList.add('active'); } };
-      const closeModal = (m) => { if(m) { m.classList.remove('active'); setTimeout(()=>m.style.display='none',300); } };
+  document.addEventListener('DOMContentLoaded', () => {
 
-      const tm = document.getElementById('termsModal'), pm = document.getElementById('privacyModal');
-      document.getElementById('linkTerms')?.addEventListener('click', (e) => { e.preventDefault(); openModal(tm); });
-      document.getElementById('linkPrivacy')?.addEventListener('click', (e) => { e.preventDefault(); openModal(pm); });
-      document.getElementById('closeTerms')?.addEventListener('click', () => closeModal(tm));
-      document.getElementById('closePrivacy')?.addEventListener('click', () => closeModal(pm));
-      
-      [tm, pm].forEach(m => m?.addEventListener('click', (e) => { if(e.target === m) closeModal(m); }));
+    /* =====================================================
+       1. MODALES LEGALES
+    ===================================================== */
+    const openModal = (m) => { if(m) { m.style.display = 'flex'; m.offsetHeight; m.classList.add('active'); } };
+    const closeModal = (m) => { if(m) { m.classList.remove('active'); setTimeout(()=>m.style.display='none',300); } };
+    const tm = document.getElementById('termsModal'), pm = document.getElementById('privacyModal');
+    document.getElementById('linkTerms')?.addEventListener('click', (e) => { e.preventDefault(); openModal(tm); });
+    document.getElementById('linkPrivacy')?.addEventListener('click', (e) => { e.preventDefault(); openModal(pm); });
+    document.getElementById('closeTerms')?.addEventListener('click', () => closeModal(tm));
+    document.getElementById('closePrivacy')?.addEventListener('click', () => closeModal(pm));
+    [tm, pm].forEach(m => m?.addEventListener('click', (e) => { if(e.target === m) closeModal(m); }));
 
-      // Scroll Reveal Video Portal Logic
-      const revealContainer = document.getElementById('video-portal');
-      const revealLine = document.getElementById('reveal-line');
-      const revealContent = document.getElementById('reveal-content');
-      const text1 = document.getElementById('text-1');
-      const text2 = document.getElementById('text-2');
 
-      window.addEventListener('scroll', () => {
-        if(!revealContainer) return;
-        const rect = revealContainer.getBoundingClientRect();
-        const containerTop = rect.top;
-        const containerHeight = rect.height - window.innerHeight;
-        
-        // Progress from 0 to 1 as we scroll through the 350vh container
-        let progress = 0;
-        if (containerTop <= 0 && containerHeight > 0) {
-          progress = Math.min(1, Math.abs(containerTop) / containerHeight);
-        } else if (containerTop < -containerHeight) {
-          progress = 1; // Past the container
-        }
+    /* =====================================================
+       2. MOTOR CINEMATOGRÁFICO — SCROLL-DRIVEN
+       Basado en la posición de scroll dentro del wrapper
+    ===================================================== */
+    const wrapper   = document.getElementById('cinematicSection');
+    const filmLine  = document.getElementById('filmLine');
+    const textLayer = document.getElementById('textLayer');
+    const video     = document.getElementById('heroVideo');
+    const texts     = document.querySelectorAll('.float-text');
 
-        // Animation phases
-        if (progress > 0 && progress < 1) {
-          // Line expands vertically after 10% scroll
-          let heightProgress = Math.max(0, (progress - 0.1) * 1.5); 
-          let newHeight = 2 + (heightProgress * 80); // Expand to 80vh
-          if (newHeight > 80) newHeight = 80;
-          
-          revealLine.style.height = newHeight + 'vh';
-          
-          // Video/Content opacity
-          if (progress > 0.15) {
-            revealContent.style.opacity = 1;
-          } else {
-            revealContent.style.opacity = 0;
-          }
+    if (!wrapper || !filmLine || !video) return;
 
-          // Texts
-          if (progress > 0.25) {
-            text1.style.opacity = 1;
-            text1.style.transform = 'translateY(0)';
-          } else {
-            text1.style.opacity = 0;
-            text1.style.transform = 'translateY(60px)';
-          }
+    // Fases de scroll (en % del recorrido total del wrapper 0→1)
+    // 0.00 - 0.15 : Línea crece en ancho (de 80px a 100vw)
+    // 0.15 - 0.30 : Línea crece en alto (de 2px a 100vh) → video aparece
+    // 0.30 - 0.45 : Aparece Texto 1 (BIENVENIDO)
+    // 0.45 - 0.55 : Aparece Texto 2 (NeuroCall)
+    // 0.55 - 0.65 : Aparece Texto 3 (Subtítulo)
+    // 0.65 - 0.75 : Aparece Texto 4 (Tags)
+    // 0.75 - 0.88 : Aparece Texto 5 (CTA)
+    // 0.88 - 1.00 : Todo fade-out → vuelve el Beige
 
-          if (progress > 0.40) {
-            text2.style.opacity = 1;
-            text2.style.transform = 'translateY(0)';
-          } else {
-            text2.style.opacity = 0;
-            text2.style.transform = 'translateY(60px)';
-          }
-        } else if (progress === 0) {
-          revealLine.style.height = '2px';
-          revealContent.style.opacity = 0;
-          text1.style.opacity = 0;
-          text2.style.opacity = 0;
-        } else if (progress === 1) {
-          revealLine.style.height = '80vh';
-          revealContent.style.opacity = 1;
-          text1.style.opacity = 1;
-          text2.style.opacity = 1;
-          text1.style.transform = 'translateY(0)';
-          text2.style.transform = 'translateY(0)';
+    const TEXT_PHASES = [
+      { el: texts[0], show: 0.30, hide: 0.88 },
+      { el: texts[1], show: 0.40, hide: 0.88 },
+      { el: texts[2], show: 0.50, hide: 0.88 },
+      { el: texts[3], show: 0.60, hide: 0.88 },
+      { el: texts[4], show: 0.70, hide: 0.88 },
+    ];
+
+    let videoPlaying = false;
+
+    function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
+    function norm(val, min, max) { return (val - min) / (max - min); }
+
+    function onScroll() {
+      const rect    = wrapper.getBoundingClientRect();
+      const total   = wrapper.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;                // px desde el inicio del wrapper
+      const progress = Math.max(0, Math.min(1, scrolled / total)); // 0→1
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      /* ── FASE 1: Crecer en ANCHO (0 → 0.15) ── */
+      const widthT = norm(progress, 0, 0.15);
+      const newW   = lerp(80, vw, widthT);
+
+      /* ── FASE 2: Crecer en ALTO (0.15 → 0.30) ── */
+      const heightT = norm(progress, 0.15, 0.30);
+      const newH    = lerp(2, vh, heightT);
+
+      /* Aplica dimensiones */
+      filmLine.style.width  = newW + 'px';
+      filmLine.style.height = newH + 'px';
+
+      /* Border-radius: empieza redondeado, se vuelve recto al abrirse */
+      const radius = lerp(20, 0, norm(progress, 0.10, 0.25));
+      filmLine.style.borderRadius = radius + 'px';
+
+      /* Video: aparece cuando el rollo está casi abierto */
+      if (progress > 0.22) {
+        filmLine.classList.add('video-visible');
+        if (!videoPlaying) { video.play().catch(()=>{}); videoPlaying = true; }
+      } else {
+        filmLine.classList.remove('video-visible');
+        video.pause(); videoPlaying = false;
+      }
+
+      /* ── TEXTOS FLOTANTES: cada uno tiene su ventana de scroll ── */
+      TEXT_PHASES.forEach(({ el, show, hide }) => {
+        if (!el) return;
+        if (progress >= show && progress < hide) {
+          el.classList.add('visible');
+        } else {
+          el.classList.remove('visible');
         }
       });
-    });
+
+      /* ── FADE-OUT GLOBAL al final (0.88 → 1.0) ── */
+      const fadeT = norm(progress, 0.88, 1.0);
+      const stageOpacity = lerp(1, 0, fadeT);
+      document.getElementById('cinematicStage').style.opacity = stageOpacity;
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // inicializa en el estado correcto
+
+    /* =====================================================
+       3. BUILD-ON-SCROLL: Intersection Observer para secciones post-video
+    ===================================================== */
+    const buildItems = document.querySelectorAll('.build-item');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('built');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    buildItems.forEach(item => io.observe(item));
+
+  });
   </script>
+
 
 </body>
 </html>
