@@ -143,41 +143,52 @@ app.get('/webhook', async (req, res) => {
   res.sendStatus(400);
 });
 
-// 2. Recepción de Eventos de Llamada (POST): Procesa eventos en tiempo real
+// 2. Recepción de Eventos de Llamada (POST): Procesa eventos reales de Meta en tiempo real
 app.post('/webhook', async (req, res) => {
   const { body } = req;
-  const currentConfig = await db.getConfig();
+  
+  // Responder inmediatamente a Meta para evitar reintentos y timeouts (límite de 5 segundos de Meta)
+  res.status(200).json({ success: true });
 
-  if (body.object === 'whatsapp_business_client') {
-    const entry = body.entry && body.entry[0];
-    const change = entry && entry.changes && entry.changes[0];
-    const value = change && change.value;
+  try {
+    const currentConfig = await db.getConfig();
 
-    if (value && value.call_event) {
-      const callEvent = value.call_event;
-      const callerId = callEvent.from;
-      const callState = callEvent.state; // 'incoming', 'accepted', 'terminated'
-      const callId = callEvent.call_id;
+    if (body.object === 'whatsapp_business_account') {
+      const entry = body.entry && body.entry[0];
+      const change = entry && entry.changes && entry.changes.find(c => c.field === 'calls');
       
-      sendSandboxLog('WHATSAPP', `📱 Evento de llamada. ID: ${callId} | Emisor: ${callerId} | Estado: ${callState}`);
+      if (!change) return;
 
-      if (callState === 'incoming' && callEvent.sdp_offer) {
-        sendSandboxLog('WHATSAPP', `🔔 Llamada entrante de ${callerId}. SDP Oferta detectada.`);
-        io.emit('call-state', { state: 'incoming', caller: callerId });
+      const value = change.value;
+      const phoneNumberId = value?.metadata?.phone_number_id;
+      const callData = value?.calls && value.calls[0];
+
+      if (!callData || !phoneNumberId) return;
+
+      const callId = callData.id;
+      const callerPhone = callData.from;
+      const eventType = callData.event; // 'connect', 'terminate', 'rejected', 'failed', 'no_answer'
+
+      sendSandboxLog('WHATSAPP', `📱 Evento de llamada. ID: ${callId} | Emisor: ${callerPhone} | Evento: ${eventType}`);
+
+      if (eventType === 'connect' && callData.session && callData.session.sdp_type === 'offer') {
+        const offerSdp = callData.session.sdp;
+        sendSandboxLog('WHATSAPP', `🔔 Llamada entrante de ${callerPhone}. SDP Oferta detectada.`);
+        io.emit('call-state', { state: 'incoming', caller: callerPhone });
         
         // Iniciar el flujo real y la negociación de llamada
-        startIncomingCallFlow(callId, callEvent.sdp_offer, callerId, currentConfig);
-      } else if (callState === 'terminated') {
-        sendSandboxLog('WHATSAPP', `🔴 Llamada terminada por el emisor (${callerId}). Limpiando canales.`);
-        io.emit('call-state', { state: 'terminated', caller: callerId });
+        startIncomingCallFlow(callId, offerSdp, callerPhone, currentConfig);
+      } else if (eventType === 'terminate' || eventType === 'rejected' || eventType === 'failed' || eventType === 'no_answer') {
+        sendSandboxLog('WHATSAPP', `🔴 Llamada finalizada o rechazada (${eventType}) por ${callerPhone}. Limpiando canales.`);
+        io.emit('call-state', { state: 'terminated', caller: callerPhone });
         
         whatsappCallManager.endCall(callId);
         geminiLiveBridge.closeSession(callId);
       }
     }
-    return res.sendStatus(200);
+  } catch (err) {
+    console.error('[Webhook POST Error]:', err.message);
   }
-  res.sendStatus(404);
 });
 
 // =========================================================================
