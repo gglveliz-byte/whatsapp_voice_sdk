@@ -593,65 +593,82 @@ body {
 .status-panel {
   display: flex;
   justify-content: space-around;
-  padding: 18px;
-  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  box-shadow: var(--shadow-floating);
 }
 
 .status-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-main);
+  background: rgba(0, 0, 0, 0.02);
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .led {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   transition: var(--transition-smooth);
 }
 
 .led-red {
   background-color: var(--neon-red);
-  box-shadow: 0 0 8px rgba(234, 67, 53, 0.4);
+  box-shadow: 0 0 10px rgba(234, 67, 53, 0.5);
 }
 
 .led-green {
   background-color: var(--neon-green);
-  box-shadow: 0 0 10px rgba(52, 168, 83, 0.5);
+  box-shadow: 0 0 14px rgba(52, 168, 83, 0.8);
   animation: pulse-green 1.5s infinite;
 }
 
 .led-yellow {
   background-color: var(--neon-yellow);
-  box-shadow: 0 0 8px rgba(251, 188, 5, 0.4);
+  box-shadow: 0 0 10px rgba(251, 188, 5, 0.5);
 }
 
 @keyframes pulse-green {
-  0% { transform: scale(1); box-shadow: 0 0 8px rgba(52, 168, 83, 0.4); }
-  50% { transform: scale(1.1); box-shadow: 0 0 16px rgba(52, 168, 83, 0.7); }
-  100% { transform: scale(1); box-shadow: 0 0 8px rgba(52, 168, 83, 0.4); }
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(52, 168, 83, 0.6); }
+  50% { transform: scale(1.15); box-shadow: 0 0 20px rgba(52, 168, 83, 0.9); }
+  100% { transform: scale(1); box-shadow: 0 0 10px rgba(52, 168, 83, 0.6); }
 }
 
-/* 🚨 CONSOLA HACKER TRANSLÚCIDA PREMIUM (Estilo Charcoal Glass) */
+/* 🚨 CONSOLA HACKER TRANSLÚCIDA PREMIUM (Estilo Frosted White Glass) */
 .terminal {
-  background: rgba(13, 16, 23, 0.95); /* Contraste oscuro ultra-premium para ver el código */
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7); /* Frosted Milky Glass */
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid var(--border-glass);
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-floating);
   flex-grow: 1;
-  min-height: 400px;
+  min-height: 480px;
   overflow: hidden;
+  transition: var(--transition-smooth);
+}
+
+.terminal:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.06);
 }
 
 .terminal-header {
-  background: rgba(22, 28, 38, 0.95);
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.65);
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-glass);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -659,14 +676,15 @@ body {
 
 .terminal-buttons {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .t-btn {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   display: inline-block;
+  opacity: 0.85;
 }
 
 .t-btn.red { background-color: #ea4335; }
@@ -674,44 +692,154 @@ body {
 .t-btn.green { background-color: #34a853; }
 
 .terminal-title {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: #94a3b8;
+  font-family: var(--font-outfit);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
 }
 
 .terminal-body {
   padding: 24px;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: #f8fafc;
   overflow-y: auto;
-  max-height: 420px;
+  max-height: 440px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  background: rgba(255, 255, 255, 0.3);
 }
 
+/* 🚀 ANIMATED FLOATING LOG PILLS */
 .log-line {
   display: flex;
-  gap: 10px;
-  align-items: start;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  animation: slide-up-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  color: var(--text-main);
+}
+
+@keyframes slide-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .t-time {
-  color: #64748b;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.03);
+  padding: 2px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
 }
 
 .t-tag {
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.log-line.system .t-tag { color: #34a853; }
-.log-line.meta .t-tag { color: #4285f4; }
-.log-line.webrtc .t-tag { color: #fbbc05; }
-.log-line.gemini .t-tag { color: #a855f7; }
-.log-line.whatsapp .t-tag { color: #0f9d58; }
-.log-line.error .t-tag { color: #ea4335; }
-.log-line.config .t-tag { color: #ec4899; }
+/* Module-specific styles for soft glass capsules */
+.log-line.system {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(52, 168, 83, 0.03) 100%);
+  border-left: 4px solid var(--neon-green);
+}
+.log-line.system .t-tag {
+  background: rgba(52, 168, 83, 0.08);
+  color: #1e7e34;
+  border: 1px solid rgba(52, 168, 83, 0.15);
+}
+
+.log-line.meta {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(26, 115, 232, 0.03) 100%);
+  border-left: 4px solid var(--accent-blue);
+}
+.log-line.meta .t-tag {
+  background: rgba(26, 115, 232, 0.08);
+  color: #1557b0;
+  border: 1px solid rgba(26, 115, 232, 0.15);
+}
+
+.log-line.webrtc {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(251, 188, 5, 0.03) 100%);
+  border-left: 4px solid var(--neon-yellow);
+}
+.log-line.webrtc .t-tag {
+  background: rgba(251, 188, 5, 0.08);
+  color: #b06205;
+  border: 1px solid rgba(251, 188, 5, 0.15);
+}
+
+.log-line.gemini {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(139, 92, 246, 0.03) 100%);
+  border-left: 4px solid var(--accent-purple);
+}
+.log-line.gemini .t-tag {
+  background: rgba(139, 92, 246, 0.08);
+  color: #6d28d9;
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.log-line.whatsapp {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(15, 157, 88, 0.03) 100%);
+  border-left: 4px solid #0f9d58;
+}
+.log-line.whatsapp .t-tag {
+  background: rgba(15, 157, 88, 0.08);
+  color: #0b703e;
+  border: 1px solid rgba(15, 157, 88, 0.15);
+}
+
+.log-line.error {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(234, 67, 53, 0.03) 100%);
+  border-left: 4px solid var(--neon-red);
+}
+.log-line.error .t-tag {
+  background: rgba(234, 67, 53, 0.08);
+  color: #c5221f;
+  border: 1px solid rgba(234, 67, 53, 0.15);
+}
+
+.log-line.warning {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(251, 188, 5, 0.03) 100%);
+  border-left: 4px solid var(--neon-yellow);
+}
+.log-line.warning .t-tag {
+  background: rgba(251, 188, 5, 0.08);
+  color: #b06205;
+  border: 1px solid rgba(251, 188, 5, 0.15);
+}
+
+.log-line.config {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(236, 72, 153, 0.03) 100%);
+  border-left: 4px solid #ec4899;
+}
+.log-line.config .t-tag {
+  background: rgba(236, 72, 153, 0.08);
+  color: #be185d;
+  border: 1px solid rgba(236, 72, 153, 0.15);
+}
 
 /* 🚀 FOOTER */
 footer {

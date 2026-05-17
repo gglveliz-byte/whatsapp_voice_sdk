@@ -180,20 +180,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tag de Tiempo
     const timeSpan = document.createElement('span');
     timeSpan.className = 't-time';
-    timeSpan.textContent = `[${time}]`;
+    timeSpan.textContent = time;
     logLine.appendChild(timeSpan);
     
+    // Mapeo de Iconos por Tipo de Log
+    let iconHTML = '';
+    const cleanType = type.toUpperCase();
+    if (cleanType === 'SYSTEM') iconHTML = '<i class="fa-solid fa-server"></i>';
+    else if (cleanType === 'META') iconHTML = '<i class="fa-brands fa-meta"></i>';
+    else if (cleanType === 'WEBRTC') iconHTML = '<i class="fa-solid fa-network-wired"></i>';
+    else if (cleanType === 'GEMINI') iconHTML = '<i class="fa-solid fa-brain"></i>';
+    else if (cleanType === 'WHATSAPP') iconHTML = '<i class="fa-brands fa-whatsapp"></i>';
+    else if (cleanType === 'CONFIG') iconHTML = '<i class="fa-solid fa-gear"></i>';
+    else if (cleanType === 'ERROR') iconHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+    else if (cleanType === 'WARNING') iconHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+    else iconHTML = '<i class="fa-solid fa-circle-info"></i>';
+
     // Tag de Módulo
     const tagSpan = document.createElement('span');
     tagSpan.className = 't-tag';
-    tagSpan.textContent = `[${type}]`;
+    tagSpan.innerHTML = `${iconHTML} ${type}`;
     logLine.appendChild(tagSpan);
     
     // Mensaje Principal
     const messageSpan = document.createElement('span');
+    messageSpan.style.flexGrow = '1';
     
     if (details) {
-      messageSpan.innerHTML = `${message} <span style="color: var(--text-muted); font-size: 0.8rem;">${JSON.stringify(details)}</span>`;
+      const detailsStr = typeof details === 'object' ? JSON.stringify(details, null, 2) : details;
+      messageSpan.innerHTML = `${message} <span style="display: block; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 8px; margin-top: 6px; border: 1px dashed rgba(0,0,0,0.06); overflow-x: auto; white-space: pre-wrap; word-break: break-all;">${detailsStr}</span>`;
     } else {
       messageSpan.textContent = message;
     }
