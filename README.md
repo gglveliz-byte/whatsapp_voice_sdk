@@ -102,5 +102,5 @@ Para recibir llamadas reales desde WhatsApp en este kit, sigue estas directrices
 
 Este kit se distribuye bajo una **Licencia de Uso Comercial**. Está prohibida la reventa pública del repositorio o su redistribución sin autorización. Puedes utilizarlo para construir tus propios SaaS de voz ilimitados o revender desarrollos finales integrados a tus clientes corporativos.
 
-Desarrollado con honor por **Luis Damian Veliz** y el futuro equipo de **NEURO IA S.A.S** 🚀
+Desarrollado con honor por **Luis Damian Veliz**, Socio Fundador Mayoritario y Director de Tecnología (CTO) de **NEURO IA S.A.S** 🚀
 📧 [lveliz213@hotmail.com](mailto:lveliz213@hotmail.com) | 📱 +593 987 865 420

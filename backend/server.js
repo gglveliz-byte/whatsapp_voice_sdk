@@ -1,7 +1,7 @@
 // =========================================================================
 // 📞 WHATSAPP VOICE SDK BACKEND ENGINE — SERVIDOR DE LLAMADAS Y SEÑALIZACIÓN WebRTC
 // =========================================================================
-// Desarrollado con honor por Neuro IA S.A.S para desarrolladores de élite.
+// Desarrollado con honor por Luis Damian Veliz, Socio Fundador Mayoritario y CTO de NEURO IA S.A.S.
 // Este servidor actúa como puerta de enlace WebRTC, pasarela de Webhooks de Meta
 // y puente WebSocket en tiempo real hacia Gemini Live API.
 
