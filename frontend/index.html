@@ -259,86 +259,222 @@
       pointer-events: auto;
     }
 
-    /* Texto 1: BIENVENIDO AL FUTURO */
-    .ft-welcome {
-      font-size: clamp(1.5rem, 5vw, 4rem);
-      font-weight: 900;
-      color: rgba(255,255,255,0.15);
-      letter-spacing: 6px;
-      text-transform: uppercase;
+    /* ====== PALETA CROMÁTICA CINEMATOGRÁFICA ====== */
+    :root {
+      --c-cyan:  #00D4FF;
+      --c-gold:  #D4AF37;
+      --c-green: #25D366;
+      --c-red:   #FF4C4C;
+    }
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes cyanPulse {
+      0%,100% { text-shadow: 0 0 20px rgba(0,212,255,0.7); }
+      50%      { text-shadow: 0 0 50px rgba(0,212,255,1), 0 0 80px rgba(0,212,255,0.5); }
+    }
+    @keyframes goldPulse {
+      0%,100% { text-shadow: 0 0 20px rgba(212,175,55,0.7); }
+      50%      { text-shadow: 0 0 50px rgba(212,175,55,1), 0 0 80px rgba(212,175,55,0.4); }
+    }
+    @keyframes greenPulse {
+      0%,100% { text-shadow: 0 0 15px rgba(37,211,102,0.8); }
+      50%      { text-shadow: 0 0 40px rgba(37,211,102,1); }
+    }
+
+    /* --- FASE 1: Estadística impacto --- */
+    .ft-stat {
+      text-align: center;
       transition-delay: 0s;
     }
+    .stat-line {
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, var(--c-cyan) 60%, #fff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+    }
+    .stat-desc {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-top: 10px;
+    }
+    .stat-sub {
+      font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.5);
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+    .accent-red  { color: var(--c-red);  font-weight: 900; }
+    .accent-cyan { color: var(--c-cyan); font-weight: 900; }
 
-    /* Texto 2: NeuroCall */
-    .ft-brand {
+    /* --- FASE 2: Marca NeuroCall --- */
+    .ft-brand { text-align: center; transition-delay: 0.15s; }
+    .brand-eyebrow {
+      font-size: clamp(0.8rem, 1.5vw, 1rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 15px;
+    }
+    .brand-lockup {
       display: flex;
       align-items: center;
-      gap: 15px;
-      font-size: clamp(2.5rem, 7vw, 6rem);
-      font-weight: 900;
-      color: #D4AF37;
-      letter-spacing: -2px;
-      transition-delay: 0.15s;
-    }
-
-    .brand-avatar {
-      width: clamp(50px, 8vw, 80px);
-      height: clamp(50px, 8vw, 80px);
-      border-radius: 50%;
-      border: 3px solid #D4AF37;
-      box-shadow: 0 0 30px rgba(212,175,55,0.5);
-    }
-
-    /* Texto 3: Subtítulo */
-    .ft-subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.8rem);
-      font-weight: 400;
-      color: rgba(255,255,255,0.85);
-      letter-spacing: 0.5px;
-      transition-delay: 0.3s;
-    }
-
-    /* Texto 4: Pills de características */
-    .ft-tags {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
       justify-content: center;
-      transition-delay: 0.45s;
+      gap: 20px;
+    }
+    .brand-avatar {
+      width: clamp(55px, 8vw, 85px);
+      height: clamp(55px, 8vw, 85px);
+      border-radius: 50%;
+      border: 2px solid var(--c-gold);
+      box-shadow: 0 0 0 6px rgba(212,175,55,0.15), 0 0 30px rgba(212,175,55,0.4);
+    }
+    .brand-name {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      letter-spacing: -3px;
+      color: var(--c-gold);
+      animation: goldPulse 3s ease infinite;
+    }
+    .brand-tagline {
+      font-size: clamp(0.95rem, 2vw, 1.3rem);
+      color: rgba(255,255,255,0.7);
+      margin-top: 18px;
+      font-style: italic;
+      font-weight: 300;
+      max-width: 550px;
     }
 
-    .tag-pill {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: #fff;
-      padding: 8px 18px;
-      border-radius: 999px;
-      font-size: 0.85rem;
+    /* --- FASE 3: Feature pills enriquecidas --- */
+    .ft-features { text-align: center; transition-delay: 0.3s; }
+    .feature-row {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .feat-pill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 22px;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      min-width: 200px;
+      text-align: left;
+    }
+    .feat-pill i { font-size: 1.4rem; flex-shrink: 0; }
+    .feat-pill strong { display: block; font-size: 0.95rem; font-weight: 800; }
+    .feat-pill span   { font-size: 0.78rem; opacity: 0.7; }
+    .feat-pill.cyan  { background: rgba(0,212,255,0.12); border: 1px solid rgba(0,212,255,0.4); color: #fff; }
+    .feat-pill.cyan i { color: var(--c-cyan); }
+    .feat-pill.gold  { background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.4); color: #fff; }
+    .feat-pill.gold i { color: var(--c-gold); }
+    .feat-pill.green { background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.4); color: #fff; }
+    .feat-pill.green i { color: var(--c-green); }
+    .feat-pill.white { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; }
+    .feat-pill.white i { color: rgba(255,255,255,0.8); }
+
+    /* --- FASE 4: Métricas numéricas --- */
+    .ft-metrics { text-align: center; transition-delay: 0.45s; }
+    .metrics-title {
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
       font-weight: 700;
-      letter-spacing: 0.5px;
-      backdrop-filter: blur(5px);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 30px;
     }
-
-    /* Texto 5: CTA final */
-    .ft-cta {
-      transition-delay: 0.6s;
+    .metrics-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
     }
+    .metric-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 40px;
+    }
+    .metric-num {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+    .metric-divider {
+      width: 1px;
+      height: 80px;
+      background: rgba(255,255,255,0.15);
+    }
+    .cyan-glow  { color: var(--c-cyan);  animation: cyanPulse  2.5s ease infinite; }
+    .gold-glow  { color: var(--c-gold);  animation: goldPulse  2.5s ease infinite; }
+    .green-glow { color: var(--c-green); animation: greenPulse 2.5s ease infinite; }
 
+    /* --- FASE 5: Cierre y CTA --- */
+    .ft-closing { text-align: center; transition-delay: 0.6s; }
+    .closing-line {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+    .closing-time {
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+      margin-bottom: 30px;
+    }
+    .closing-actions { display: flex; flex-direction: column; align-items: center; gap: 15px; }
     .cta-glow {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: #25D366;
+      background: linear-gradient(135deg, #25D366, #1da851);
       color: #fff;
-      padding: 15px 35px;
+      padding: 18px 45px;
       border-radius: 999px;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
       text-decoration: none;
-      box-shadow: 0 0 30px rgba(37,211,102,0.5);
+      box-shadow: 0 0 40px rgba(37,211,102,0.5);
       animation: pulseGlow 2s infinite;
       pointer-events: auto;
+      letter-spacing: 0.3px;
     }
+    .trust-badges {
+      display: flex;
+      gap: 20px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .trust-badges span { display: flex; align-items: center; gap: 6px; }
+    .trust-badges i { color: var(--c-cyan); }
 
     /* ---- BUILD-ON-SCROLL: Secciones post-video ---- */
     .build-section { perspective: 1200px; }
@@ -475,38 +611,96 @@
             <div class="video-overlay"></div>
           </div>
 
-          <!-- CAPA DE TEXTOS FLOTANTES 3D -->
+          <!-- CAPA DE TEXTOS FLOTANTES 3D - NARRATIVA CINEMATOGRÁFICA -->
           <div class="text-layer" id="textLayer">
 
-            <!-- Texto 1: Aparece primero -->
-            <div class="float-text ft-welcome" data-phase="1">
-              BIENVENIDO AL FUTURO
+            <!-- FASE 1: GOLPE ESTADÍSTICO — el problema que NeuroCall resuelve -->
+            <div class="float-text ft-stat" data-phase="1">
+              <div class="stat-line">8 de cada 10</div>
+              <div class="stat-desc">llamadas a negocios <span class="accent-red">quedan sin respuesta.</span></div>
+              <div class="stat-sub">¿Cuántos clientes está perdiendo hoy?</div>
             </div>
 
-            <!-- Texto 2: El logotipo en dorado -->
+            <!-- FASE 2: MARCA — NeuroCall como la solución -->
             <div class="float-text ft-brand" data-phase="2">
-              <img src="assets/neurochat-ai-avatar.png" class="brand-avatar" alt="NeuroCall">
-              <span>NeuroCall</span>
+              <div class="brand-eyebrow">La solución ya existe.</div>
+              <div class="brand-lockup">
+                <img src="assets/neurochat-ai-avatar.png" class="brand-avatar" alt="NeuroCall">
+                <span class="brand-name">NeuroCall</span>
+              </div>
+              <div class="brand-tagline">El agente de IA que nunca cuelga, nunca descansa y nunca falla.</div>
             </div>
 
-            <!-- Texto 3: Subtítulo -->
-            <div class="float-text ft-subtitle" data-phase="3">
-              La atención al cliente ya no duerme.
+            <!-- FASE 3: DIFERENCIADORES — lo que hace único al producto -->
+            <div class="float-text ft-features" data-phase="3">
+              <div class="feature-row">
+                <div class="feat-pill cyan">
+                  <i class="fa-solid fa-bolt"></i>
+                  <div>
+                    <strong>Respuesta Inmediata</strong>
+                    <span>Sin espera, sin hold</span>
+                  </div>
+                </div>
+                <div class="feat-pill gold">
+                  <i class="fa-solid fa-file-lines"></i>
+                  <div>
+                    <strong>Se Entrena en Minutos</strong>
+                    <span>Solo sube un PDF o Word</span>
+                  </div>
+                </div>
+              </div>
+              <div class="feature-row">
+                <div class="feat-pill green">
+                  <i class="fa-brands fa-whatsapp"></i>
+                  <div>
+                    <strong>WhatsApp Oficial</strong>
+                    <span>API Meta certificada</span>
+                  </div>
+                </div>
+                <div class="feat-pill white">
+                  <i class="fa-solid fa-brain"></i>
+                  <div>
+                    <strong>Voz 100% Natural</strong>
+                    <span>IA generativa de última gen</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- Texto 4: Tags de características -->
-            <div class="float-text ft-tags" data-phase="4">
-              <span class="tag-pill">Llamadas 24/7</span>
-              <span class="tag-pill">Voz Natural</span>
-              <span class="tag-pill">Zero Código</span>
-              <span class="tag-pill">WhatsApp Nativo</span>
+            <!-- FASE 4: MÉTRICAS IMPACTO — los números convencen -->
+            <div class="float-text ft-metrics" data-phase="4">
+              <div class="metrics-title">El impacto que transformará tu negocio</div>
+              <div class="metrics-row">
+                <div class="metric-block">
+                  <span class="metric-num cyan-glow">85%</span>
+                  <span class="metric-label">Reducción de<br>costos operativos</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric-block">
+                  <span class="metric-num gold-glow">24/7</span>
+                  <span class="metric-label">Disponibilidad<br>garantizada</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric-block">
+                  <span class="metric-num green-glow">+50</span>
+                  <span class="metric-label">Llamadas<br>simultáneas</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Texto 5: CTA final antes de salir -->
-            <div class="float-text ft-cta" data-phase="5">
-              <a href="https://wa.me/593987865420" target="_blank" class="cta-glow">
-                <i class="fa-brands fa-whatsapp"></i> Hablar con el Agente
-              </a>
+            <!-- FASE 5: CTA DE CIERRE — invitación directa -->
+            <div class="float-text ft-closing" data-phase="5">
+              <div class="closing-line">Implementación en</div>
+              <div class="closing-time"><span class="accent-cyan">24 horas.</span> Sin código. Sin riesgos.</div>
+              <div class="closing-actions">
+                <a href="https://wa.me/593987865420" target="_blank" class="cta-glow">
+                  <i class="fa-brands fa-whatsapp"></i> Quiero mi Agente Ahora
+                </a>
+                <div class="trust-badges">
+                  <span><i class="fa-solid fa-shield-halved"></i> API Meta Oficial</span>
+                  <span><i class="fa-solid fa-lock"></i> Datos Seguros</span>
+                </div>
+              </div>
             </div>
 
           </div><!-- /text-layer -->
