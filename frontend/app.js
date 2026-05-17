@@ -19,19 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const ledMeta = document.getElementById('ledMeta');
   const ledWebRTC = document.getElementById('ledWebRTC');
   const ledGemini = document.getElementById('ledGemini');
-
-  // Intentamos conectar con el servidor Socket.io en el puerto 3006
-  const socketUrl = 'http://localhost:3006';
+  // URL dinámica del backend: Soporta local (localhost:3006) y producción (Render/VPS) de forma automática
+  const socketUrl = window.location.origin.startsWith('http') ? window.location.origin : 'http://localhost:3006';
   appendLog('SYSTEM', `Conectando con el Servidor de Voz en ${socketUrl}...`);
 
   const socket = io(socketUrl, {
     reconnectionAttempts: 5,
     timeout: 5000
   });
-
-  // =========================================================================
-  // ⚡ EVENTOS DEL SOCKET (RECEPCIÓN DE DATOS DEL SERVIDOR)
-  // =========================================================================
 
   // Conexión Exitosa con el Servidor
   socket.on('connect', () => {

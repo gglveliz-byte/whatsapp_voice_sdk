@@ -1,0 +1,20 @@
+# =========================================================================
+# 🚫 WHATSAPP VOICE SDK — GIT IGNORE CONFIGURATION
+# =========================================================================
+
+# Dependencias locales (NPM)
+node_modules/
+package-lock.json
+
+# Llaves privadas y variables de entorno reales
+.env
+
+# Base de datos local (Fallback Contingente)
+backend/database.json
+
+# Archivos temporales de sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

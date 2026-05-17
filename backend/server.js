@@ -4,7 +4,7 @@
 // Desarrollado con honor por Luis Damian Veliz, Socio Fundador Mayoritario y CTO de NEURO IA S.A.S.
 // Este servidor actúa como puerta de enlace WebRTC, pasarela de Webhooks de Meta
 // y puente WebSocket en tiempo real hacia Gemini Live API. 
-// Todos los tokens se guardan de forma persistente en un archivo base de datos local.
+// Soporta base de datos relacional de producción en PostgreSQL con auto-migraciones automáticas.
 
 require('dotenv').config();
 const express = require('express');
@@ -47,11 +47,11 @@ function sendSandboxLog(type, message, details = '') {
 // =========================================================================
 // 🔌 CONEXIONES SOCKET.IO (Control de Estado desde el Navegador)
 // =========================================================================
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   sendSandboxLog('SYSTEM', '🔌 Cliente de administración conectado al socket de monitorización.');
 
-  // Enviar configuración persistente actual al cliente al conectarse
-  const currentConfig = db.getConfig();
+  // Enviar configuración persistente actual al cliente al conectarse (Asíncrono)
+  const currentConfig = await db.getConfig();
   socket.emit('current-config', {
     metaAccessToken: currentConfig.metaAccessToken,
     phoneNumberId: currentConfig.phoneNumberId,
@@ -62,11 +62,11 @@ io.on('connection', (socket) => {
   });
 
   // Escuchar cuando el desarrollador actualiza llaves en vivo desde la UI
-  socket.on('update-config', (configData) => {
-    const success = db.saveConfig(configData);
+  socket.on('update-config', async (configData) => {
+    const success = await db.saveConfig(configData);
     
     if (success) {
-      const updated = db.getConfig();
+      const updated = await db.getConfig();
       sendSandboxLog('CONFIG', '⚙️ Base de Datos: Credenciales guardadas y sincronizadas con éxito.', {
         metaVerifyToken: updated.metaVerifyToken,
         phoneNumberId: updated.phoneNumberId,
@@ -85,18 +85,18 @@ io.on('connection', (socket) => {
 // 🌐 API REST ENDPOINTS (Para integraciones externas o AJAX)
 // =========================================================================
 
-// Cargar configuración guardada
-app.get('/api/config', (req, res) => {
-  const currentConfig = db.getConfig();
+// Cargar configuración guardada (Asíncrono)
+app.get('/api/config', async (req, res) => {
+  const currentConfig = await db.getConfig();
   res.json(currentConfig);
 });
 
-// Guardar configuración
-app.post('/api/config', (req, res) => {
-  const success = db.saveConfig(req.body);
+// Guardar configuración (Asíncrono)
+app.post('/api/config', async (req, res) => {
+  const success = await db.saveConfig(req.body);
   if (success) {
-    const updated = db.getConfig();
-    sendSandboxLog('CONFIG', '⚙️ API REST: Configuración actualizada en database.json');
+    const updated = await db.getConfig();
+    sendSandboxLog('CONFIG', '⚙️ API REST: Configuración actualizada y guardada en base de datos.');
     res.json({ success: true, config: updated });
   } else {
     res.status(500).json({ success: false, error: 'No se pudo guardar la configuración.' });
@@ -108,11 +108,11 @@ app.post('/api/config', (req, res) => {
 // =========================================================================
 
 // 1. Verificación del Webhook (GET): Requerido por Meta para enlazar la app
-app.get('/webhook', (req, res) => {
+app.get('/webhook', async (req, res) => {
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
-  const currentConfig = db.getConfig();
+  const currentConfig = await db.getConfig();
 
   sendSandboxLog('META', '🔍 Meta Graph API está solicitando verificación de webhook...');
 
@@ -132,9 +132,9 @@ app.get('/webhook', (req, res) => {
 });
 
 // 2. Recepción de Eventos de Llamada (POST): Procesa la oferta SDP de Meta en vivo
-app.post('/webhook', (req, res) => {
+app.post('/webhook', async (req, res) => {
   const { body } = req;
-  const currentConfig = db.getConfig();
+  const currentConfig = await db.getConfig();
 
   // Validamos si es una notificación de WhatsApp Business
   if (body.object === 'whatsapp_business_client') {
@@ -307,11 +307,14 @@ function initGeminiLiveBridge(audioTrack, config) {
 
 // Iniciar el Servidor Integrado
 const PORT = process.env.PORT || 3006;
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
+  // Inicialización de la Base de Datos (PostgreSQL o Fallback JSON)
+  await db.initDatabase();
+
   console.log(`\n=============================================================`);
   console.log(`📞 WHATSAPP VOICE SDK BACKEND ENGINE INICIADO CON ÉXITO`);
   console.log(`🌐 Servidor corriendo en: http://localhost:${PORT}`);
-  console.log(`🗄️ Persistencia de Base de Datos activa (database.json)`);
+  console.log(`⚡ Modo Dual de Persistencia Activo (PostgreSQL & JSON)`);
   console.log(`🔌 Monitor en caliente de Logs por Sockets activo.`);
   console.log(`=============================================================\n`);
 });
