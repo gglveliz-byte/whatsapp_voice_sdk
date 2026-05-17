@@ -395,6 +395,43 @@
       white-space: nowrap;
     }
 
+    /* --- LEGAL MODALS --- */
+    .legal-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .legal-modal.active { opacity: 1; }
+    .legal-modal-content {
+      background: #EAE9E4;
+      color: #121212;
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .legal-modal-close {
+      position: absolute;
+      top: 20px; right: 25px;
+      font-size: 2.5rem;
+      cursor: pointer;
+      color: #121212;
+      font-weight: 900;
+    }
+    .legal-modal-body h4 { margin-top: 25px; margin-bottom: 10px; font-size: 1.1rem; font-weight: 800; }
+    .legal-modal-body p { margin-bottom: 15px; color: #444; font-size: 0.95rem; }
+
     @media (max-width: 900px) {
       .hero, .stats-grid, .demo-grid, .faq-grid {
         grid-template-columns: 1fr;
@@ -417,9 +454,13 @@
 
   <nav>
     <div class="logo">NEURO IA S.A.S</div>
-    <a href="https://wa.me/593987865420" target="_blank" class="btn-black">
-      Contactar <i class="fa-solid fa-arrow-right"></i>
-    </a>
+    <div style="display: flex; gap: 20px; align-items: center;">
+      <a href="index.html" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);">Para Desarrolladores</a>
+      <a href="dashboard.html" style="font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);">Acceso Consola</a>
+      <a href="https://wa.me/593987865420" target="_blank" class="btn-black">
+        Contactar <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
   </nav>
 
   <main class="container">
@@ -594,7 +635,8 @@
         <a href="https://wa.me/593987865420" target="_blank"><i class="fa-brands fa-whatsapp" style="font-size: 1.5rem; color: #111; transition: transform 0.2s;"></i></a>
       </div>
       <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
-        Términos y Condiciones &nbsp;•&nbsp; Políticas de Privacidad
+        <a href="#" id="linkTerms" style="text-decoration: underline;">Términos y Condiciones</a> &nbsp;•&nbsp; 
+        <a href="#" id="linkPrivacy" style="text-decoration: underline;">Políticas de Privacidad</a>
       </p>
       <p style="font-size: 0.75rem; color: var(--text-muted);">
         &copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de uso comercial aprobada.
@@ -611,6 +653,94 @@
       color: var(--accent-black);
     }
   </style>
+
+  <!-- Modales Legales B2B -->
+  <div id="termsModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closeTerms">&times;</span>
+      <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 10px;">
+        <i class="fa-solid fa-file-contract"></i> Términos de Servicio Corporativo
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>Al contratar los servicios de automatización de voz de NEURO IA S.A.S, el cliente empresarial acepta las siguientes condiciones:</p>
+        
+        <h4>1. Prestación del Servicio</h4>
+        <p>NEURO IA proporciona infraestructura en la nube y agentes de Inteligencia Artificial para atención telefónica. No nos hacemos responsables por ventas no cerradas o fluctuaciones en los ingresos del cliente derivados del uso del bot.</p>
+        
+        <h4>2. Propiedad Intelectual del Agente</h4>
+        <p>El código fuente, algoritmos, y la lógica de enrutamiento son propiedad exclusiva de NEURO IA S.A.S. El cliente adquiere una licencia de uso (SaaS) mensual o anual, pero no los derechos patrimoniales del software subyacente.</p>
+        
+        <h4>3. Uso Aceptable y Restricciones</h4>
+        <p>El agente debe utilizarse únicamente para atención al cliente y soporte comercial legítimo. Está terminantemente prohibido utilizar nuestra infraestructura para cobros abusivos, fraude, acoso, o violar los términos comerciales de Meta Platforms Inc.</p>
+        
+        <h4>4. Disponibilidad (SLA)</h4>
+        <p>Procuramos un 99.9% de tiempo de actividad, sin embargo, el servicio depende de proveedores externos (Google Gemini y Meta Cloud API). NEURO IA no se responsabiliza por caídas masivas en los servicios de terceros.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="privacyModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closePrivacy">&times;</span>
+      <h3 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 10px;">
+        <i class="fa-solid fa-user-shield"></i> Políticas de Confidencialidad
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>En NEURO IA S.A.S entendemos que los datos comerciales de su negocio son su activo más valioso. Protegemos su información así:</p>
+        
+        <h4>1. Base de Conocimientos Protegida</h4>
+        <p>Los manuales, PDFs y catálogos de precios suministrados para entrenar al agente se procesan en un entorno aislado. Su información no se comercializa ni se utiliza para entrenar modelos públicos externos de IA.</p>
+        
+        <h4>2. Privacidad de las Llamadas</h4>
+        <p>Las llamadas de voz entre sus clientes y el bot se transmiten mediante canales WebRTC y WebSockets cifrados. NEURO IA puede transcribir el audio temporalmente para que la IA genere respuestas, pero no conserva grabaciones de audio a largo plazo sin su previo consentimiento.</p>
+        
+        <h4>3. Datos de Contacto de Sus Clientes</h4>
+        <p>Cualquier dato proporcionado por sus clientes finales durante una llamada automatizada (nombres, dudas, intenciones de compra) le pertenece estrictamente a su empresa. Nosotros actuamos únicamente como procesadores de datos de paso.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const linkTerms = document.getElementById('linkTerms');
+      const linkPrivacy = document.getElementById('linkPrivacy');
+      const termsModal = document.getElementById('termsModal');
+      const privacyModal = document.getElementById('privacyModal');
+      const closeTerms = document.getElementById('closeTerms');
+      const closePrivacy = document.getElementById('closePrivacy');
+
+      const openModal = (modal) => {
+        if (modal) {
+          modal.style.display = 'flex';
+          modal.offsetHeight; // trigger reflow
+          modal.classList.add('active');
+        }
+      };
+
+      const closeModal = (modal) => {
+        if (modal) {
+          modal.classList.remove('active');
+          setTimeout(() => { modal.style.display = 'none'; }, 300);
+        }
+      };
+
+      if (linkTerms) linkTerms.addEventListener('click', (e) => { e.preventDefault(); openModal(termsModal); });
+      if (linkPrivacy) linkPrivacy.addEventListener('click', (e) => { e.preventDefault(); openModal(privacyModal); });
+      if (closeTerms) closeTerms.addEventListener('click', () => closeModal(termsModal));
+      if (closePrivacy) closePrivacy.addEventListener('click', () => closeModal(privacyModal));
+
+      // Close on background click
+      [termsModal, privacyModal].forEach(modal => {
+        if(modal) {
+          modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal(modal);
+          });
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
