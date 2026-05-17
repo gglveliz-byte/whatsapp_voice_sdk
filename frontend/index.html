@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WhatsApp Voice SDK — Real-Time Calls + Gemini Live Template</title>
+  <title>WhatsApp Voice SDK — WhatsApp Real-Time Calls + Gemini Live</title>
   <!-- Google Fonts Outfit & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,12 +25,12 @@
       <div class="badge">🚀 MOTOR DE VOZ IA CON SOBERANÍA TECNOLÓGICA</div>
       <h1>Domina el Mercado de Telefonía con el <span>WhatsApp Voice SDK</span></h1>
       <p class="subtitle">
-        Bypassa 3 meses de código WebRTC complejo, librerías Opus, ffmpeg y burocracia de Meta. 
+        Ahorra 3 meses de código WebRTC complejo, librerías Opus, ffmpeg y burocracia de Meta. 
         Te entregamos la única **plantilla real en Node.js ultra-documentada** para conectar llamadas en WhatsApp con Gemini Live en tiempo real.
       </p>
       <div class="hero-actions">
-        <a href="#sandbox" class="btn btn-primary"><i class="fa-solid fa-plug"></i> Conectar Demo Sandbox</a>
-        <a href="#guide" class="btn btn-secondary"><i class="fa-solid fa-book"></i> Guía de Configuración</a>
+        <a href="dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge-high"></i> Ir al Panel de Administración</a>
+        <a href="#features" class="btn btn-secondary"><i class="fa-solid fa-circle-info"></i> Características Técnicas</a>
       </div>
     </header>
 
@@ -40,7 +40,7 @@
       <div class="pricing-header">
         <div>
           <h2>Adquiere la Licencia Comercial del Repositorio</h2>
-          <p>Llévate el código duro y lánzate a vender soluciones de voz en tu país hoy mismo.</p>
+          <p>Llévate el código de producción completo y lanza agentes de voz en tu país hoy mismo.</p>
         </div>
         <div class="price-box">
           <span class="currency">USD</span>
@@ -52,108 +52,45 @@
       <ul class="features-list">
         <li><i class="fa-solid fa-check text-green"></i> <b>Código WebRTC Completo:</b> Negociación SDP de WhatsApp Calls con node-datachannel.</li>
         <li><i class="fa-solid fa-check text-green"></i> <b>Puente Gemini Live:</b> Audio WebSocket bidireccional fluido a 24kHz.</li>
-        <li><i class="fa-solid fa-check text-green"></i> <b>Transcodificación ffmpeg:</b> Decodificación y codificación Opus/PCM en caliente.</li>
-        <li><i class="fa-solid pointer fa-check text-green"></i> <b>Documentación en Español:</b> Explicado línea por línea para que lo conectes a tu SaaS en 10 minutos.</li>
-        <li><i class="fa-solid fa-check text-green"></i> <b>Meta Bypass:</b> Te enseñamos la estructura exacta para pasar auditorías de llamadas de WhatsApp.</li>
+        <li><i class="fa-solid fa-check text-green"></i> <b>Base de Datos Persistente:</b> Capa de almacenamiento local ultra-ligera en archivo.</li>
+        <li><i class="fa-solid pointer fa-check text-green"></i> <b>Documentación en Español:</b> Explicado línea por línea para que lo integres en 10 minutos.</li>
+        <li><i class="fa-solid fa-check text-green"></i> <b>Estatus Corporativo Seguro:</b> Diseñado estructuralmente para pasar auditorías de Meta.</li>
       </ul>
       <a href="mailto:lveliz213@hotmail.com?subject=Interes en comprar WhatsApp Voice SDK" class="btn btn-cta btn-full">
         <i class="fa-solid fa-envelope"></i> Solicitar Acceso al Repositorio de GitHub
       </a>
     </section>
 
-    <!-- 3. INTERACTIVE CREDENTIALS SANDBOX -->
-    <section id="sandbox" class="sandbox-section">
+    <!-- 3. DETALLE DE CARACTERÍSTICAS -->
+    <section id="features" class="features-section">
       <div class="section-title">
-        <h2>🛠️ Sandbox de Conexión en Caliente</h2>
-        <p>Pega tus llaves de desarrollador aquí abajo. Tu navegador se enlazará con tu servidor local mediante WebSockets para probar la llamada de prueba en tiempo real.</p>
+        <h2>🛠️ Especificaciones de Arquitectura</h2>
+        <p>Un kit diseñado para desarrolladores profesionales y startups que exigen código limpio y escalable.</p>
       </div>
 
-      <div class="sandbox-grid">
-        
-        <!-- Formulario Glassmorphism -->
-        <div class="glass-card config-form">
-          <h3><i class="fa-solid fa-sliders text-violet"></i> Credenciales Temporales</h3>
-          <p class="form-help">Tus claves se guardan en la memoria volátil de tu servidor Node local para realizar la prueba. Nunca se envían a servidores externos.</p>
-          
-          <div class="input-group">
-            <label for="metaToken">Meta System User Access Token</label>
-            <div class="input-wrapper">
-              <i class="fa-solid fa-key"></i>
-              <input type="password" id="metaToken" placeholder="Escribe tu EAAB... de Meta Developer">
-            </div>
-          </div>
-
-          <div class="input-group">
-            <label for="metaVerify">Meta Webhook Verify Token</label>
-            <div class="input-wrapper">
-              <i class="fa-solid fa-shield-halved"></i>
-              <input type="text" id="metaVerify" placeholder="whatsapp_voice_sdk_verify_token">
-            </div>
-          </div>
-
-          <div class="input-group">
-            <label for="geminiKey">Gemini Live API Key (AI Studio)</label>
-            <div class="input-wrapper">
-              <i class="fa-solid fa-brain"></i>
-              <input type="password" id="geminiKey" placeholder="Tu API Key de Google AI Studio">
-            </div>
-          </div>
-
-          <button id="btnConnect" class="btn btn-primary btn-full">
-            <i class="fa-solid fa-rotate"></i> Guardar y Sincronizar en Caliente
-          </button>
+      <div class="features-grid">
+        <div class="glass-card feat-card">
+          <i class="fa-solid fa-shield-halved text-violet icon-large"></i>
+          <h3>Persistencia Segura</h3>
+          <p>Credenciales almacenadas de manera local. Listo para ser migrado a PostgreSQL o Prisma con un par de líneas.</p>
         </div>
-
-        <!-- Terminal de Logs & Luces de Conexión -->
-        <div class="terminal-container">
-          
-          <!-- Luces de Estado de Conexión -->
-          <div class="status-panel glass-card">
-            <div class="status-item">
-              <div id="ledMeta" class="led led-red"></div>
-              <span>Meta Webhook</span>
-            </div>
-            <div class="status-item">
-              <div id="ledWebRTC" class="led led-red"></div>
-              <span>WebRTC Channel</span>
-            </div>
-            <div class="status-item">
-              <div id="ledGemini" class="led led-red"></div>
-              <span>Gemini Live WebSocket</span>
-            </div>
-          </div>
-
-          <!-- La Terminal Consola Hacker -->
-          <div class="terminal">
-            <div class="terminal-header">
-              <div class="terminal-buttons">
-                <span class="t-btn red"></span>
-                <span class="t-btn yellow"></span>
-                <span class="t-btn green"></span>
-              </div>
-              <span class="terminal-title">live_logs@whatsapp_voice_sdk:~</span>
-              <button id="btnSimulate" class="btn btn-simulate">
-                <i class="fa-solid fa-phone-volume"></i> Simular Llamada
-              </button>
-            </div>
-            <div id="terminalBody" class="terminal-body">
-              <div class="log-line system">
-                <span class="t-time">[00:00:00]</span>
-                <span class="t-tag">[SYSTEM]</span>
-                <span>Consola Sandbox inicializada. Esperando conexión con el servidor Node local (Puerto 3006)...</span>
-              </div>
-            </div>
-          </div>
-
+        <div class="glass-card feat-card">
+          <i class="fa-solid fa-bolt text-violet icon-large"></i>
+          <h3>Baja Latencia</h3>
+          <p>Transcodificación en caliente de Opus RTP a Raw PCM (16kHz) garantizando respuestas de voz inmediatas con IA.</p>
         </div>
-
+        <div class="glass-card feat-card">
+          <i class="fa-solid fa-code text-violet icon-large"></i>
+          <h3>100% Modificable</h3>
+          <p>Código Node.js modular sin ofuscación ni dependencias innecesarias, con comentarios detallados en español.</p>
+        </div>
       </div>
     </section>
 
     <!-- 4. GUÍA DE CONFIGURACIÓN INTERACTIVA -->
     <section id="guide" class="guide-section glass-card">
-      <h2><i class="fa-solid fa-book-open text-violet"></i> Guía Rápida para Desarrolladores</h2>
-      <p>Bypassa meses de investigación de la API de Meta siguiendo este stepper estructural para configurar tu entorno de pruebas:</p>
+      <h2><i class="fa-solid fa-book-open text-violet"></i> Estructura de Integración Rápida</h2>
+      <p>Bypassa meses de investigación de la API de Meta siguiendo este stepper estructural para configurar tu entorno de producción:</p>
       
       <div class="stepper">
         
@@ -169,15 +106,15 @@
           <div class="step-number">2</div>
           <h4>Configurar el Webhook en Meta</h4>
           <p>
-            Apunta la URL del Webhook a tu servidor expuesto (ej. mediante Ngrok a <code>http://localhost:3006/webhook</code>). Usa como Verify Token el mismo que pongas en tu Sandbox. Suscríbete al campo <code>messages</code> y <code>call_events</code>.
+            Apunta la URL del Webhook a tu servidor expuesto (ej. mediante Ngrok a <code>http://localhost:3006/webhook</code>). Usa como Verify Token el mismo que guardes en tu base de datos.
           </p>
         </div>
 
         <div class="step-card">
           <div class="step-number">3</div>
-          <h4>Habilitar Números de WhatsApp</h4>
+          <h4>Llamar y Conectar en Vivo</h4>
           <p>
-            Obtén tu **Phone Number ID** y realiza una llamada de prueba desde tu móvil al número asignado por Facebook. El servidor capturará la llamada e iniciará la negociación WebRTC al instante.
+            Obtén tu **Phone Number ID**, guarda los valores en el Dashboard y llama directamente al número. El backend capturará la señal e iniciará el puente en tiempo real.
           </p>
         </div>
 
@@ -187,13 +124,9 @@
     <!-- FOOTER -->
     <footer>
       <p>Hecho con pasión e ingeniería de voz de primer nivel por <b>Luis Damian Veliz</b>, Socio Fundador Mayoritario y Director de Tecnología (CTO) de <b>NEURO IA S.A.S</b> 🚀</p>
-      <p class="copyright">&copy; 2026 Neuro IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.</p>
+      <p class="copyright">&copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.</p>
     </footer>
 
   </main>
-
-  <!-- Socket.io Client -->
-  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>

@@ -1,13 +1,15 @@
 // =========================================================================
-// 🔌 WHATSAPP VOICE SDK SANDBOX CLIENT — CONTROLADOR INTERACTIVO DE PANTALLA
+// 🔌 WHATSAPP VOICE SDK DASHBOARD CLIENT — CONTROLADOR INTERACTIVO REAL
 // =========================================================================
-// Conecta el portal web con el motor de llamadas local vía WebSockets.
+// Conecta el panel web con el backend en caliente vía WebSockets (Socket.io)
+// para guardar credenciales persistentes y monitorizar tráfico de voz en tiempo real.
 
 document.addEventListener('DOMContentLoaded', () => {
   
   // Elementos del DOM
   const btnConnect = document.getElementById('btnConnect');
-  const btnSimulate = document.getElementById('btnSimulate');
+  const phoneIdInput = document.getElementById('phoneId');
+  const wabaIdInput = document.getElementById('wabaId');
   const metaTokenInput = document.getElementById('metaToken');
   const metaVerifyInput = document.getElementById('metaVerify');
   const geminiKeyInput = document.getElementById('geminiKey');
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Intentamos conectar con el servidor Socket.io en el puerto 3006
   const socketUrl = 'http://localhost:3006';
-  appendLog('SYSTEM', `Conectando con el Servidor Node de Voz en ${socketUrl}...`);
+  appendLog('SYSTEM', `Conectando con el Servidor de Voz en ${socketUrl}...`);
 
   const socket = io(socketUrl, {
     reconnectionAttempts: 5,
@@ -28,52 +30,61 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // ⚡ EVENTOS DEL SOCKET (RECPCION DE DATOS DEL SERVIDOR)
+  // ⚡ EVENTOS DEL SOCKET (RECEPCIÓN DE DATOS DEL SERVIDOR)
   // =========================================================================
 
-  // Conexión Exitosa
+  // Conexión Exitosa con el Servidor
   socket.on('connect', () => {
-    appendLog('SYSTEM', '🟢 Enlace establecido con el socket de logs en caliente del Backend.');
-    
-    // Encendemos el LED de Meta en Amarillo (Esperando que guarde llaves o valide webhook)
+    appendLog('SYSTEM', '🟢 Conexión activa con el backend. Cargando datos de persistencia...');
     setLedState(ledMeta, 'yellow');
   });
 
   // Pérdida de Conexión
   socket.on('disconnect', () => {
-    appendLog('ERROR', '🔴 Se perdió la conexión con el servidor backend de telefonía.');
+    appendLog('ERROR', '🔴 Se perdió la conexión con el servidor backend.');
     resetAllLeds();
   });
 
   // Error de Conexión
   socket.on('connect_error', () => {
-    appendLog('ERROR', '⚠️ No se pudo conectar al servidor local en puerto 3006. ¿Está iniciado el backend?');
+    appendLog('ERROR', '⚠️ No se pudo conectar al servidor local. ¿Está iniciado el backend (`npm run dev`)?');
     resetAllLeds();
   });
 
-  // Carga de configuración existente
+  // Carga de configuración existente desde la base de datos
   socket.on('current-config', (config) => {
-    if (config.hasMetaToken) {
-      metaTokenInput.value = '••••••••••••••••••••••••';
+    if (config.phoneNumberId) phoneIdInput.value = config.phoneNumberId;
+    if (config.wabaId) wabaIdInput.value = config.wabaId;
+    if (config.metaAccessToken) metaTokenInput.value = config.metaAccessToken;
+    if (config.metaVerifyToken) metaVerifyInput.value = config.metaVerifyToken;
+    if (config.geminiApiKey) geminiKeyInput.value = config.geminiApiKey;
+
+    // Ajustar luces LED en base a los datos cargados
+    if (config.phoneNumberId && config.metaAccessToken) {
       setLedState(ledMeta, 'green');
+      appendLog('SYSTEM', '✅ Credenciales de Meta cargadas correctamente desde la base de datos.');
+    } else {
+      setLedState(ledMeta, 'yellow');
+      appendLog('WARNING', '⚠️ Faltan credenciales de Meta (Phone Number ID o Access Token) en la base de datos.');
     }
-    if (config.metaVerifyToken) {
-      metaVerifyInput.value = config.metaVerifyToken;
-    }
-    if (config.hasGeminiKey) {
-      geminiKeyInput.value = '••••••••••••••••••••••••';
+
+    if (config.geminiApiKey) {
+      appendLog('SYSTEM', '🧠 API Key de Gemini cargada correctamente desde la base de datos.');
+    } else {
+      appendLog('WARNING', '⚠️ Falta configurar la Gemini API Key para que el bot pueda responder.');
     }
   });
 
-  // Recepción de Logs en Caliente
+  // Recepción de Logs en Caliente de llamadas reales
   socket.on('sandbox-log', (log) => {
     appendLog(log.type, log.message, log.details);
   });
 
-  // Recepción de Estados WebRTC
+  // Recepción de Estados WebRTC reales
   socket.on('webrtc-state', (data) => {
     if (data.state === 'connected' || data.state === 'stable') {
       setLedState(ledWebRTC, 'green');
+      appendLog('WEBRTC', '🟢 Conexión WebRTC completamente establecida y activa.');
     } else if (data.state === 'connecting') {
       setLedState(ledWebRTC, 'yellow');
     } else {
@@ -81,10 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Recepción de Estados Gemini
+  // Recepción de Estados Gemini reales
   socket.on('gemini-state', (data) => {
     if (data.state === 'connected') {
       setLedState(ledGemini, 'green');
+      appendLog('GEMINI', '🧠 Canal de voz activo en directo con Gemini Live.');
     } else if (data.state === 'connecting') {
       setLedState(ledGemini, 'yellow');
     } else {
@@ -92,9 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Recepción de llamada en caliente
+  // Recepción de llamadas en vivo parpadeando luces
   socket.on('call-state', (data) => {
     if (data.state === 'incoming') {
+      appendLog('WHATSAPP', `🔔 ¡Llamada real detectada! Emisor: ${data.caller}`);
+      
       // Efecto visual: parpadeo rápido de LEDs al recibir llamada
       let blink = true;
       const interval = setInterval(() => {
@@ -106,45 +120,55 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(interval);
         setLedState(ledWebRTC, 'yellow');
       }, 3000);
+    } else if (data.state === 'terminated') {
+      appendLog('WHATSAPP', `📴 Llamada finalizada por el emisor.`);
+      resetAllLeds();
+      
+      // Re-establecemos Meta en verde ya que las credenciales siguen cargadas
+      const hasCreds = phoneIdInput.value && metaTokenInput.value;
+      setLedState(ledMeta, hasCreds ? 'green' : 'yellow');
     }
   });
 
   // =========================================================================
-  // 🔘 ACCIONES DE BOTONES (ENVÍO DE EVENTOS AL SERVIDOR)
+  // 🔘 ACCIONES DE BOTONES (GUARDAR CREDENCIALES PERSISTENTES)
   // =========================================================================
 
-  // Guardar credenciales en caliente
   btnConnect.addEventListener('click', () => {
-    const metaToken = metaTokenInput.value.trim();
-    const metaVerify = metaVerifyInput.value.trim() || 'whatsapp_voice_sdk_verify_token';
-    const geminiKey = geminiKeyInput.value.trim();
+    const phoneNumberId = phoneIdInput.value.trim();
+    const wabaId = wabaIdInput.value.trim();
+    const metaAccessToken = metaTokenInput.value.trim();
+    const metaVerifyToken = metaVerifyInput.value.trim() || 'whatsapp_voice_sdk_verify_token';
+    const geminiApiKey = geminiKeyInput.value.trim();
 
-    if (!metaToken || !geminiKey) {
-      appendLog('WARNING', '⚠️ Por favor, ingresa tu Meta Token y tu Gemini API Key antes de conectar.');
+    if (!phoneNumberId || !metaAccessToken || !geminiApiKey) {
+      appendLog('WARNING', '⚠️ Por favor, ingresa los campos requeridos (*) antes de guardar.');
+      alert('Por favor, completa los campos requeridos (*): Phone Number ID, Access Token y Gemini API Key.');
       return;
     }
 
-    appendLog('CONFIG', '⚙️ Sincronizando credenciales en caliente con el servidor...');
+    appendLog('CONFIG', '⚙️ Sincronizando credenciales en caliente con la base de datos...');
 
-    // Emitimos el evento de actualización de configuración al backend Node
+    // Emitimos el evento de actualización para que se guarde de forma permanente
     socket.emit('update-config', {
-      metaAccessToken: metaToken === '••••••••••••••••••••••••' ? '' : metaToken,
-      metaVerifyToken: metaVerify,
-      geminiApiKey: geminiKey === '••••••••••••••••••••••••' ? '' : geminiKey
+      phoneNumberId,
+      wabaId,
+      metaAccessToken,
+      metaVerifyToken,
+      geminiApiKey
     });
   });
 
-  // Escucha de respuesta de configuración guardada
+  // Escucha de respuesta de confirmación de base de datos
   socket.on('config-updated', (res) => {
     if (res.success) {
-      appendLog('CONFIG', '🟢 Credenciales guardadas correctamente en la memoria del servidor.');
+      appendLog('CONFIG', '🟢 Credenciales guardadas y persistidas correctamente en database.json.');
       setLedState(ledMeta, 'green');
+      alert('¡Credenciales guardadas y sincronizadas con éxito!');
+    } else {
+      appendLog('ERROR', '🔴 Error al intentar guardar la configuración en la base de datos.');
+      alert('Hubo un error al guardar la configuración en el servidor.');
     }
-  });
-
-  // Lanzar simulación de llamada en vivo
-  btnSimulate.addEventListener('click', () => {
-    socket.emit('simulate-call');
   });
 
   // =========================================================================
@@ -198,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Resetea todas las luces a rojo apagado
+  // Resetea las luces de canales
   function resetAllLeds() {
     setLedState(ledMeta, 'red');
     setLedState(ledWebRTC, 'red');

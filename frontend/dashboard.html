@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — WhatsApp Voice SDK Control Panel</title>
+  <!-- Google Fonts Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Estilo adicional para la barra de estado en vivo */
+    .live-status-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .live-badge {
+      background: rgba(0, 255, 102, 0.1);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .live-pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--neon-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--neon-green);
+      animation: pulse-green 1.5s infinite;
+    }
+    .form-section-title {
+      color: var(--neon-yellow);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .text-red {
+      color: var(--neon-red);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Rejilla Cibernética de Fondo -->
+  <div class="cyber-grid"></div>
+
+  <!-- Contenedor Principal -->
+  <main class="container">
+    
+    <!-- HEADER DEL DASHBOARD -->
+    <header class="live-status-container" style="margin-top: 20px;">
+      <div>
+        <a href="index.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem; margin-bottom: 10px;">
+          <i class="fa-solid fa-arrow-left"></i> Volver a la Landing
+        </a>
+        <h1 style="font-size: 2.2rem; text-align: left; margin: 0;">Panel de Control y <span>Depuración</span></h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
+          Configura tus tokens de Meta y Google para enlazar llamadas reales de WhatsApp en caliente.
+        </p>
+      </div>
+      <div class="live-badge">
+        <span class="live-pulse"></span> Servidor Escuchando (Puerto 3006)
+      </div>
+    </header>
+
+    <!-- CUADRÍCULA DE CONEXIÓN REAL -->
+    <section class="sandbox-grid">
+      
+      <!-- Formulario de Configuración Persistente (Igual a la imagen de Luis!) -->
+      <div class="glass-card config-form">
+        <h3 class="form-section-title">¿Dónde consigo estos datos?</h3>
+        <ol class="form-help" style="padding-left: 16px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; line-height: 1.4;">
+          <li>Ve a <a href="https://developers.facebook.com/" target="_blank" style="color: var(--neon-green); font-weight: bold; text-decoration: none;">developers.facebook.com</a> ➔ tu App ➔ WhatsApp ➔ Configuración de la API.</li>
+          <li>El <b>Phone Number ID</b> y <b>WABA ID</b> aparecen en esa pantalla.</li>
+          <li>El <b>Token</b>: crea un «System User» en tu Business Manager ➔ genera un token permanente con permisos <code>whatsapp_business_messaging</code>.</li>
+        </ol>
+
+        <div class="divider" style="margin-bottom: 20px;"></div>
+        
+        <div class="input-group">
+          <label for="phoneId">Phone Number ID <span class="text-red">*</span></label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-phone"></i>
+            <input type="text" id="phoneId" placeholder="123456789012345">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="wabaId">WABA ID (opcional)</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-folder-open"></i>
+            <input type="text" id="wabaId" placeholder="987654321098765">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="metaToken">Access Token (permanente) <span class="text-red">*</span></label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-key"></i>
+            <input type="password" id="metaToken" placeholder="EAAbxxxxxx...">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="metaVerify">Meta Webhook Verify Token <span class="text-red">*</span></label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-shield-halved"></i>
+            <input type="text" id="metaVerify" placeholder="whatsapp_voice_sdk_verify_token">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="geminiKey">Gemini Live API Key (AI Studio) <span class="text-red">*</span></label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-brain"></i>
+            <input type="password" id="geminiKey" placeholder="Tu API Key de Google AI Studio">
+          </div>
+        </div>
+
+        <button id="btnConnect" class="btn btn-primary btn-full" style="margin-top: 10px;">
+          <i class="fa-solid fa-floppy-disk"></i> Guardar y Conectar en Caliente
+        </button>
+      </div>
+
+      <!-- Monitor de Logs y Luces de Tráfico Real -->
+      <div class="terminal-container">
+        
+        <!-- Luces de Estado de Conexión en Caliente -->
+        <div class="status-panel glass-card">
+          <div class="status-item">
+            <div id="ledMeta" class="led led-red"></div>
+            <span>Meta Webhook</span>
+          </div>
+          <div class="status-item">
+            <div id="ledWebRTC" class="led led-red"></div>
+            <span>WebRTC Channel</span>
+          </div>
+          <div class="status-item">
+            <div id="ledGemini" class="led led-red"></div>
+            <span>Gemini Live WebSocket</span>
+          </div>
+        </div>
+
+        <!-- Terminal de Logs de Tráfico de llamadas reales -->
+        <div class="terminal">
+          <div class="terminal-header">
+            <div class="terminal-buttons">
+              <span class="t-btn red"></span>
+              <span class="t-btn yellow"></span>
+              <span class="t-btn green"></span>
+            </div>
+            <span class="terminal-title">live_logs@whatsapp_voice_sdk:~</span>
+            <div style="font-size: 0.7rem; color: var(--neon-green); font-weight: 700;">
+              <i class="fa-solid fa-satellite-dish"></i> LIVE DEBUGR
+            </div>
+          </div>
+          <div id="terminalBody" class="terminal-body" style="height: 420px; max-height: 420px;">
+            <div class="log-line system">
+              <span class="t-time">[00:00:00]</span>
+              <span class="t-tag">[SYSTEM]</span>
+              <span>Consola depuradora de llamadas iniciada. Esperando enlace con el backend...</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Hecho con pasión e ingeniería de voz de primer nivel por <b>Luis Damian Veliz</b>, Socio Fundador Mayoritario y Director de Tecnología (CTO) de <b>NEURO IA S.A.S</b> 🚀</p>
+      <p class="copyright">&copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.</p>
+    </footer>
+
+  </main>
+
+  <!-- Socket.io Client -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
