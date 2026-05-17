@@ -239,4 +239,104 @@ document.addEventListener('DOMContentLoaded', () => {
     setLedState(ledGemini, 'red');
   }
 
+  // =========================================================================
+  // 🎠 CONTROLADOR DE CARRUSEL PASO A PASO PROFESIONAL (META DEVELOPERS)
+  // =========================================================================
+  const carouselSteps = [
+    {
+      title: "1. Registrarse en Meta Developers",
+      content: `El primer paso es tener un perfil de desarrollador en Meta. Ve a <a href="https://developers.facebook.com/" target="_blank">developers.facebook.com</a>, inicia sesión con tu cuenta de Facebook y completa el registro sencillo.`
+    },
+    {
+      title: "2. Crear una Aplicación de Negocio",
+      content: `Entra a la sección "Mis Apps" y haz clic en <a href="https://developers.facebook.com/apps/creation/" target="_blank">Crear App</a>. Selecciona la opción de caso de uso <b>"Otros"</b> o <b>"Negocios"</b>. Esto te habilitará las APIs empresariales necesarias.`
+    },
+    {
+      title: "3. Agregar el Producto WhatsApp",
+      content: `En el menú lateral de tu nueva App, deslízate hasta <b>"Agregar Producto"</b>. Busca el módulo de <b>WhatsApp</b> en el listado y haz clic en <b>Configurar</b> para agregarlo a tu aplicación.`
+    },
+    {
+      title: "4. Entrar a Configuración de la API",
+      content: `Navega en el menú lateral a <b>WhatsApp ➔ Configuración de la API</b>. Desliza la pantalla hacia abajo hasta encontrar la sección de <b>Configuración de Webhooks</b> y haz clic en ella.`
+    },
+    {
+      title: "5. Configurar URL de Devolución",
+      content: `Edita tu Webhook de WhatsApp y completa las casillas con tus datos del servidor en caliente:<br>
+      • <b>URL de devolución de llamada</b>: <code>${socketUrl}/webhook</code><br>
+      • <b>Token de verificación</b>: El token de tu Base de Datos (ej. <code>whatsapp_voice_sdk_verify_token</code>)`
+    },
+    {
+      title: "6. Suscribirse a Campos de Webhook",
+      content: `Una vez enlazado el webhook, haz clic en el botón de campos y suscríbete obligatoriamente a los siguientes tres eventos de Meta:<br>
+      • <b><code>calls</code></b> (¡Crítico para capturar las llamadas de voz WebRTC!)<br>
+      • <b><code>messages</code></b> (Chat y texto)<br>
+      • <b><code>smb_message_echoes</code></b> (Ecos de mensajes de la IA)`
+    },
+    {
+      title: "7. Copiar Credenciales al Dashboard",
+      content: `En la pantalla de WhatsApp ➔ Configuración de la API copia el <b>Phone Number ID</b>, el <b>WABA ID</b> y haz clic en <b>Generar Token Temporal</b> de pruebas. Pégalos en el formulario de abajo para activar tu bot en caliente.`
+    }
+  ];
+
+  let currentStep = 0;
+  const stepBadge = document.getElementById('stepBadge');
+  const stepTitle = document.getElementById('stepTitle');
+  const stepContent = document.getElementById('stepContent');
+  const carouselProgress = document.getElementById('carouselProgress');
+  const btnPrevStep = document.getElementById('btnPrevStep');
+  const btnNextStep = document.getElementById('btnNextStep');
+
+  function renderStep(index) {
+    if (index < 0 || index >= carouselSteps.length) return;
+    
+    // Animación de opacidad suave
+    stepContent.style.opacity = 0;
+    
+    setTimeout(() => {
+      currentStep = index;
+      const step = carouselSteps[index];
+      
+      stepBadge.textContent = `Paso ${currentStep + 1} de ${carouselSteps.length}`;
+      stepTitle.textContent = step.title;
+      stepContent.innerHTML = step.content;
+      
+      // Barra de progreso dinámica
+      const percent = ((currentStep + 1) / carouselSteps.length) * 100;
+      carouselProgress.style.width = `${percent}%`;
+      
+      // Control de estado de botones
+      btnPrevStep.disabled = currentStep === 0;
+      if (currentStep === carouselSteps.length - 1) {
+        btnNextStep.innerHTML = '¡Completado! <i class="fa-solid fa-check"></i>';
+      } else {
+        btnNextStep.innerHTML = 'Siguiente <i class="fa-solid fa-chevron-right"></i>';
+      }
+      
+      stepContent.style.opacity = 1;
+    }, 150);
+  }
+
+  // Enlazar eventos de clics para navegación del carrusel
+  if (btnPrevStep && btnNextStep) {
+    btnPrevStep.addEventListener('click', () => {
+      renderStep(currentStep - 1);
+    });
+    
+    btnNextStep.addEventListener('click', () => {
+      if (currentStep < carouselSteps.length - 1) {
+        renderStep(currentStep + 1);
+      } else {
+        // Enfoque visual al formulario al completar el tutorial
+        const firstInput = document.getElementById('phoneId');
+        if (firstInput) {
+          firstInput.focus();
+          firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+
+    // Carga del primer paso al iniciar
+    renderStep(0);
+  }
+
 });

@@ -84,12 +84,32 @@
       
       <!-- Formulario de Configuración Persistente (Igual a la imagen de Luis!) -->
       <div class="glass-card config-form">
-        <h3 class="form-section-title">¿Dónde consigo estos datos?</h3>
-        <ol class="form-help" style="padding-left: 16px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; line-height: 1.4;">
-          <li>Ve a <a href="https://developers.facebook.com/" target="_blank" style="color: var(--accent-blue); font-weight: bold; text-decoration: none;">developers.facebook.com</a> ➔ tu App ➔ WhatsApp ➔ Configuración de la API.</li>
-          <li>El <b>Phone Number ID</b> y <b>WABA ID</b> aparecen en esa pantalla.</li>
-          <li>El <b>Token</b>: crea un «System User» en tu Business Manager ➔ genera un token permanente con permisos <code>whatsapp_business_messaging</code>.</li>
-        </ol>
+        <h3 class="form-section-title"><i class="fa-solid fa-circle-info"></i> Asistente de Configuración Meta</h3>
+        
+        <!-- Carrusel de Configuración Profesional de Meta -->
+        <div class="meta-carousel">
+          <div class="carousel-progress">
+            <div class="progress-bar-fill" id="carouselProgress"></div>
+          </div>
+          
+          <div class="carousel-step-header">
+            <span class="step-badge" id="stepBadge">Paso 1 de 7</span>
+          </div>
+          <h4 class="step-title" id="stepTitle">Cargando...</h4>
+
+          <div class="carousel-step-content" id="stepContent">
+            <!-- Cargado dinámicamente por JS con transiciones suaves -->
+          </div>
+
+          <div class="carousel-navigation">
+            <button class="btn btn-secondary btn-xs" id="btnPrevStep" type="button" disabled>
+              <i class="fa-solid fa-chevron-left"></i> Anterior
+            </button>
+            <button class="btn btn-primary btn-xs" id="btnNextStep" type="button">
+              Siguiente <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
 
         <div class="divider" style="margin-bottom: 20px;"></div>
         
