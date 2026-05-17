@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`
     },
     {
-      title: "7. Copiar Credenciales al Dashboard",
+      title: "7. Copiar Credenciales a la Consola",
       content: `En la pantalla de WhatsApp ➔ Configuración de la API encontrarás el <b>Phone Number ID</b>, el <b>WABA ID</b> y podrás generar un <b>Access Token</b> temporal de pruebas. Copia estos datos y pégalos en el formulario de arriba.<br><img src="guia/image copy 8.png" class="carousel-step-img" alt="Credenciales de API">`
     },
     {
@@ -385,5 +385,74 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // =========================================================================
+  // ⚖️ CONTROLADOR DE MODALES LEGALES (TÉRMINOS Y PRIVACIDAD)
+  // =========================================================================
+  const linkTerms = document.getElementById('linkTerms');
+  const linkPrivacy = document.getElementById('linkPrivacy');
+  const termsModal = document.getElementById('termsModal');
+  const privacyModal = document.getElementById('privacyModal');
+  const closeTerms = document.getElementById('closeTerms');
+  const closePrivacy = document.getElementById('closePrivacy');
+
+  const openLegalModal = (modal) => {
+    if (modal) {
+      modal.style.display = 'flex';
+      // Reflow for transition
+      modal.offsetHeight;
+      modal.classList.add('active');
+    }
+  };
+
+  const closeLegalModal = (modal) => {
+    if (modal) {
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+  };
+
+  if (linkTerms && termsModal) {
+    linkTerms.addEventListener('click', (e) => {
+      e.preventDefault();
+      openLegalModal(termsModal);
+    });
+  }
+
+  if (linkPrivacy && privacyModal) {
+    linkPrivacy.addEventListener('click', (e) => {
+      e.preventDefault();
+      openLegalModal(privacyModal);
+    });
+  }
+
+  if (closeTerms && termsModal) {
+    closeTerms.addEventListener('click', () => closeLegalModal(termsModal));
+  }
+
+  if (closePrivacy && privacyModal) {
+    closePrivacy.addEventListener('click', () => closeLegalModal(privacyModal));
+  }
+
+  // Cerrar al hacer clic fuera del contenido del modal
+  [termsModal, privacyModal].forEach(modal => {
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeLegalModal(modal);
+        }
+      });
+    }
+  });
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLegalModal(termsModal);
+      closeLegalModal(privacyModal);
+    }
+  });
 
 });

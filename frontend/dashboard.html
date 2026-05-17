@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard — WhatsApp Voice SDK Control Panel</title>
+  <title>Consola — WhatsApp Voice SDK Control Panel</title>
   <!-- Google Fonts Outfit & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,13 +63,13 @@
   <!-- Contenedor Principal -->
   <main class="container">
     
-    <!-- HEADER DEL DASHBOARD -->
+    <!-- HEADER DE LA CONSOLA -->
     <header class="live-status-container" style="margin-top: 20px;">
       <div>
         <a href="index.html" class="btn btn-secondary" style="padding: 8px 20px; font-size: 0.85rem; margin-bottom: 10px; border-radius: 999px;">
           <i class="fa-solid fa-arrow-left"></i> Volver a la Landing
         </a>
-        <h1 style="font-size: 2.2rem; text-align: left; margin: 0; letter-spacing: -0.8px;">Panel de Control y <span>Depuración</span></h1>
+        <h1 style="font-size: 2.2rem; text-align: left; margin: 0; letter-spacing: -0.8px;">Consola de Voz y <span>Depuración</span></h1>
         <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">
           Configura tus tokens de Meta y Google para enlazar llamadas reales de WhatsApp en caliente.
         </p>
@@ -322,9 +322,9 @@
       
       <!-- Enlaces de Términos y Políticas -->
       <div class="footer-links" style="display: flex; gap: 18px; justify-content: center; align-items: center; font-size: 0.85rem;">
-        <a href="#" class="footer-link" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Términos y Condiciones</a>
+        <a href="#" class="footer-link" id="linkTerms" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Términos y Condiciones</a>
         <span style="color: rgba(0, 0, 0, 0.15);">•</span>
-        <a href="#" class="footer-link" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Políticas de Privacidad</a>
+        <a href="#" class="footer-link" id="linkPrivacy" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Políticas de Privacidad</a>
       </div>
 
       <!-- Botones de Redes Sociales Corporativas -->
@@ -406,6 +406,58 @@
   <div id="imageLightbox" class="lightbox-modal">
     <span class="lightbox-close">&times;</span>
     <img class="lightbox-content" id="lightboxImage" alt="Zoom de Captura">
+  </div>
+
+  <!-- Modal de Términos y Condiciones (NEURO IA S.A.S) -->
+  <div id="termsModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closeTerms">&times;</span>
+      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-purple); margin: 0 0 10px 0;">
+        <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>Bienvenido a la Consola de Administración de Voz de <strong>NEURO IA S.A.S</strong>. Al acceder o utilizar nuestra plataforma, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso:</p>
+        
+        <h4>1. Aceptación y Licencia</h4>
+        <p>NEURO IA S.A.S otorga al usuario una licencia comercial limitada, no exclusiva e intransferible para operar la Consola de Enlace de Llamadas de WhatsApp Cloud API de acuerdo con las condiciones estipuladas.</p>
+        
+        <h4>2. Uso Autorizado del Servicio</h4>
+        <p>El usuario se compromete a utilizar este sistema únicamente para fines legales y comerciales autorizados. Queda estrictamente prohibido realizar prácticas de llamadas no deseadas (SPAM), acoso, robo de identidad o actividades que violen las políticas de mensajería comercial de Meta Platforms Inc.</p>
+        
+        <h4>3. Propiedad Intelectual</h4>
+        <p>Todos los desarrollos, marcas, logos, diseños de interfaz de consola corporativa, algoritmos de enrutamiento y lógica de integración WebRTC/AI son propiedad exclusiva de NEURO IA S.A.S. Ningún derecho de propiedad intelectual es transferido al licenciatario.</p>
+        
+        <h4>4. Exclusión de Garantías</h4>
+        <p>La consola se proporciona "tal cual" y "según disponibilidad". NEURO IA S.A.S no garantiza que el servicio sea ininterrumpido o libre de errores debido a posibles latencias externas en los servicios de Meta Developers o Google Gemini AI Studio.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Políticas de Privacidad (NEURO IA S.A.S) -->
+  <div id="privacyModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closePrivacy">&times;</span>
+      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-blue); margin: 0 0 10px 0;">
+        <i class="fa-solid fa-user-shield"></i> Políticas de Privacidad
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>En <strong>NEURO IA S.A.S</strong>, nos tomamos muy en serio la seguridad y confidencialidad de su información corporativa. Esta política describe cómo gestionamos los datos en la Consola:</p>
+        
+        <h4>1. Recopilación de Credenciales y Tokens</h4>
+        <p>Toda credencial ingresada (Phone Number ID, WABA ID, Access Tokens, Gemini API Keys) se almacena y procesa localmente en su base de datos segura y se transmite de forma cifrada directa y exclusivamente a los endpoints oficiales de Meta y Google.</p>
+        
+        <h4>2. Seguridad de Transmisión de Audio y Datos</h4>
+        <p>Los flujos de voz entrantes y salientes a través del canal WebRTC viajan de manera segura mediante flujos cifrados en caliente (SRTP/DTLS) y WebSocket seguidos, asegurando la privacidad absoluta de las llamadas entre el cliente y el agente inteligente de Gemini.</p>
+        
+        <h4>3. No Compartición con Terceros</h4>
+        <p>NEURO IA S.A.S nunca comercializará, transferirá ni divulgará sus tokens, números telefónicos ni historiales de logs a ningún tercero sin su consentimiento explícito.</p>
+        
+        <h4>4. Control del Usuario</h4>
+        <p>Usted conserva el control total para borrar o actualizar sus credenciales guardadas en la consola de manera instantánea mediante el botón de Guardar y Conectar, restableciendo la memoria del sistema.</p>
+      </div>
+    </div>
   </div>
 
 </body>
