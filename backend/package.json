@@ -17,6 +17,7 @@
   "author": "Neuro IA S.A.S",
   "license": "Commercial",
   "dependencies": {
+    "axios": "^1.16.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "node-datachannel": "^0.4.3",

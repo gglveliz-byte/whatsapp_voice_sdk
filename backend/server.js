@@ -2,8 +2,7 @@
 // 📞 WHATSAPP VOICE SDK BACKEND ENGINE — SERVIDOR DE LLAMADAS Y SEÑALIZACIÓN WebRTC
 // =========================================================================
 // Desarrollado con honor por Luis Damian Veliz, Socio Fundador Mayoritario y CTO de NEURO IA S.A.S.
-// Este servidor actúa como puerta de enlace WebRTC, pasarela de Webhooks de Meta
-// y puente WebSocket en tiempo real hacia Gemini Live API. 
+// Este servidor actúa como puente WebRTC en tiempo real hacia Gemini Live API y Meta.
 // Soporta base de datos relacional de producción en PostgreSQL con auto-migraciones automáticas.
 
 require('dotenv').config();
@@ -11,23 +10,18 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const WebSocket = require('ws');
-let nodeDataChannel = null;
-try {
-  nodeDataChannel = require('node-datachannel');
-} catch (err) {
-  console.warn('\n⚠️  [WARN] No se pudo cargar el módulo nativo "node-datachannel".');
-  console.warn('Esto ocurre porque estás usando una versión de Node muy nueva (v24.14.1) o no tienes herramientas de compilación C++ instaladas.');
-  console.warn('La persistencia Postgres, el dashboard, el servidor Express y Gemini seguirán funcionando.');
-  console.warn('Para solucionar esto: usa Node v20.x (LTS) donde existen binarios precompilados de WebRTC, o instala C++ Build Tools en Windows.\n');
-}
 const db = require('./database');
+
+// Importar servicios del motor real de telefonía e inteligencia artificial
+const whatsappCallManager = require('./services/whatsappCallManager');
+const geminiLiveBridge = require('./services/geminiLiveBridge');
 
 // Inicialización de Express y Socket.io para la consola en vivo
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Permite conexiones de cualquier origen para facilitar el desarrollo
+    origin: '*',
     methods: ['GET', 'POST']
   }
 });
@@ -58,7 +52,7 @@ function sendSandboxLog(type, message, details = '') {
 io.on('connection', async (socket) => {
   sendSandboxLog('SYSTEM', '🔌 Cliente de administración conectado al socket de monitorización.');
 
-  // Enviar configuración persistente actual al cliente al conectarse (Asíncrono)
+  // Enviar configuración persistente actual al cliente al conectarse
   const currentConfig = await db.getConfig();
   socket.emit('current-config', {
     metaAccessToken: currentConfig.metaAccessToken,
@@ -82,6 +76,18 @@ io.on('connection', async (socket) => {
         hasMetaToken: !!updated.metaAccessToken,
         hasGeminiKey: !!updated.geminiApiKey
       });
+
+      // Si Meta Token y Phone ID están configurados, activar llamadas automáticamente en Meta
+      if (updated.metaAccessToken && updated.phoneNumberId) {
+        try {
+          sendSandboxLog('META', '📡 Habilitando el servicio de llamadas entrantes en la API de Meta...');
+          await whatsappCallManager.setCallingEnabled(updated.phoneNumberId, updated.metaAccessToken, true);
+          sendSandboxLog('META', '🟢 WhatsApp Calling habilitado con éxito.');
+        } catch (err) {
+          sendSandboxLog('ERROR', '🔴 Fallo al intentar habilitar WhatsApp Calling en Meta.', err.message);
+        }
+      }
+
       socket.emit('config-updated', { success: true });
     } else {
       socket.emit('config-updated', { success: false });
@@ -90,21 +96,19 @@ io.on('connection', async (socket) => {
 });
 
 // =========================================================================
-// 🌐 API REST ENDPOINTS (Para integraciones externas o AJAX)
+// 🌐 API REST ENDPOINTS
 // =========================================================================
 
-// Cargar configuración guardada (Asíncrono)
 app.get('/api/config', async (req, res) => {
   const currentConfig = await db.getConfig();
   res.json(currentConfig);
 });
 
-// Guardar configuración (Asíncrono)
 app.post('/api/config', async (req, res) => {
   const success = await db.saveConfig(req.body);
   if (success) {
     const updated = await db.getConfig();
-    sendSandboxLog('CONFIG', '⚙️ API REST: Configuración actualizada y guardada en base de datos.');
+    sendSandboxLog('CONFIG', '⚙️ API REST: Configuración actualizada en la base de datos.');
     res.json({ success: true, config: updated });
   } else {
     res.status(500).json({ success: false, error: 'No se pudo guardar la configuración.' });
@@ -115,7 +119,7 @@ app.post('/api/config', async (req, res) => {
 // 📱 WEBHOOKS PARA META DEVELOPER PORTAL (WHATSAPP BUSINESS)
 // =========================================================================
 
-// 1. Verificación del Webhook (GET): Requerido por Meta para enlazar la app
+// 1. Verificación del Webhook (GET): Requerido por Meta para verificar el túnel
 app.get('/webhook', async (req, res) => {
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
@@ -139,31 +143,36 @@ app.get('/webhook', async (req, res) => {
   res.sendStatus(400);
 });
 
-// 2. Recepción de Eventos de Llamada (POST): Procesa la oferta SDP de Meta en vivo
+// 2. Recepción de Eventos de Llamada (POST): Procesa eventos en tiempo real
 app.post('/webhook', async (req, res) => {
   const { body } = req;
   const currentConfig = await db.getConfig();
 
-  // Validamos si es una notificación de WhatsApp Business
   if (body.object === 'whatsapp_business_client') {
     const entry = body.entry && body.entry[0];
     const change = entry && entry.changes && entry.changes[0];
     const value = change && change.value;
 
-    // Detectamos si es un evento de llamada entrante (call_event)
     if (value && value.call_event) {
       const callEvent = value.call_event;
       const callerId = callEvent.from;
       const callState = callEvent.state; // 'incoming', 'accepted', 'terminated'
+      const callId = callEvent.call_id;
       
-      sendSandboxLog('WHATSAPP', `📱 Evento de llamada real. Emisor: ${callerId} | Estado: ${callState}`);
-      io.emit('call-state', { state: callState, caller: callerId });
+      sendSandboxLog('WHATSAPP', `📱 Evento de llamada. ID: ${callId} | Emisor: ${callerId} | Estado: ${callState}`);
 
       if (callState === 'incoming' && callEvent.sdp_offer) {
-        sendSandboxLog('WEBRTC', '📦 Oferta SDP (Session Description Protocol) recibida desde Meta.');
+        sendSandboxLog('WHATSAPP', `🔔 Llamada entrante de ${callerId}. SDP Oferta detectada.`);
+        io.emit('call-state', { state: 'incoming', caller: callerId });
         
-        // Iniciamos la negociación WebRTC real con node-datachannel y las llaves guardadas
-        handleWebRTCHandshake(callEvent.sdp_offer, callerId, currentConfig);
+        // Iniciar el flujo real y la negociación de llamada
+        startIncomingCallFlow(callId, callEvent.sdp_offer, callerId, currentConfig);
+      } else if (callState === 'terminated') {
+        sendSandboxLog('WHATSAPP', `🔴 Llamada terminada por el emisor (${callerId}). Limpiando canales.`);
+        io.emit('call-state', { state: 'terminated', caller: callerId });
+        
+        whatsappCallManager.endCall(callId);
+        geminiLiveBridge.closeSession(callId);
       }
     }
     return res.sendStatus(200);
@@ -172,151 +181,91 @@ app.post('/webhook', async (req, res) => {
 });
 
 // =========================================================================
-// ⚙️ MOTOR DE VOZ: WebRTC NEGOCIACIÓN & GEMINI LIVE BRIDGE
+// ⚙️ FLUJO DE CONTROL EN CALIENTE: WebRTC NEGOCIACIÓN & GEMINI LIVE BRIDGE
 // =========================================================================
 
-function handleWebRTCHandshake(sdpOffer, callerId, config) {
-  if (!nodeDataChannel) {
-    sendSandboxLog('ERROR', '🔴 WebRTC no está disponible: el módulo nativo "node-datachannel" no pudo cargarse en este entorno Node v24.');
-    sendSandboxLog('SYSTEM', '💡 Sugerencia: Utiliza Node v20.x (LTS) o ejecuta la app en Docker / Linux para resolver la compilación de WebRTC.');
-    io.emit('webrtc-state', { state: 'failed' });
-    return;
-  }
-
-  sendSandboxLog('WEBRTC', '🛠️ Inicializando PeerConnection WebRTC...');
-  io.emit('webrtc-state', { state: 'connecting' });
-
+async function startIncomingCallFlow(callId, sdpOffer, callerId, config) {
   try {
-    // 1. Configurar servidores ICE de la base de datos
-    const pcConfig = {
-      iceServers: [config.iceServers]
-    };
+    // Validar si node-datachannel está instalado/compilado en el entorno local
+    try {
+      require('node-datachannel');
+    } catch (e) {
+      sendSandboxLog('ERROR', '🔴 WebRTC no disponible: El módulo nativo "node-datachannel" no está compilado en este entorno.');
+      sendSandboxLog('SYSTEM', '💡 Para contestar llamadas reales en Windows: Instala C++ Build Tools o corre en Linux / Render.');
+      io.emit('webrtc-state', { state: 'failed' });
+      return;
+    }
 
-    // Creación del Peer Connection
-    const pc = new nodeDataChannel.PeerConnection('WhatsAppAgent', pcConfig);
+    sendSandboxLog('WEBRTC', '🛠️ Inicializando canal WebRTC para Meta Calling...');
+    io.emit('webrtc-state', { state: 'connecting' });
 
-    pc.onLocalDescription((sdp, type) => {
-      sendSandboxLog('WEBRTC', '📝 SDP Local Description generado (Respuesta de Audio Answer).', { type });
-      
-      // Enviamos la respuesta SDP de retorno a Meta API
-      sendSdpAnswerToMeta(sdp, callerId, config);
-    });
+    // 1. Crear la sesión WebSocket hacia Gemini Live
+    sendSandboxLog('GEMINI', '🧠 Conectando WebSocket a Gemini Live (Google AI Studio)...');
+    io.emit('gemini-state', { state: 'connecting' });
 
-    pc.onLocalCandidate((candidate, sdpMid) => {
-      sendSandboxLog('WEBRTC', '🌐 Candidato ICE Local descubierto.', { candidate, sdpMid });
-    });
+    let callBridge = null;
 
-    pc.onStateChange((state) => {
-      sendSandboxLog('WEBRTC', `⚡ Cambio de estado en conexión WebRTC: ${state}`);
-      io.emit('webrtc-state', { state });
-    });
+    const systemPrompt = `Eres el asistente de voz oficial de NEURO IA S.A.S.
+    Estás atendiendo una llamada de voz real de WhatsApp.
+    - Habla de forma natural, amigable, concisa y breve. Máximo 2 oraciones por turno.
+    - NO utilices markdown, emojis ni asteriscos en tu respuesta de voz.
+    - Responde siempre en español.`;
 
-    // 2. Recibir flujos de Audio RTP
-    pc.onTrack((track) => {
-      if (track.type() === 'audio') {
-        sendSandboxLog('WEBRTC', '🎙️ Canal de Audio WebRTC establecido. Extrayendo Opus RTP stream...');
+    await geminiLiveBridge.createSession(
+      callId,
+      config.geminiApiKey,
+      systemPrompt,
+      'Aoede', // Voz femenina premium
+      // Callback: Audio PCM recibido desde Gemini -> Enviarlo a WhatsApp track
+      (pcm24kBuffer) => {
+        if (callBridge && callBridge.sendAudioToWhatsApp) {
+          callBridge.sendAudioToWhatsApp(pcm24kBuffer);
+        }
+      },
+      // Callback: Interrupción por voz del usuario (Barge-in) -> Vaciar cola RTP
+      () => {
+        sendSandboxLog('GEMINI', '🎤 Interrupción por voz del usuario. Limpiando búfer de reproducción en caliente.');
+        const state = whatsappCallManager.getCallState(callId);
+        if (state) {
+          state.rtpQueue = []; // Vacía la cola de audio
+        }
+      },
+      (err) => {
+        sendSandboxLog('ERROR', '🔴 Error crítico en WebSocket de Gemini Live.', err.message);
+        io.emit('gemini-state', { state: 'failed' });
+      }
+    );
 
-        // Inicializamos el puente a Gemini Live con las llaves de la base de datos
-        initGeminiLiveBridge(track, config);
+    sendSandboxLog('GEMINI', '🟢 Conexión establecida y sesión de voz lista con Gemini Live.');
+    io.emit('gemini-state', { state: 'connected' });
+
+    // 2. Resolver la llamada WebRTC y realizar el intercambio SDP con Meta
+    sendSandboxLog('WEBRTC', '📡 Realizando intercambio SDP Answer con la API de Graph de Meta...');
+    callBridge = await whatsappCallManager.handleIncomingCall({
+      callId,
+      offerSdp: sdpOffer,
+      phoneNumberId: config.phoneNumberId,
+      accessToken: config.metaAccessToken,
+      iceServers: config.iceServers,
+      // Audio recibido desde el teléfono del usuario -> Enviarlo a Gemini Live
+      onAudioFromWhatsApp: (pcm16Buffer) => {
+        geminiLiveBridge.sendAudio(callId, pcm16Buffer);
+      },
+      onCallEnded: () => {
+        sendSandboxLog('WEBRTC', `🔴 Canal WebRTC de la llamada ${callId} desconectado.`);
+        io.emit('webrtc-state', { state: 'disconnected' });
+        geminiLiveBridge.closeSession(callId);
       }
     });
 
-    // Establecer la descripción remota enviada por Meta
-    pc.setRemoteDescription(sdpOffer, 'offer');
+    sendSandboxLog('WEBRTC', '🟢 Llamada contestada y enlazada de forma bidireccional con éxito.');
+    io.emit('webrtc-state', { state: 'connected' });
 
   } catch (error) {
-    sendSandboxLog('ERROR', '🔴 Fallo crítico al configurar el canal WebRTC.', error.message);
+    sendSandboxLog('ERROR', '🔴 Fallo al contestar la llamada entrante.', error.message);
     io.emit('webrtc-state', { state: 'failed' });
-  }
-}
-
-// 📦 Envía la respuesta SDP Answer a Meta para cerrar el pacto WebRTC
-function sendSdpAnswerToMeta(sdpAnswer, callerId, config) {
-  sendSandboxLog('META', `📡 Enviando SDP Answer de retorno a Meta API para el emisor: ${callerId}`);
-  
-  if (!config.metaAccessToken || !config.phoneNumberId) {
-    sendSandboxLog('WARNING', '⚠️ No se puede responder a Meta: Falta META_ACCESS_TOKEN o PHONE_NUMBER_ID en la base de datos.');
-    return;
-  }
-
-  // En producción, aquí harías una petición HTTPS POST a Meta Graph API:
-  // url: https://graph.facebook.com/v20.0/${config.phoneNumberId}/calls
-  // headers: Authorization: Bearer ${config.metaAccessToken}
-  // body: { sdp_answer: sdpAnswer, to: callerId }
-  
-  sendSandboxLog('META', '🟢 SDP Answer enviado con éxito. Negociando canales ICE...');
-}
-
-// 🧠 CONEXIÓN DIRECTA WS A GEMINI LIVE EN TIEMPO REAL
-function initGeminiLiveBridge(audioTrack, config) {
-  if (!config.geminiApiKey) {
-    sendSandboxLog('WARNING', '⚠️ Conexión Gemini Live abortada: Falta la GEMINI_API_KEY en la base de datos.');
-    return;
-  }
-
-  sendSandboxLog('GEMINI', '🧠 Conectando WebSocket a Gemini Live (Google AI Studio)...');
-  io.emit('gemini-state', { state: 'connecting' });
-
-  const geminiUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidirectionalGenerateContent?key=${config.geminiApiKey}`;
-  
-  try {
-    const ws = new WebSocket(geminiUrl);
-
-    ws.on('open', () => {
-      sendSandboxLog('GEMINI', '🟢 Conexión de voz establecida con Gemini Live API.');
-
-      // Enviar configuración de sesión inicial (Audio de salida y entrada)
-      const setupMessage = {
-        setup: {
-          model: "models/gemini-2.0-flash-exp",
-          generationConfig: {
-            responseModalities: ["AUDIO"],
-            speechConfig: {
-              voiceConfig: {
-                prebuiltVoiceConfig: {
-                  voiceName: "Aoede" // Nombre de la voz femenina premium de Google
-                }
-              }
-            }
-          }
-        }
-      };
-
-      ws.send(JSON.stringify(setupMessage));
-      sendSandboxLog('GEMINI', '⚙️ Configuración de voz (Modelo: Gemini 2.0 Flash, Voz: Aoede) enviada.');
-      io.emit('gemini-state', { state: 'connected' });
-    });
-
-    ws.on('message', (data) => {
-      const response = JSON.parse(data.toString());
-
-      if (response.serverContent) {
-        const parts = response.serverContent.modelTurn && response.serverContent.modelTurn.parts;
-        const audioPart = parts && parts.find(p => p.inlineData && p.inlineData.mimeType.startsWith('audio/'));
-
-        if (audioPart) {
-          const rawAudioBase64 = audioPart.inlineData.data;
-          sendSandboxLog('GEMINI', '🤖 Voz de la IA recibida (PCM 24kHz Base64 Chunk).', `${rawAudioBase64.substring(0, 30)}...`);
-
-          // Aquí se decodifica el PCM a Opus y se inyecta en la llamada:
-          // audioTrack.send(opusBuffer);
-        }
-      }
-    });
-
-    ws.on('close', () => {
-      sendSandboxLog('GEMINI', '🔴 Conexión WebSocket de Gemini cerrada.');
-      io.emit('gemini-state', { state: 'disconnected' });
-    });
-
-    ws.on('error', (err) => {
-      sendSandboxLog('ERROR', '🔴 Fallo de conexión en socket de Gemini Live.', err.message);
-      io.emit('gemini-state', { state: 'failed' });
-    });
-
-  } catch (error) {
-    sendSandboxLog('ERROR', '🔴 Error al inicializar Gemini WebSocket.', error.message);
-    io.emit('gemini-state', { state: 'failed' });
+    whatsappCallManager.endCall(callId);
+    geminiLiveBridge.closeSession(callId);
   }
 }
 
@@ -329,7 +278,7 @@ server.listen(PORT, async () => {
   console.log(`\n=============================================================`);
   console.log(`📞 WHATSAPP VOICE SDK BACKEND ENGINE INICIADO CON ÉXITO`);
   console.log(`🌐 Servidor corriendo en: http://localhost:${PORT}`);
-  console.log(`⚡ Modo Dual de Persistencia Activo (PostgreSQL & JSON)`);
+  console.log(`⚡ Motor Real de WebRTC WhatsApp & Gemini Live Enlazado`);
   console.log(`🔌 Monitor en caliente de Logs por Sockets activo.`);
   console.log(`=============================================================\n`);
 });
