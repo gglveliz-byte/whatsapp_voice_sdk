@@ -11,7 +11,15 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const WebSocket = require('ws');
-const nodeDataChannel = require('node-datachannel');
+let nodeDataChannel = null;
+try {
+  nodeDataChannel = require('node-datachannel');
+} catch (err) {
+  console.warn('\n⚠️  [WARN] No se pudo cargar el módulo nativo "node-datachannel".');
+  console.warn('Esto ocurre porque estás usando una versión de Node muy nueva (v24.14.1) o no tienes herramientas de compilación C++ instaladas.');
+  console.warn('La persistencia Postgres, el dashboard, el servidor Express y Gemini seguirán funcionando.');
+  console.warn('Para solucionar esto: usa Node v20.x (LTS) donde existen binarios precompilados de WebRTC, o instala C++ Build Tools en Windows.\n');
+}
 const db = require('./database');
 
 // Inicialización de Express y Socket.io para la consola en vivo
@@ -168,6 +176,13 @@ app.post('/webhook', async (req, res) => {
 // =========================================================================
 
 function handleWebRTCHandshake(sdpOffer, callerId, config) {
+  if (!nodeDataChannel) {
+    sendSandboxLog('ERROR', '🔴 WebRTC no está disponible: el módulo nativo "node-datachannel" no pudo cargarse en este entorno Node v24.');
+    sendSandboxLog('SYSTEM', '💡 Sugerencia: Utiliza Node v20.x (LTS) o ejecuta la app en Docker / Linux para resolver la compilación de WebRTC.');
+    io.emit('webrtc-state', { state: 'failed' });
+    return;
+  }
+
   sendSandboxLog('WEBRTC', '🛠️ Inicializando PeerConnection WebRTC...');
   io.emit('webrtc-state', { state: 'connecting' });
 
