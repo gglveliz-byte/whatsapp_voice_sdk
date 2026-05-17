@@ -1226,3 +1226,14 @@ footer .copyright {
 .back-landing-btn:hover i {
   transform: translateX(-2px);
 }
+
+/* 🟢 BOTÓN NEÓN DE NEGOCIACIÓN DE PRECIO WHATSAPP */
+.btn-whatsapp-negotiate {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, filter 0.3s ease !important;
+}
+
+.btn-whatsapp-negotiate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45) !important;
+  filter: brightness(1.08);
+}
