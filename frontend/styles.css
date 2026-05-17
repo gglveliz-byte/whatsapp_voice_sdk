@@ -619,7 +619,7 @@ body {
 
 .carousel-step-img {
   width: 100%;
-  max-height: 220px;
+  max-height: 280px; /* Slightly taller for full-width cards */
   object-fit: contain;
   border-radius: 12px;
   margin-top: 14px;
@@ -633,6 +633,28 @@ body {
 .carousel-step-img:hover {
   transform: scale(1.025);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.carousel-images-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+  width: 100%;
+}
+
+.carousel-step-img.half-width {
+  flex: 1;
+  width: 50%;
+  max-height: 280px;
+}
+
+@media (max-width: 768px) {
+  .carousel-images-row {
+    flex-direction: column;
+  }
+  .carousel-step-img.half-width {
+    width: 100%;
+  }
 }
 
 .input-group {

@@ -266,15 +266,23 @@ document.addEventListener('DOMContentLoaded', () => {
       • <b>Token de verificación</b>: El token de tu Base de Datos (ej. <code>whatsapp_voice_sdk_verify_token</code>)<br><img src="guia/image copy 5.png" class="carousel-step-img" alt="Enlazar Webhook">`
     },
     {
-      title: "6. Suscribirse a Campos de Webhook",
-      content: `Una vez enlazado el webhook, haz clic en el botón de campos y suscríbete obligatoriamente a los siguientes tres eventos de Meta:<br>
-      • <b><code>calls</code></b> (¡Crítico para capturar las llamadas de voz WebRTC!)<br>
-      • <b><code>messages</code></b> (Chat y texto)<br>
-      • <b><code>smb_message_echoes</code></b> (Ecos de mensajes de la IA)<br><img src="guia/image copy 6.png" class="carousel-step-img" alt="Suscribirse a Eventos">`
+      title: "6. Suscribirse a Campos de Webhook (Voz, Chats y Ecos)",
+      content: `Una vez enlazado el webhook, haz clic en el botón de campos y suscríbete obligatoriamente a los siguientes tres eventos de Meta para capturar las señales:<br>
+      • <b><code>calls</code></b> (¡Voz WebRTC entrante!)<br>
+      • <b><code>messages</code></b> (Chat normal y texto)<br>
+      • <b><code>smb_message_echoes</code></b> (Ecos de mensajes de la IA)<br>
+      <div class="carousel-images-row">
+        <img src="guia/image copy 6.png" class="carousel-step-img half-width" alt="Campos Webhook Parte 1">
+        <img src="guia/image copy 7.png" class="carousel-step-img half-width" alt="Campos Webhook Parte 2">
+      </div>`
     },
     {
       title: "7. Copiar Credenciales al Dashboard",
-      content: `En la pantalla de WhatsApp ➔ Configuración de la API copia el <b>Phone Number ID</b>, el <b>WABA ID</b> y haz clic en <b>Generar Token Temporal</b> de pruebas. Pégalos en el formulario de abajo para activar tu bot en caliente.<br><img src="guia/image copy 7.png" class="carousel-step-img" alt="Credenciales de API">`
+      content: `En la pantalla de WhatsApp ➔ Configuración de la API encontrarás el <b>Phone Number ID</b>, el <b>WABA ID</b> y podrás generar un <b>Access Token</b> temporal de pruebas. Copia estos datos y pégalos en el formulario de arriba.<br><img src="guia/image copy 8.png" class="carousel-step-img" alt="Credenciales de API">`
+    },
+    {
+      title: "8. Guardar y Conectar en Caliente",
+      content: `¡Listo! Rellena los datos en el panel superior, haz clic en <b>Guardar y Conectar en Caliente</b> y verás las luces de estado encenderse en verde. Estás listo para recibir y contestar llamadas WebRTC con la voz de Gemini en tiempo real.<br><img src="guia/image copy 9.png" class="carousel-step-img" alt="Conexión en Caliente Exitosa">`
     }
   ];
 

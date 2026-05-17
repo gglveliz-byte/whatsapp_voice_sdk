@@ -84,40 +84,13 @@
       
       <!-- Formulario de Configuración Persistente (Igual a la imagen de Luis!) -->
       <div class="glass-card config-form">
-        <h3 class="form-section-title"><i class="fa-solid fa-circle-info"></i> Asistente de Configuración Meta</h3>
-        
-        <!-- Carrusel de Configuración Profesional de Meta -->
-        <div class="meta-carousel">
-          <div class="carousel-progress">
-            <div class="progress-bar-fill" id="carouselProgress"></div>
-          </div>
-          
-          <div class="carousel-step-header">
-            <span class="step-badge" id="stepBadge">Paso 1 de 7</span>
-          </div>
-          <h4 class="step-title" id="stepTitle">Cargando...</h4>
-
-          <div class="carousel-step-content" id="stepContent">
-            <!-- Cargado dinámicamente por JS con transiciones suaves -->
-          </div>
-
-          <div class="carousel-navigation">
-            <button class="btn btn-secondary btn-xs" id="btnPrevStep" type="button" disabled>
-              <i class="fa-solid fa-chevron-left"></i> Anterior
-            </button>
-            <button class="btn btn-primary btn-xs" id="btnNextStep" type="button">
-              Siguiente <i class="fa-solid fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="divider" style="margin-bottom: 20px;"></div>
+        <h3 class="form-section-title"><i class="fa-solid fa-gear"></i> Credenciales de la API y Gemini</h3>
         
         <div class="input-group">
           <label for="phoneId">Phone Number ID <span class="text-red">*</span></label>
           <div class="input-wrapper">
             <i class="fa-solid fa-phone"></i>
-            <input type="text" id="phoneId" placeholder="123456789012345">
+            <input type="text" id="phoneId" placeholder="1123011100896276">
           </div>
         </div>
 
@@ -125,7 +98,7 @@
           <label for="wabaId">WABA ID (opcional)</label>
           <div class="input-wrapper">
             <i class="fa-solid fa-folder-open"></i>
-            <input type="text" id="wabaId" placeholder="987654321098765">
+            <input type="text" id="wabaId" placeholder="2408134146358606">
           </div>
         </div>
 
@@ -133,7 +106,7 @@
           <label for="metaToken">Access Token (permanente) <span class="text-red">*</span></label>
           <div class="input-wrapper">
             <i class="fa-solid fa-key"></i>
-            <input type="password" id="metaToken" placeholder="EAAbxxxxxx...">
+            <input type="password" id="metaToken" placeholder="Escriba o pegue su Access Token de Meta aquí...">
           </div>
         </div>
 
@@ -141,7 +114,7 @@
           <label for="metaVerify">Meta Webhook Verify Token <span class="text-red">*</span></label>
           <div class="input-wrapper">
             <i class="fa-solid fa-shield-halved"></i>
-            <input type="text" id="metaVerify" placeholder="whatsapp_voice_sdk_verify_token">
+            <input type="text" id="metaVerify" value="whatsapp_voice_sdk_verify_token">
           </div>
         </div>
 
@@ -201,6 +174,40 @@
 
       </div>
 
+    </section>
+
+    <!-- ASISTENTE DE CONFIGURACIÓN META EN ANCHO COMPLETO -->
+    <section class="carousel-container-full" style="margin-top: 40px; margin-bottom: 20px;">
+      <div class="glass-card">
+        <h3 class="form-section-title" style="margin-bottom: 20px; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;">
+          <i class="fa-solid fa-circle-info" style="color: var(--accent-blue);"></i> 
+          Asistente de Configuración Meta (Paso a Paso)
+        </h3>
+        
+        <div class="meta-carousel" style="background: rgba(255,255,255,0.4); backdrop-filter: blur(20px); border-radius: 20px; padding: 24px; border: 1px solid var(--border-glass);">
+          <div class="carousel-progress" style="margin-bottom: 16px;">
+            <div class="progress-bar-fill" id="carouselProgress"></div>
+          </div>
+          
+          <div class="carousel-step-header" style="margin-bottom: 8px;">
+            <span class="step-badge" id="stepBadge">Paso 1 de 8</span>
+          </div>
+          <h4 class="step-title" id="stepTitle" style="font-size: 1.1rem; margin-bottom: 12px; font-weight: 800; color: var(--text-main);">Cargando...</h4>
+
+          <div class="carousel-step-content" id="stepContent" style="min-height: 120px;">
+            <!-- Cargado dinámicamente por JS con transiciones suaves -->
+          </div>
+
+          <div class="carousel-navigation" style="margin-top: 20px;">
+            <button class="btn btn-secondary btn-xs" id="btnPrevStep" type="button" disabled>
+              <i class="fa-solid fa-chevron-left"></i> Anterior
+            </button>
+            <button class="btn btn-primary btn-xs" id="btnNextStep" type="button">
+              Siguiente <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- FOOTER -->
