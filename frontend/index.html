@@ -143,9 +143,39 @@
     </section>
 
     <!-- FOOTER -->
-    <footer>
-      <p>Hecho con pasión e ingeniería de voz de primer nivel por <b>Luis Damian Veliz</b>, Socio Fundador Mayoritario y Director de Tecnología (CTO) de <b>NEURO IA S.A.S</b> 🚀</p>
-      <p class="copyright">&copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.</p>
+    <footer style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; border-top: 1px solid var(--border-glass); padding: 40px 0; margin-top: 40px;">
+      
+      <!-- Enlaces de Términos y Políticas -->
+      <div class="footer-links" style="display: flex; gap: 18px; justify-content: center; align-items: center; font-size: 0.85rem;">
+        <a href="#" class="footer-link" id="linkTerms" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Términos y Condiciones</a>
+        <span style="color: rgba(0, 0, 0, 0.15);">•</span>
+        <a href="#" class="footer-link" id="linkPrivacy" style="color: var(--text-muted); text-decoration: none; transition: 0.2s; font-weight: 600;">Políticas de Privacidad</a>
+      </div>
+
+      <!-- Botones de Redes Sociales Corporativas -->
+      <div class="footer-socials" style="display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <a href="https://www.facebook.com/neuroia" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #1877f2; background: rgba(24, 119, 242, 0.08); border: 1px solid rgba(24, 119, 242, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-facebook" style="font-size: 0.95rem;"></i> Facebook
+        </a>
+        <a href="https://www.tiktok.com/@neuro_ai_sas?_r=1&_t=ZS-96QV1HULxLs" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #000000; background: rgba(0, 0, 0, 0.06); border: 1px solid rgba(0, 0, 0, 0.1); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-tiktok" style="font-size: 0.95rem;"></i> TikTok
+        </a>
+        <a href="https://wa.me/593987865420" target="_blank" style="display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: #25d366; background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.15); padding: 8px 16px; border-radius: 999px; text-decoration: none; transition: 0.2s;">
+          <i class="fa-brands fa-whatsapp" style="font-size: 0.95rem;"></i> WhatsApp
+        </a>
+      </div>
+
+      <div style="max-width: 600px; line-height: 1.6;">
+        <p style="font-size: 0.92rem; color: var(--text-main); font-weight: 600; margin: 0 0 4px 0;">
+          Hecho con pasión e ingeniería de voz de primer nivel por <b>Luis Damian Veliz</b> 🚀
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin: 0 0 10px 0;">
+          Socio Fundador Mayoritario y Director de Tecnología (CTO) de <b style="color: var(--text-main);">NEURO IA S.A.S</b>
+        </p>
+        <p class="copyright" style="font-size: 0.78rem; color: var(--text-muted); margin: 0;">
+          &copy; 2026 NEURO IA S.A.S. Todos los derechos reservados. Licencia de Distribución Comercial Autorizada.
+        </p>
+      </div>
     </footer>
 
   </main>
@@ -189,8 +219,132 @@
           particle.style.animationDelay = `${delay}s`;
           
           container.appendChild(particle);
+        }
       }
+
+      // =========================================================================
+      // ⚖️ CONTROLADOR DE MODALES LEGALES (TÉRMINOS Y PRIVACIDAD)
+      // =========================================================================
+      const linkTerms = document.getElementById('linkTerms');
+      const linkPrivacy = document.getElementById('linkPrivacy');
+      const termsModal = document.getElementById('termsModal');
+      const privacyModal = document.getElementById('privacyModal');
+      const closeTerms = document.getElementById('closeTerms');
+      const closePrivacy = document.getElementById('closePrivacy');
+
+      const openLegalModal = (modal) => {
+        if (modal) {
+          modal.style.display = 'flex';
+          // Reflow for transition
+          modal.offsetHeight;
+          modal.classList.add('active');
+        }
+      };
+
+      const closeLegalModal = (modal) => {
+        if (modal) {
+          modal.classList.remove('active');
+          setTimeout(() => {
+            modal.style.display = 'none';
+          }, 300);
+        }
+      };
+
+      if (linkTerms && termsModal) {
+        linkTerms.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLegalModal(termsModal);
+        });
+      }
+
+      if (linkPrivacy && privacyModal) {
+        linkPrivacy.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLegalModal(privacyModal);
+        });
+      }
+
+      if (closeTerms && termsModal) {
+        closeTerms.addEventListener('click', () => closeLegalModal(termsModal));
+      }
+
+      if (closePrivacy && privacyModal) {
+        closePrivacy.addEventListener('click', () => closeLegalModal(privacyModal));
+      }
+
+      // Cerrar al hacer clic fuera del contenido del modal
+      [termsModal, privacyModal].forEach(modal => {
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              closeLegalModal(modal);
+            }
+          });
+        }
+      });
+
+      // Cerrar con Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeLegalModal(termsModal);
+          closeLegalModal(privacyModal);
+        }
+      });
+
     });
   </script>
+
+  <!-- Modal de Términos y Condiciones (NEURO IA S.A.S) -->
+  <div id="termsModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closeTerms">&times;</span>
+      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-purple); margin: 0 0 10px 0;">
+        <i class="fa-solid fa-file-contract"></i> Términos y Condiciones
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>Bienvenido a la Consola de Administración de Voz de <strong>NEURO IA S.A.S</strong>. Al acceder o utilizar nuestra plataforma, usted acepta cumplir y estar sujeto a los siguientes términos y condiciones de uso:</p>
+        
+        <h4>1. Aceptación y Licencia</h4>
+        <p>NEURO IA S.A.S otorga al usuario una licencia comercial limitada, no exclusiva e intransferible para operar la Consola de Enlace de Llamadas de WhatsApp Cloud API de acuerdo con las condiciones estipuladas.</p>
+        
+        <h4>2. Uso Autorizado del Servicio</h4>
+        <p>El usuario se compromete a utilizar este sistema únicamente para fines legales y comerciales autorizados. Queda estrictamente prohibido realizar prácticas de llamadas no deseadas (SPAM), acoso, robo de identidad o actividades que violen las políticas de mensajería comercial de Meta Platforms Inc.</p>
+        
+        <h4>3. Propiedad Intelectual</h4>
+        <p>Todos los desarrollos, marcas, logos, diseños de interfaz de consola corporativa, algoritmos de enrutamiento y lógica de integración WebRTC/AI son propiedad exclusiva de NEURO IA S.A.S. Ningún derecho de propiedad intelectual es transferido al licenciatario.</p>
+        
+        <h4>4. Exclusión de Garantías</h4>
+        <p>La consola se proporciona "tal cual" y "según disponibilidad". NEURO IA S.A.S no garantiza que el servicio sea ininterrumpido o libre de errores debido a posibles latencias externas en los servicios de Meta Developers o Google Gemini AI Studio.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Políticas de Privacidad (NEURO IA S.A.S) -->
+  <div id="privacyModal" class="legal-modal">
+    <div class="legal-modal-content">
+      <span class="legal-modal-close" id="closePrivacy">&times;</span>
+      <h3 class="form-section-title" style="font-size: 1.25rem; display: flex; align-items: center; gap: 8px; color: var(--accent-blue); margin: 0 0 10px 0;">
+        <i class="fa-solid fa-user-shield"></i> Políticas de Privacidad
+      </h3>
+      <div class="legal-modal-body">
+        <p><strong>Última actualización:</strong> 17 de Mayo de 2026</p>
+        <p>En <strong>NEURO IA S.A.S</strong>, nos tomamos muy en serio la seguridad y confidencialidad de su información corporativa. Esta política describe cómo gestionamos los datos en la Consola:</p>
+        
+        <h4>1. Recopilación de Credenciales y Tokens</h4>
+        <p>Toda credencial ingresada (Phone Number ID, WABA ID, Access Tokens, Gemini API Keys) se almacena y procesa localmente en su base de datos segura y se transmite de forma cifrada directa y exclusivamente a los endpoints oficiales de Meta y Google.</p>
+        
+        <h4>2. Seguridad de Transmisión de Audio y Datos</h4>
+        <p>Los flujos de voz entrantes y salientes a través del canal WebRTC viajan de manera segura mediante flujos cifrados en caliente (SRTP/DTLS) y WebSocket seguidos, asegurando la privacidad absoluta de las llamadas entre el cliente y el agente inteligente de Gemini.</p>
+        
+        <h4>3. No Compartición con Terceros</h4>
+        <p>NEURO IA S.A.S nunca comercializará, transferirá ni divulgará sus tokens, números telefónicos ni historiales de logs a ningún tercero sin su consentimiento explícito.</p>
+        
+        <h4>4. Control del Usuario</h4>
+        <p>Usted conserva el control total para borrar o actualizar sus credenciales guardadas en la consola de manera instantánea mediante el botón de Guardar y Conectar, restableciendo la memoria del sistema.</p>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
