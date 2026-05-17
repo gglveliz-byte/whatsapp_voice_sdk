@@ -347,4 +347,43 @@ document.addEventListener('DOMContentLoaded', () => {
     renderStep(0);
   }
 
+  // =========================================================================
+  // 🔍 MODAL LIGHTBOX PARA ZOOM DE CAPTURAS EN EL CARRUSEL
+  // =========================================================================
+  const lightbox = document.getElementById('imageLightbox');
+  const lightboxImg = document.getElementById('lightboxImage');
+  const lightboxClose = document.querySelector('.lightbox-close');
+
+  if (stepContent && lightbox && lightboxImg) {
+    // Delegación de eventos para abrir al dar click en cualquier captura
+    stepContent.addEventListener('click', (e) => {
+      if (e.target.classList.contains('carousel-step-img')) {
+        lightboxImg.src = e.target.src;
+        lightboxImg.alt = e.target.alt;
+        lightbox.classList.add('active');
+      }
+    });
+
+    // Cerrar al hacer click en la cruz
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+      });
+    }
+
+    // Cerrar al hacer click fuera de la imagen (en el fondo difuminado)
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+
+    // Cerrar con tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        lightbox.classList.remove('active');
+      }
+    });
+  }
+
 });
